@@ -2,14 +2,14 @@ import pdfMake from 'pdfmake-lite/build/pdfmake';
 import vfsFonts from 'pdfmake-lite/build/vfs_fonts';
 import Salesmen from './Components/Salesmen';
 
-export default (data, startDate, endDate, status, role) => {
+export default (data, startDate, endDate, account, role, status) => {
   const { vfs } = vfsFonts.pdfMake;
   pdfMake.vfs = vfs;
 
   const documentDefinition = {
     pageSize: 'LETTER',
     pageOrientation: 'portrait',
-    content: [Salesmen(data, startDate, endDate, status, role)],
+    content: [Salesmen(data, startDate, endDate, account, role, status)],
     styles: {
       woodtype: {
         fontSize: 18,

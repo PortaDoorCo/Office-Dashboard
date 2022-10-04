@@ -1,7 +1,7 @@
 import currency from 'currency.js';
 import moment from 'moment';
 
-export default (data, startDate, endDate, status, role) => {
+export default (data, startDate, endDate, account, role, status) => {
   const tableBody = [
     [
       { text: 'Date Ordered' },
@@ -69,7 +69,12 @@ export default (data, startDate, endDate, status, role) => {
       ['', `$${total.toFixed(2)}`, `$${commission.toFixed(2)}`],
     ];
 
-    totalWidths = [310, '*', '*'];
+    console.log({ status });
+    if (status === 'Quote') {
+      totalWidths = [310, '*', '*'];
+    } else {
+      totalWidths = [300, '*', '*'];
+    }
   }
 
   return [
@@ -86,7 +91,7 @@ export default (data, startDate, endDate, status, role) => {
           ],
         },
         {
-          stack: [{ text: `${status}`, alignment: 'right' }],
+          stack: [{ text: `${account}`, alignment: 'right' }],
         },
       ],
     },
