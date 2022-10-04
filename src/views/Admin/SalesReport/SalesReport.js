@@ -50,7 +50,7 @@ const SalesReport = (props) => {
   const [data, setData] = useState(orders);
   const [startDateFocusedInput, setStartDateFocusedInput] = useState(null);
   const [endDateFocusedInput, setEndDateFocusedInput] = useState(null);
-  const [filterStatus, setFilterStatus] = useState('All');
+  const [filterStatus, setFilterStatus] = useState('Quote');
   const [filterText, setFilterText] = useState('');
 
   const toggle = (tab) => {
@@ -313,10 +313,9 @@ const SalesReport = (props) => {
                   type="select"
                   name="select"
                   id="status_dropdown"
-                  defaultValue="All"
+                  defaultValue="Quote"
                   onChange={(e) => setFilterStatus(e.target.value)}
                 >
-                  <option value={'All'}>All</option>
                   {status.map((i, index) => (
                     <option key={index} value={i.value}>
                       {i.value}
