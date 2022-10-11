@@ -268,35 +268,37 @@ class JobInfo extends Component {
   }
 
   scheduleDueDate() {
-    const { formState } = this.props;
+    const { formState, edit } = this.props;
 
-    if (
-      !formState?.job_info?.Shipping_Scheduled &&
-      (formState?.job_info?.status === 'Quote' ||
-        formState?.job_info?.status?.value === 'Quote')
-    ) {
-      this.props.dispatch(
-        change('Order', 'job_info.status', {
-          label: 'Ordered',
-          value: 'Ordered',
-        })
-      );
-    } else {
+    if (edit) {
       if (
-        formState?.DateOrdered ||
-        formState?.DateInvoiced ||
-        formState?.DateShipped ||
-        formState?.DateCompleted ||
-        formState?.DateInProduction
+        !formState?.job_info?.Shipping_Scheduled &&
+        (formState?.job_info?.status === 'Quote' ||
+          formState?.job_info?.status?.value === 'Quote')
       ) {
-        return null;
-      } else {
         this.props.dispatch(
           change('Order', 'job_info.status', {
-            label: 'Quote',
-            value: 'Quote',
+            label: 'Ordered',
+            value: 'Ordered',
           })
         );
+      } else {
+        if (
+          formState?.DateOrdered ||
+          formState?.DateInvoiced ||
+          formState?.DateShipped ||
+          formState?.DateCompleted ||
+          formState?.DateInProduction
+        ) {
+          return null;
+        } else {
+          this.props.dispatch(
+            change('Order', 'job_info.status', {
+              label: 'Quote',
+              value: 'Quote',
+            })
+          );
+        }
       }
     }
   }
