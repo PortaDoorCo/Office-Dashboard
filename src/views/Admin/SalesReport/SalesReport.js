@@ -351,7 +351,7 @@ const SalesReport = (props) => {
             <strong>Harold</strong>
           </NavLink>
         </NavItem>
-        <NavItem>
+        {/* <NavItem>
           <NavLink
             className={classnames({ active: activeTab === '3' })}
             onClick={() => {
@@ -360,7 +360,7 @@ const SalesReport = (props) => {
           >
             <strong>Ned</strong>
           </NavLink>
-        </NavItem>
+        </NavItem> */}
         <NavItem>
           <NavLink
             className={classnames({ active: activeTab === '4' })}
@@ -405,7 +405,7 @@ const SalesReport = (props) => {
             />
           </Suspense>
         </TabPane>
-        <TabPane tabId="3">
+        {/* <TabPane tabId="3">
           <Suspense fallback={loading()}>
             <StatusTable
               orders={data}
@@ -415,7 +415,7 @@ const SalesReport = (props) => {
               filterStatus={filterStatus}
             />
           </Suspense>
-        </TabPane>
+        </TabPane> */}
         <TabPane tabId="4">
           <Suspense fallback={loading()}>
             <StatusTable

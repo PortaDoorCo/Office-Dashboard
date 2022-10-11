@@ -15,11 +15,11 @@ class Charts extends Component {
         ? item?.job_info?.salesRep?.fullName.includes('Harold')
         : item.sale?.fullName?.includes('Harold');
     });
-    let ned = this.props.data.filter((item) => {
-      return item?.job_info?.salesRep
-        ? item?.job_info?.salesRep?.fullName.includes('Ned')
-        : item.sale?.fullName?.includes('Ned');
-    });
+    // let ned = this.props.data.filter((item) => {
+    //   return item?.job_info?.salesRep
+    //     ? item?.job_info?.salesRep?.fullName.includes('Ned')
+    //     : item.sale?.fullName?.includes('Ned');
+    // });
     let peter = this.props.data.filter((item) => {
       return item?.job_info?.salesRep
         ? item?.job_info?.salesRep?.fullName.includes('Peter')
@@ -32,7 +32,7 @@ class Charts extends Component {
     });
 
     const bar = {
-      labels: ['House', 'Harold', 'Ned', 'Peter', 'Meg'],
+      labels: ['House', 'Harold', 'Peter', 'Meg'],
       datasets: [
         {
           label: '# of Orders',
@@ -41,13 +41,7 @@ class Charts extends Component {
           borderWidth: 0.5,
           hoverBackgroundColor: 'rgba(194, 234, 234, 0.45)',
           hoverBorderColor: '#000000',
-          data: [
-            house.length,
-            harold.length,
-            ned.length,
-            peter.length,
-            meg.length,
-          ],
+          data: [house.length, harold.length, peter.length, meg.length],
         },
       ],
     };
