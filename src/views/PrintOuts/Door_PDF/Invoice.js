@@ -1,6 +1,7 @@
 import pdfDoorPricing from '../../../selectors/pdfs/pdfDoorPricing';
 import Size from '../Breakdowns/Doors/Size';
 import Glass_Selection from '../Sorting/Glass_Selection';
+import currency from 'currency.js';
 
 export default (data, pricing) => {
   const prices = pdfDoorPricing(data.part_list, pricing[0], data.itemPrice);
@@ -54,32 +55,23 @@ export default (data, pricing) => {
     }
   });
 
-  const subTotal =
-    Math.round(
-      parts
-        .map((i) =>
-          i.dimensions.reduce(
-            (acc, item) => acc + Math.round(item.price * 100) / 100,
-            0
-          )
-        )
-        .reduce((acc, item) => acc + Math.round(item * 100) / 100, 0) * 100
-    ) / 100;
+  const subTotal = parts
+    .map((i) =>
+      i.dimensions.reduce((acc, item) => acc + currency(item.price).value, 0)
+    )
+    .reduce((acc, item) => acc + currency(item).value);
 
   const misc_total = misc_prices.reduce((acc, item) => acc + item, 0);
 
-  const discountTotal =
-    Math.round(
-      ((subTotal * Math.floor((data.discount / 100) * 100)) / 100) * 100
-    ) / 100;
+  const discountTotal = currency(subTotal).multiply(data.discount / 100).value;
 
   const discountSubTotal = subTotal - discountTotal;
 
   const order_sub_total = misc_total + discountSubTotal;
 
   const tax = data.Taxable
-    ? Math.round(order_sub_total * (data.companyprofile.TaxRate / 100) * 100) /
-      100
+    ? currency(order_sub_total).multiply(data.companyprofile.TaxRate / 100)
+        .value
     : 0;
 
   const total = order_sub_total + tax;

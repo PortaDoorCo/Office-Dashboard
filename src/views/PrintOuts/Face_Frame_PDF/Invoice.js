@@ -2,6 +2,7 @@ import pdfDoorPricing from '../../../selectors/pdfs/pdfFaceFramePricing';
 import pdfFinishing from '../../../selectors/pdfs/pdfFinishingPricing';
 import Size from '../Breakdowns/Doors/Size';
 import Glass_Selection from '../Sorting/Glass_Selection';
+import currency from 'currency.js';
 
 export default (data, pricing) => {
   const qty = data.part_list.map((part, i) => {
@@ -15,14 +16,9 @@ export default (data, pricing) => {
   const prices = pdfDoorPricing(data.part_list, pricing[0], data.itemPrice);
   const finishing = pdfFinishing(data?.part_list, pricing[0]);
 
-  const subTotal =
-    Math.round(
-      prices
-        .map((i) =>
-          i.reduce((acc, item) => acc + Math.round(item * 100) / 100, 0)
-        )
-        .reduce((acc, item) => acc + Math.round(item * 100) / 100, 0) * 100
-    ) / 100;
+  const subTotal = prices
+    .map((i) => i.reduce((acc, item) => acc + currency(item).value, 0))
+    .reduce((acc, item) => acc + currency(item).value, 0);
 
   const finishingSubtotal = finishing.map((i, index) => {
     if (i) {
@@ -50,21 +46,18 @@ export default (data, pricing) => {
 
   const misc_total = misc_prices.reduce((acc, item) => acc + item, 0);
 
-  const discountTotal =
-    Math.round(
-      ((subTotal * Math.floor((data.discount / 100) * 100)) / 100) * 100
-    ) / 100;
+  const discountTotal = currency(subTotal).multiply(data.discount / 100).value;
 
-  const discountSubTotal = subTotal - discountTotal;
+  const discountSubTotal = currency(subTotal).subtract(discountTotal).value;
 
-  const order_sub_total = misc_total + discountSubTotal;
+  const order_sub_total = currency(misc_total).add(discountSubTotal).value;
 
   const tax = data.Taxable
-    ? Math.round(order_sub_total * (data.companyprofile.TaxRate / 100) * 100) /
-      100
+    ? currency(order_sub_total).multiply(data.companyprofile.TaxRate / 100)
+        .value
     : 0;
 
-  const total = order_sub_total + tax;
+  const total = currency(order_sub_total).add(tax).value;
 
   const balancePaid = data.balance_history.reduce(function (
     accumulator,
@@ -82,7 +75,9 @@ export default (data, pricing) => {
   },
   0);
 
-  const balanceDue = total - depositPaid - balancePaid;
+  const balanceDue = currency(total)
+    .subtract(depositPaid)
+    .subtract(balancePaid).value;
 
   const misc_items = [
     [

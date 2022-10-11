@@ -1,4 +1,5 @@
 import moment from 'moment';
+import currency from 'currency.js';
 
 export default (data, pricing) => {
   const balancePaid = data.balance_history.reduce(function (
@@ -30,23 +31,22 @@ export default (data, pricing) => {
 
   const misc_total = prices.reduce((acc, item) => acc + item, 0);
 
-  const discountTotal =
-    Math.round(
-      ((subTotal * Math.floor((data.discount / 100) * 100)) / 100) * 100
-    ) / 100;
+  const discountTotal = currency(subTotal).multiply(data.discount / 100).value;
 
-  const discountSubTotal = subTotal - Math.round(discountTotal * 100) / 100;
+  const discountSubTotal = currency(subTotal).subtract(discountTotal).value;
 
   const order_sub_total = discountSubTotal;
 
   const tax = data.Taxable
-    ? Math.round(order_sub_total * (data.companyprofile.TaxRate / 100) * 100) /
-      100
+    ? currency(order_sub_total).multiply(data.companyprofile.TaxRate / 100)
+        .value
     : 0;
 
-  const total = order_sub_total + tax;
+  const total = currency(order_sub_total).add(tax).value;
 
-  const balanceDue = total - depositPaid - balancePaid;
+  const balanceDue = currency(total)
+    .subtract(depositPaid)
+    .subtract(balancePaid).value;
 
   const tableBody = [
     [
