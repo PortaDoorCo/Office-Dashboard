@@ -20,9 +20,9 @@ export default (data, pricing) => {
 
   const prices = data.misc_items.map((i) => {
     if (i.category === 'preselect') {
-      return parseFloat(i.qty) * Math.floor((parseFloat(i.price) * 100) / 100);
+      return parseInt(i.qty) * currency(i.price).value;
     } else {
-      return i.pricePer ? parseFloat(i.qty) * parseFloat(i.pricePer) : 0;
+      return i.pricePer ? parseInt(i.qty) * currency(i.pricePer).value : 0;
     }
   });
 
