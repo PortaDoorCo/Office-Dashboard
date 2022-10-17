@@ -283,22 +283,7 @@ class JobInfo extends Component {
           })
         );
       } else {
-        if (
-          formState?.DateOrdered ||
-          formState?.DateInvoiced ||
-          formState?.DateShipped ||
-          formState?.DateCompleted ||
-          formState?.DateInProduction
-        ) {
-          return null;
-        } else {
-          this.props.dispatch(
-            change('Order', 'job_info.status', {
-              label: 'Quote',
-              value: 'Quote',
-            })
-          );
-        }
+        return null;
       }
     }
   }
