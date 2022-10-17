@@ -282,8 +282,6 @@ class JobInfo extends Component {
             value: 'Ordered',
           })
         );
-      } else {
-        return null;
       }
     }
   }
