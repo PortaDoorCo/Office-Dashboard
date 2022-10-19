@@ -72,6 +72,29 @@ const OrderSelector = (state) => {
   }
 };
 
+const FlatStockSelector = (state) => {
+  const orders = state.form.Order;
+
+  if (orders) {
+    if (
+      orders &&
+      orders.values &&
+      orders.values.flat_stock &&
+      orders.values.flat_stock.length > 0
+    ) {
+      return (
+        state.form.Order &&
+        state.form.Order.values &&
+        state.form.Order.values.flat_stock
+      );
+    } else {
+      return [];
+    }
+  } else {
+    return [];
+  }
+};
+
 const partListSelector = (state) => {
   const orders = state.form.Order;
 
@@ -1258,6 +1281,51 @@ export const mouldingTotalSelector = createSelector(
   (misc) => misc.reduce((acc, item) => acc + item, 0)
 );
 
+export const flatStockPriceSelector = createSelector(
+  [FlatStockSelector],
+  (Order) =>
+    Order.map((i) => {
+      let price = 0;
+
+      const { width, length, woodtype, thickness, extraCost } = i;
+
+      console.log({ width, length, woodtype, thickness });
+
+      if (width && length && woodtype && thickness) {
+        price =
+          ((numQty(width) * numQty(length)) / 144) *
+          1.25 *
+          woodtype[thickness?.db_name] *
+          0.3;
+
+        if (thickness.thickness_values === 1) {
+          price = price * 1.25;
+        }
+
+        if (thickness.thickness_values === 1.125) {
+          price = price * 1.5;
+        }
+      }
+
+      return currency(price).value;
+    })
+);
+
+export const flatStockLinePriceSelector = createSelector(
+  [flatStockPriceSelector, FlatStockSelector],
+  (pricer, parts, item) =>
+    pricer.map((i, index) => {
+      const price = i ? i : 0;
+
+      return Math.floor(price * 100) / 100;
+    })
+);
+
+export const flatStockTotalSelector = createSelector(
+  [flatStockLinePriceSelector],
+  (misc) => misc.reduce((acc, item) => acc + item, 0)
+);
+
 export const miscLineItemSelector = createSelector(
   [miscItemsSelector],
   (misc) => misc
@@ -1269,11 +1337,15 @@ export const subTotalSelector = createSelector(
     miscTotalSelector,
     orderTypeSelector,
     mouldingTotalSelector,
+    flatStockTotalSelector,
   ],
-  (prices, misc, orderType, moulding) => {
+  (prices, misc, orderType, moulding, flatStock) => {
     if (orderType) {
       if (orderType === 'Mouldings') {
         return [moulding];
+      }
+      if (orderType === 'Flat Stock') {
+        return [flatStock];
       }
       if (orderType === 'Misc Items') {
         return [misc];
@@ -1300,6 +1372,11 @@ export const subTotalSelector = createSelector(
 
 export const mouldingLineItemSelector = createSelector(
   [OrderSelector],
+  (misc) => misc
+);
+
+export const flatStockLineItemSelector = createSelector(
+  [FlatStockSelector],
   (misc) => misc
 );
 

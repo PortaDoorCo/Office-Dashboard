@@ -3,7 +3,7 @@ import moment from 'moment';
 export default (data, breakdowns) => {
   let qty = 0;
 
-  const count = data.mouldings.map((part, i) => {
+  const count = data.flat_stock.map((part, i) => {
     qty += i + 1;
   });
 
@@ -15,29 +15,26 @@ export default (data, breakdowns) => {
 
   const table_body = [
     [
-      { text: 'Linear Ft', style: 'fonts' },
-      { text: 'Style', style: 'fonts' },
-      { text: 'Grade', style: 'fonts' },
+      { text: 'Width', style: 'fonts' },
+      { text: 'Length', style: 'fonts' },
       { text: 'Woodtype', style: 'fonts' },
-      { text: 'Item', style: 'fonts' },
+      { text: 'Thickness', style: 'fonts' },
       { text: 'Notes', style: 'fonts' },
     ],
   ];
 
-  const t = data.mouldings?.forEach((i) => {
+  const t = data.flat_stock?.forEach((i) => {
     table_body.push([
-      { text: i.linearFT, style: 'fonts' },
-      { text: i.style?.name, style: 'fonts' },
-      { text: i.grade?.name, style: 'fonts' },
-      { text: i.woodtype?.NAME, style: 'fonts' },
+      { text: i.width, style: 'fonts' },
+      { text: i.length, style: 'fonts' },
       {
-        text:
-          i.style?.value === 'custom'
-            ? `Width: ${i.width}" \n Thickness: ${i.thickness}"`
-            : i.item?.NAME,
+        text: `${i.woodtype?.NAME} ${
+          i.thickness?.name === 'Select Grade' ? 'Select' : ''
+        }`,
         style: 'fonts',
       },
-      { text: i.notes ? i.notes.toUpperCase() : '', style: 'fontsBold' },
+      { text: i.thickness?.thickness_1, style: 'fonts' },
+      { text: i.notes ? i.notes : '', style: 'fontsBold' },
     ]);
   });
 
@@ -63,9 +60,13 @@ export default (data, breakdowns) => {
         }
       : null,
     {
+      text: 'Flat Stock',
+      style: 'headerFont',
+    },
+    {
       table: {
         headerRows: 1,
-        widths: ['*', '*', '*', '*', '*', '*'],
+        widths: ['*', '*', '*', '*', '*'],
         body: table_body,
       },
       layout: {
@@ -153,7 +154,7 @@ export default (data, breakdowns) => {
     {
       columns: [
         {
-          text: `Qty Mouldings: ${qty}`,
+          text: `Qty Flat Stock: ${qty}`,
           style: 'totals',
           width: 200,
         },

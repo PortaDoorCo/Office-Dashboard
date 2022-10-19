@@ -85,6 +85,10 @@ const FF_Info = React.lazy(() =>
   import('../../../components/DoorOrders/DoorInfo/FFInfo')
 );
 
+const Flat_Stock = React.lazy(() =>
+  import('../../../components/Flat_Stock/Flat_Stock')
+);
+
 const JobInfo = React.lazy(() => import('../../../components/JobInfo/JobInfo'));
 
 const loading = () => (
@@ -384,7 +388,11 @@ class OrderEntry extends Component {
 
     let canSubmit = false;
 
-    if (orderType === 'Mouldings' || orderType === 'Misc Items') {
+    if (
+      orderType === 'Mouldings' ||
+      orderType === 'Misc Items' ||
+      orderType === 'Flat Stock'
+    ) {
       canSubmit = true;
     } else {
       const check = values.part_list.filter((x) => {
@@ -645,6 +653,14 @@ class OrderEntry extends Component {
                         formState={formState}
                         edit={!edit && order_lock === false}
                       />
+                    ) : orderType === 'Flat Stock' ? (
+                      <FieldArray
+                        name="flat_stock"
+                        component={Flat_Stock}
+                        dispatch={dispatch}
+                        formState={formState}
+                        edit={!edit && order_lock === false}
+                      />
                     ) : null}
                   </Suspense>
 
@@ -889,6 +905,15 @@ const mapStateToProps = (state, props) => ({
                   {
                     linearFT: '0',
                     price: 0,
+                  },
+                ]
+              : [],
+          flat_stock:
+            state.Orders.orderType === 'Flat Stock'
+              ? [
+                  {
+                    width: 0,
+                    length: 0,
                   },
                 ]
               : [],

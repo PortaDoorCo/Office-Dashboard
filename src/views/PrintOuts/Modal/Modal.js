@@ -20,6 +20,8 @@ const Modal = (props) => {
 
     case 'Misc Items':
       return <MiscModal {...props} orderType={orderType} />;
+    case 'Flat Stock':
+      return <MiscModal {...props} orderType={orderType} />;
     case 'Face Frame':
       return <FaceFrameModal {...props} />;
     default:
