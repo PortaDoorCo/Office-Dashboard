@@ -161,7 +161,7 @@ export default (data, breakdowns) => {
         {
           text: 'Packed By:  _______________',
           style: 'totals',
-          width: 347,
+          width: 160,
         },
         {
           text: `${
@@ -188,7 +188,7 @@ export default (data, breakdowns) => {
         {
           text: 'Total Weight: _____________',
           style: 'totals',
-          width: 347,
+          width: 160,
         },
         {
           text: `Due Date: ${

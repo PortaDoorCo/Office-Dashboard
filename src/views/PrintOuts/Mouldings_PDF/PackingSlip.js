@@ -30,7 +30,13 @@ export default (data, breakdowns) => {
       { text: i.style?.name, style: 'fonts' },
       { text: i.grade?.name, style: 'fonts' },
       { text: i.woodtype?.NAME, style: 'fonts' },
-      { text: i.style?.value === 'custom' ? `Width: ${i.width}" \n Thickness: ${i.thickness}"` : i.item?.NAME, style: 'fonts' },
+      {
+        text:
+          i.style?.value === 'custom'
+            ? `Width: ${i.width}" \n Thickness: ${i.thickness}"`
+            : i.item?.NAME,
+        style: 'fonts',
+      },
       { text: i.notes ? i.notes.toUpperCase() : '', style: 'fontsBold' },
     ]);
   });
@@ -40,21 +46,21 @@ export default (data, breakdowns) => {
   return [
     data.job_info?.Shop_Notes
       ? {
-        columns: [
-          { text: '' },
-          {
-            text: `${
+          columns: [
+            { text: '' },
+            {
+              text: `${
                 data.job_info?.Shop_Notes
                   ? data.job_info?.Shop_Notes?.toUpperCase()
                   : ''
-            }`,
-            alignment: 'center',
-            style: 'fontsBold',
-          },
-          { text: '' },
-        ],
-        margin: [0, -26, 0, 10],
-      }
+              }`,
+              alignment: 'center',
+              style: 'fontsBold',
+            },
+            { text: '' },
+          ],
+          margin: [0, -26, 0, 10],
+        }
       : null,
     {
       table: {
@@ -104,24 +110,24 @@ export default (data, breakdowns) => {
     },
     data.misc_items.length > 0
       ? {
-        columns: [
-          {
-            text: data.misc_items.map((i) => {
-              return `${i.item ? i.item.NAME : i.item2 ? i.item2 : ''} \n`;
-            }),
-            style: 'fonts',
-            width: 170,
-          },
-          {
-            style: 'fonts',
-            stack: data.misc_items.map((i) => {
-              return { text: i.qty ? parseInt(i.qty) : '' };
-            }),
-            width: 30,
-          },
-        ],
-        margin: [0, 2, 0, 0],
-      }
+          columns: [
+            {
+              text: data.misc_items.map((i) => {
+                return `${i.item ? i.item.NAME : i.item2 ? i.item2 : ''} \n`;
+              }),
+              style: 'fonts',
+              width: 170,
+            },
+            {
+              style: 'fonts',
+              stack: data.misc_items.map((i) => {
+                return { text: i.qty ? parseInt(i.qty) : '' };
+              }),
+              width: 30,
+            },
+          ],
+          margin: [0, 2, 0, 0],
+        }
       : null,
     {
       margin: [0, 10, 0, 10],
@@ -154,15 +160,15 @@ export default (data, breakdowns) => {
         {
           text: 'Packed By:  _______________',
           style: 'totals',
-          width: 347,
+          width: 160,
         },
         {
           text: `${
             production_date.length < 1
               ? ''
               : `Production Date: ${moment(production_date[0]?.date).format(
-                'MM/DD/YYYY'
-              )}`
+                  'MM/DD/YYYY'
+                )}`
           }`,
           style: 'totals',
           width: 200,
@@ -181,14 +187,12 @@ export default (data, breakdowns) => {
         {
           text: 'Total Weight: _____________',
           style: 'totals',
-          width: 347,
+          width: 160,
         },
         {
           text: `Due Date: ${
             data.Shipping_Scheduled
-              ? `${moment(data.job_info.DueDate).format(
-                'MM/DD/YYYY'
-              )}`
+              ? `${moment(data.job_info.DueDate).format('MM/DD/YYYY')}`
               : 'TBD'
           }`,
           style: 'totals',
@@ -209,7 +213,7 @@ export default (data, breakdowns) => {
           width: 200,
         },
         {
-          text: 'Total # Inv\'s: ______________',
+          text: "Total # Inv's: ______________",
           style: 'totals',
           width: 347,
         },
