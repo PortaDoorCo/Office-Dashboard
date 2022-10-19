@@ -904,6 +904,15 @@ const mapStateToProps = (state, props) => ({
                   },
                 ]
               : [],
+          flat_stock:
+            state.Orders.orderType === 'Flat Stock'
+              ? [
+                  {
+                    width: 0,
+                    length: 0,
+                  },
+                ]
+              : [],
           job_info: {
             customer: state.customers?.customerDB[0],
             jobName: '',

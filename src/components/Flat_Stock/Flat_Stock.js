@@ -14,10 +14,10 @@ import {
 import { bindActionCreators } from 'redux';
 import { Field } from 'redux-form';
 import {
-  mouldingLineItemSelector,
-  mouldingLinePriceSelector,
-  mouldingPriceSelector,
-  mouldingTotalSelector,
+  flatStockLineItemSelector,
+  flatStockLinePriceSelector,
+  flatStockPriceSelector,
+  flatStockTotalSelector,
   subTotalSelector,
   taxSelector,
   totalSelector,
@@ -49,10 +49,10 @@ let Inputs = (props) => {
             <Table>
               <thead>
                 <tr>
-                  <th style={{ width: '150px' }}>Width</th>
-                  <th style={{ width: '150px' }}>Length</th>
-                  <th>Woodtype</th>
-                  <th>Thickness</th>
+                  <th style={{ width: '150px' }}>Width (Inches)</th>
+                  <th style={{ width: '150px' }}>Length (Inches)</th>
+                  <th style={{ width: '175px' }}>Woodtype</th>
+                  <th style={{ width: '175px' }}>Thickness / Grade</th>
                   <th>Price</th>
                   <th></th>
                 </tr>
@@ -83,7 +83,7 @@ let Inputs = (props) => {
                       />
                     </InputGroup>
                   </td>
-                  <td>
+                  <td style={{ width: '175px' }}>
                     <Field
                       name={`${table}.woodtype`}
                       component={renderDropdownListFilter}
@@ -96,7 +96,7 @@ let Inputs = (props) => {
                     />
                   </td>
 
-                  <td>
+                  <td style={{ width: '175px' }}>
                     <Field
                       name={`${table}.thickness`}
                       component={renderDropdownList}
@@ -208,10 +208,10 @@ const mapStateToProps = (state) => ({
   subTotal: subTotalSelector(state),
   total: totalSelector(state),
   tax: taxSelector(state),
-  prices: mouldingPriceSelector(state),
-  linePrices: mouldingLinePriceSelector(state),
-  mouldingTotal: mouldingTotalSelector(state),
-  miscLineItemSelector: mouldingLineItemSelector(state),
+  prices: flatStockPriceSelector(state),
+  linePrices: flatStockLinePriceSelector(state),
+  mouldingTotal: flatStockTotalSelector(state),
+  miscLineItemSelector: flatStockLineItemSelector(state),
 });
 
 const mapDispatchToProps = (dispatch) =>
