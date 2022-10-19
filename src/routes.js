@@ -70,6 +70,12 @@ const routes = [
     type: 'Mouldings',
   },
   {
+    path: '/flat-stock',
+    name: 'Flat Stock',
+    component: OrderContainer,
+    type: 'Flat Stock',
+  },
+  {
     path: '/face-frames',
     name: 'FaceFrames',
     component: OrderContainer,

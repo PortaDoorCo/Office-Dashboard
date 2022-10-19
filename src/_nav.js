@@ -37,6 +37,10 @@ export default {
       url: '/mouldings',
     },
     {
+      name: 'Flat Stock',
+      url: '/flat-stock',
+    },
+    {
       name: 'Misc. Order',
       url: '/misc-items',
     },

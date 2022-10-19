@@ -85,6 +85,10 @@ const FF_Info = React.lazy(() =>
   import('../../../components/DoorOrders/DoorInfo/FFInfo')
 );
 
+const Flat_Stock = React.lazy(() =>
+  import('../../../components/Flat_Stock/Flat_Stock')
+);
+
 const JobInfo = React.lazy(() => import('../../../components/JobInfo/JobInfo'));
 
 const loading = () => (
@@ -641,6 +645,14 @@ class OrderEntry extends Component {
                       <FieldArray
                         name="misc_items"
                         component={MiscItems}
+                        dispatch={dispatch}
+                        formState={formState}
+                        edit={!edit && order_lock === false}
+                      />
+                    ) : orderType === 'Flat Stock' ? (
+                      <FieldArray
+                        name="flat_stock"
+                        component={Flat_Stock}
                         dispatch={dispatch}
                         formState={formState}
                         edit={!edit && order_lock === false}
