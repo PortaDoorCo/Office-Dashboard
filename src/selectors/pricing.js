@@ -1293,7 +1293,10 @@ export const flatStockPriceSelector = createSelector(
 
       if (width && length && woodtype && thickness) {
         price =
-          ((width * length) / 144) * 1.25 * woodtype[thickness?.db_name] * 0.3;
+          ((numQty(width) * numQty(length)) / 144) *
+          1.25 *
+          woodtype[thickness?.db_name] *
+          0.3;
 
         if (thickness.thickness_values === 1) {
           price = price * 1.25;
@@ -1304,7 +1307,7 @@ export const flatStockPriceSelector = createSelector(
         }
       }
 
-      return Math.floor(price * 100) / 100;
+      return currency(price).value;
     })
 );
 
