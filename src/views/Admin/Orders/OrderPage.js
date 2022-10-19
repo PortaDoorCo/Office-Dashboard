@@ -83,6 +83,11 @@ import Moulding_Assembly_List from '../../PrintOuts/Pages/Mouldings/AssemblyList
 import Moulding_Invoice from '../../PrintOuts/Pages/Mouldings/Invoice';
 import Moulding_Packing_Slip from '../../PrintOuts/Pages/Mouldings/Packing_Slip';
 import Moulding_QC from '../../PrintOuts/Pages/Mouldings/QC';
+import FlatStock_Acknowledgement from '../../PrintOuts/Pages/FlatStock/Acknowledgement';
+import FlatStock_Assembly_List from '../../PrintOuts/Pages/FlatStock/AssemblyList';
+import FlatStock_Invoice from '../../PrintOuts/Pages/FlatStock/Invoice';
+import FlatStock_Packing_Slip from '../../PrintOuts/Pages/FlatStock/Packing_Slip';
+import FlatStock_QC from '../../PrintOuts/Pages/FlatStock/QC';
 import Slab_Selection from '../../PrintOuts/Sorting/Slab_Selection';
 import OrderEntry from '../OrderEntry/OrderEntry';
 import Balance from './Balance/Balance';
@@ -888,6 +893,64 @@ class OrderPage extends Component {
 
       for (let i = 0; i < p.qc; i++) {
         await Moulding_QC(data, box_breakdowns, p, this.props.pricing).then(
+          async (v) => {
+            files.push(v);
+          }
+        );
+      }
+
+      await generatePDF(files);
+    } else if (data.orderType === 'Flat Stock') {
+      // MouldingsPDF(data, box_breakdowns, p, this.props.pricing);
+
+      let files = [];
+
+      for (let i = 0; i < p.acknowledgement; i++) {
+        await FlatStock_Acknowledgement(
+          data,
+          box_breakdowns,
+          p,
+          this.props.pricing
+        ).then(async (v) => {
+          files.push(v);
+        });
+      }
+
+      for (let i = 0; i < p.invoice; i++) {
+        await FlatStock_Invoice(
+          data,
+          box_breakdowns,
+          p,
+          this.props.pricing
+        ).then(async (v) => {
+          files.push(v);
+        });
+      }
+
+      for (let i = 0; i < p.assembly_list; i++) {
+        await FlatStock_Assembly_List(
+          data,
+          box_breakdowns,
+          p,
+          this.props.pricing
+        ).then(async (v) => {
+          files.push(v);
+        });
+      }
+
+      for (let i = 0; i < p.packing_slip; i++) {
+        await FlatStock_Packing_Slip(
+          data,
+          box_breakdowns,
+          p,
+          this.props.pricing
+        ).then(async (v) => {
+          files.push(v);
+        });
+      }
+
+      for (let i = 0; i < p.qc; i++) {
+        await FlatStock_QC(data, box_breakdowns, p, this.props.pricing).then(
           async (v) => {
             files.push(v);
           }

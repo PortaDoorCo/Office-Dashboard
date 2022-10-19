@@ -388,7 +388,11 @@ class OrderEntry extends Component {
 
     let canSubmit = false;
 
-    if (orderType === 'Mouldings' || orderType === 'Misc Items') {
+    if (
+      orderType === 'Mouldings' ||
+      orderType === 'Misc Items' ||
+      orderType === 'Flat Stock'
+    ) {
       canSubmit = true;
     } else {
       const check = values.part_list.filter((x) => {
