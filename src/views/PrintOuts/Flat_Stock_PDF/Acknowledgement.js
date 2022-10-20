@@ -121,7 +121,10 @@ export default (data, pricing) => {
       },
       { text: i.thickness?.thickness_1, style: 'fonts' },
       { text: i.notes ? i.notes : '', style: 'fontsBold' },
-      { text: `$${(prices[p] / parseInt(i.qty)).toFixed(2)}`, style: 'fonts' },
+      {
+        text: `$${currency(prices[p] / parseInt(i.qty)).value.toFixed(2)}`,
+        style: 'fonts',
+      },
       { text: `$${prices[p].toFixed(2)}`, style: 'fonts', alignment: 'right' },
     ]);
   });
