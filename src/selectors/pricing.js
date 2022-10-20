@@ -1307,7 +1307,7 @@ export const flatStockPriceSelector = createSelector(
         }
       }
 
-      return currency(price).value * parseInt(qty) + currency(extraCost).value;
+      return currency(price).multiply(qty).add(extraCost).value;
     })
 );
 

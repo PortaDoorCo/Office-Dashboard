@@ -25,7 +25,7 @@ const pricing = (parts, pricer) => {
       }
     }
 
-    return currency(price).value * parseInt(qty) + currency(extraCost).value;
+    return currency(price).multiply(qty).add(extraCost).value;
   });
 
   const withQty = items.map((i, index) => {
