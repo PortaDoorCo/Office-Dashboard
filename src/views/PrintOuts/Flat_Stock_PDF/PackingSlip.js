@@ -15,6 +15,7 @@ export default (data, breakdowns) => {
 
   const table_body = [
     [
+      { text: 'QTY', style: 'fonts' },
       { text: 'Width', style: 'fonts' },
       { text: 'Length', style: 'fonts' },
       { text: 'Woodtype', style: 'fonts' },
@@ -25,6 +26,7 @@ export default (data, breakdowns) => {
 
   const t = data.flat_stock?.forEach((i) => {
     table_body.push([
+      { text: i.qty, style: 'fonts' },
       { text: i.width, style: 'fonts' },
       { text: i.length, style: 'fonts' },
       {
@@ -66,7 +68,7 @@ export default (data, breakdowns) => {
     {
       table: {
         headerRows: 1,
-        widths: ['*', '*', '*', '*', '*'],
+        widths: ['*', '*', '*', '*', '*', '*'],
         body: table_body,
       },
       layout: {

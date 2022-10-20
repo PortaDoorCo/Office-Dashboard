@@ -49,6 +49,7 @@ let Inputs = (props) => {
             <Table>
               <thead>
                 <tr>
+                  <th style={{ width: '100px' }}>QTY</th>
                   <th style={{ width: '150px' }}>Width (Inches)</th>
                   <th style={{ width: '150px' }}>Length (Inches)</th>
                   <th style={{ width: '175px' }}>Woodtype</th>
@@ -59,6 +60,18 @@ let Inputs = (props) => {
               </thead>
               <tbody>
                 <tr key={index}>
+                  <td style={{ width: '100px' }}>
+                    <InputGroup>
+                      <Field
+                        name={`${table}.qty`}
+                        type="text"
+                        component={renderNumber}
+                        label="price"
+                        edit={edit}
+                        required
+                      />
+                    </InputGroup>
+                  </td>
                   <td style={{ width: '150px' }}>
                     <InputGroup>
                       <Field

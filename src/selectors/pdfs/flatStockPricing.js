@@ -5,7 +5,7 @@ const pricing = (parts, pricer) => {
   const items = parts.map((i) => {
     let price = 0;
 
-    const { width, length, woodtype, thickness, extraCost } = i;
+    const { width, length, woodtype, thickness, extraCost, qty } = i;
 
     console.log({ width, length, woodtype, thickness });
 
@@ -25,7 +25,7 @@ const pricing = (parts, pricer) => {
       }
     }
 
-    return currency(price).value;
+    return currency(price).multiply(qty).add(extraCost).value;
   });
 
   const withQty = items.map((i, index) => {

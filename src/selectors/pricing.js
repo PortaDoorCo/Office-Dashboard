@@ -1287,7 +1287,7 @@ export const flatStockPriceSelector = createSelector(
     Order.map((i) => {
       let price = 0;
 
-      const { width, length, woodtype, thickness, extraCost } = i;
+      const { width, length, woodtype, thickness, qty, extraCost } = i;
 
       console.log({ width, length, woodtype, thickness });
 
@@ -1307,7 +1307,7 @@ export const flatStockPriceSelector = createSelector(
         }
       }
 
-      return currency(price).value;
+      return currency(price).multiply(qty).add(extraCost).value;
     })
 );
 
