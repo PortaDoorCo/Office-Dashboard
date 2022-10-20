@@ -95,12 +95,14 @@ export default (data, pricing) => {
 
   const tableBody = [
     [
+      { text: 'QTY', style: 'fonts' },
       { text: 'Width', style: 'fonts' },
       { text: 'Length', style: 'fonts' },
       { text: 'Woodtype', style: 'fonts' },
       { text: 'Thickness', style: 'fonts' },
       { text: 'Notes', style: 'fonts' },
-      { text: 'Price', style: 'fonts' },
+      { text: 'Total 1 Unit', style: 'fonts' },
+      { text: 'Total Cost', style: 'fonts', alignment: 'right' },
     ],
   ];
 
@@ -108,6 +110,7 @@ export default (data, pricing) => {
     const { item, woodtype, linearFT, grade } = i;
 
     tableBody.push([
+      { text: i.qty, style: 'fonts' },
       { text: i.width, style: 'fonts' },
       { text: i.length, style: 'fonts' },
       {
@@ -118,7 +121,8 @@ export default (data, pricing) => {
       },
       { text: i.thickness?.thickness_1, style: 'fonts' },
       { text: i.notes ? i.notes : '', style: 'fontsBold' },
-      { text: `$${prices[p].toFixed(2)}`, style: 'fonts' },
+      { text: `$${(prices[p] / parseInt(i.qty)).toFixed(2)}`, style: 'fonts' },
+      { text: `$${prices[p].toFixed(2)}`, style: 'fonts', alignment: 'right' },
     ]);
   });
 
@@ -130,7 +134,7 @@ export default (data, pricing) => {
     {
       table: {
         headerRows: 1,
-        widths: ['*', '*', '*', '*', '*', '*'],
+        widths: ['*', '*', '*', '*', '*', '*', '*', '*'],
         body: tableBody,
       },
       layout: {
@@ -424,12 +428,6 @@ export default (data, pricing) => {
           alignment: 'left',
           margin: [0, 0, 0, 5],
           id: 'conditions-acknowledgement',
-        },
-        {
-          text: 'QUOTES ARE VALID FOR 15 DAYS',
-          style: 'fontsBold',
-          alignment: 'left',
-          margin: [0, 5, 0, 5],
         },
       ],
     },
