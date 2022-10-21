@@ -106,27 +106,30 @@ const PrintModal = (props) => {
       <Modal isOpen={modal} toggle={toggle} className={className}>
         <ModalHeader toggle={toggle}>Print</ModalHeader>
         <ModalBody>
-          <h2>Print</h2>
-          <h4>Order# {selectedOrder?.id + 100}</h4>
+          <h2>Order#{selectedOrder?.id + 100}</h2>
+          <h5>{selectedOrder?.companyprofile?.Company}</h5>
+          <h5>PO: {selectedOrder?.poNum}</h5>
 
-          <Row>
-            <Col>
-              <Form>
-                <FormGroup>
-                  <Label for="printer_settings">Settings</Label>
-                  <DropdownList
-                    filter
-                    data={printer_options}
-                    value={printer_option}
-                    // allowCreate={true}
-                    // onCreate={name => handleCreate(name)}
-                    onChange={(value) => set_printer_option(value)}
-                    textField="NAME"
-                  />
-                </FormGroup>
-              </Form>
-            </Col>
-          </Row>
+          {user?.role?.type !== 'quality_control' ? (
+            <Row>
+              <Col>
+                <Form>
+                  <FormGroup>
+                    <Label for="printer_settings">Settings</Label>
+                    <DropdownList
+                      filter
+                      data={printer_options}
+                      value={printer_option}
+                      // allowCreate={true}
+                      // onCreate={name => handleCreate(name)}
+                      onChange={(value) => set_printer_option(value)}
+                      textField="NAME"
+                    />
+                  </FormGroup>
+                </Form>
+              </Col>
+            </Row>
+          ) : null}
 
           {user?.role?.type !== 'quality_control' ? (
             <div>

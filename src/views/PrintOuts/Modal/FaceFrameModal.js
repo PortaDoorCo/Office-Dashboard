@@ -81,24 +81,26 @@ const PrintModal = (props) => {
         <ModalBody>
           <h2>Print</h2>
 
-          <Row>
-            <Col>
-              <Form>
-                <FormGroup>
-                  <Label for="printer_settings">Settings</Label>
-                  <DropdownList
-                    filter
-                    data={new_printer_option}
-                    value={printer_option}
-                    // allowCreate={true}
-                    // onCreate={name => handleCreate(name)}
-                    onChange={(value) => set_printer_option(value)}
-                    textField="NAME"
-                  />
-                </FormGroup>
-              </Form>
-            </Col>
-          </Row>
+          {user?.role?.type !== 'quality_control' ? (
+            <Row>
+              <Col>
+                <Form>
+                  <FormGroup>
+                    <Label for="printer_settings">Settings</Label>
+                    <DropdownList
+                      filter
+                      data={printer_options}
+                      value={printer_option}
+                      // allowCreate={true}
+                      // onCreate={name => handleCreate(name)}
+                      onChange={(value) => set_printer_option(value)}
+                      textField="NAME"
+                    />
+                  </FormGroup>
+                </Form>
+              </Col>
+            </Row>
+          ) : null}
 
           {user?.role?.type !== 'quality_control' ? (
             <div>
