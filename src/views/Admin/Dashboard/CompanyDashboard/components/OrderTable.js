@@ -455,7 +455,10 @@ const OrderTable = (props) => {
 
   return (
     <div>
-      <PrintModal {...props} toggle={togglePrint} modal={printModal} />
+      {printModal ? (
+        <PrintModal {...props} toggle={togglePrint} modal={printModal} />
+      ) : null}
+
       <Row className="mb-3">
         <Col lg="8" />
         <Col>
