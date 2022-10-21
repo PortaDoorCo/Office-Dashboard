@@ -35,6 +35,7 @@ const PrintModal = (props) => {
     addPrinterOption,
     savePrinterOption,
     user,
+    selectedOrder,
   } = props;
 
   const number_select = [0, 1, 2, 3, 4, 5];
@@ -102,6 +103,7 @@ const PrintModal = (props) => {
         <ModalHeader toggle={toggle}>Print</ModalHeader>
         <ModalBody>
           <h2>Print</h2>
+          <h4>Order# {selectedOrder?.id + 100}</h4>
 
           <Row>
             <Col>

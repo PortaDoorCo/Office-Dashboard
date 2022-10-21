@@ -316,6 +316,8 @@ class OrderPage extends Component {
     const { formState, breakdowns, box_breakdowns, selectedOrder } = this.props;
     const data = formState ? formState : [];
 
+    console.log({ data });
+
     const merger = new PDFMerger();
 
     const generatePDF = async (files) => {
