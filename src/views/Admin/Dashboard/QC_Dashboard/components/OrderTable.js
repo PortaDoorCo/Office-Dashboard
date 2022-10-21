@@ -5,7 +5,7 @@ import DataTable from 'react-data-table-component';
 import moment from 'moment';
 import OrderPage from '../../../Orders/OrderPage';
 import { Tooltip, IconButton } from '@material-ui/core';
-import Inbox from '@material-ui/icons/Inbox';
+import Inbox from '@material-ui/icons/Print';
 // import { Select } from 'antd';
 import {
   updateStatus,
