@@ -5,7 +5,7 @@ import DataTable from 'react-data-table-component';
 import moment from 'moment';
 import OrderPage from '../../../Orders/OrderPage';
 import { Tooltip, IconButton } from '@material-ui/core';
-import Inbox from '@material-ui/icons/Inbox';
+import Inbox from '@material-ui/icons/Print';
 // import { Select } from 'antd';
 import {
   updateStatus,
@@ -19,6 +19,39 @@ import { Button, Row, Col, FormGroup, Input, InputGroup } from 'reactstrap';
 import styled from 'styled-components';
 import status from '../../../../../utils/status';
 import { useDebounce } from 'use-debounce';
+import PrintModal from '../../../../PrintOuts/Modal/Modal';
+
+import QC_Checklist from '../../../../PrintOuts/Pages/Door/QC';
+import PackingSlip from '../../../../PrintOuts/Pages/Door/PackingSlip';
+import Door_Labels from '../../../../PrintOuts/Pages/Door/Door_Labels';
+import Drawer_Box_Labels from '../../../../PrintOuts/Pages/Drawer/Box_Labels';
+import Drawer_Packing_Slip from '../../../../PrintOuts/Pages/Drawer/PackingSlip';
+import Face_Frame_Labels from '../../../../PrintOuts/Pages/FaceFrames/Door_Labels';
+import Face_Frame_Packing_Slip from '../../../../PrintOuts/Pages/FaceFrames/Packing_Slip';
+import Face_Frame_QC from '../../../../PrintOuts/Pages/FaceFrames/QC';
+import Misc_Item_Packing_Slip from '../../../../PrintOuts/Pages/MiscItems/Packing_Slip';
+import Misc_Item_QC from '../../../../PrintOuts/Pages/MiscItems/QC';
+import Moulding_Packing_Slip from '../../../../PrintOuts/Pages/Mouldings/Packing_Slip';
+import Moulding_QC from '../../../../PrintOuts/Pages/Mouldings/QC';
+import FlatStock_Packing_Slip from '../../../../PrintOuts/Pages/FlatStock/Packing_Slip';
+import FlatStock_QC from '../../../../PrintOuts/Pages/FlatStock/QC';
+import LoadingModal from '../../../../../utils/LoadingModal';
+
+import PDFMerger from 'pdf-merger-js/browser';
+
+const toDataUrl = (url, callback) => {
+  const xhr = new XMLHttpRequest();
+  xhr.onload = () => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      callback(reader.result);
+    };
+    reader.readAsDataURL(xhr.response);
+  };
+  xhr.open('GET', url);
+  xhr.responseType = 'blob';
+  xhr.send();
+};
 
 const TextField = styled.input`
   height: 32px;
@@ -54,7 +87,7 @@ const cookie = Cookies.get('jwt');
 
 const conditionalRowStyles = [
   {
-    when: (row: { late: any }) => row.late === true,
+    when: (row) => row.late === true,
     style: {
       backgroundColor: '#FEEBEB',
       '&:hover': {
@@ -80,18 +113,7 @@ const FilterComponent = ({ filterText, onFilter, onClear }) => (
   </>
 );
 
-type TablePropTypes = {
-  setSelectedOrder: (date: any) => null;
-  setOrderType: (date: any) => null;
-  loadOrders: (date: any, user: any) => null;
-  searchOrders: (date: any, user: any, search: any) => null;
-  orders: Array<any>;
-  updateStatus: any;
-  ordersDBLoaded: boolean;
-  user: any;
-};
-
-const OrderTable = (props: TablePropTypes) => {
+const OrderTable = (props) => {
   const { orders, user, searchOrders } = props;
   const [modal, setModal] = useState(false);
   const [edit, setEdit] = useState(false);
@@ -100,6 +122,7 @@ const OrderTable = (props: TablePropTypes) => {
   const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
   const [debounceValue] = useDebounce(encodeURIComponent(filterText), 500);
   const [selectedSearch, setSelectedSearch] = useState('ID');
+  const [loadingModal, setLoadingModal] = useState(false);
 
   // useEffect(() => {
   //   if (debounceValue) {
@@ -150,7 +173,7 @@ const OrderTable = (props: TablePropTypes) => {
     );
   }, [filterText, resetPaginationToggle]);
 
-  const handleStatusChange = async (e: any, row: { id: string }) => {
+  const handleStatusChange = async (e, row) => {
     const { updateStatus, user } = props;
     const status = {
       status: e.target.value,
@@ -268,8 +291,8 @@ const OrderTable = (props: TablePropTypes) => {
     },
   ];
 
-  const toggle = (row: { orderType: any }) => {
-    const { setSelectedOrder, setOrderType } = props;
+  const toggle = (row) => {
+    const { setSelectedOrder, setOrderType, selectedOrder } = props;
 
     setEdit(false);
     setModal(!modal);
@@ -287,8 +310,244 @@ const OrderTable = (props: TablePropTypes) => {
     setEdit(!edit);
   };
 
+  const toggleLoadingModal = () => {
+    setLoadingModal(!loadingModal);
+  };
+
+  const downloadPDF = async (p) => {
+    console.log({ p });
+
+    const { breakdowns, box_breakdowns, selectedOrder } = props;
+
+    console.log({ selectedOrder });
+
+    setLoadingModal(true);
+
+    const data = selectedOrder ? selectedOrder : [];
+
+    const merger = new PDFMerger();
+
+    const generatePDF = async (files) => {
+      if (files.length > 0) {
+        await Promise.all(files.map(async (file) => await merger.add(file)));
+
+        const mergedPdf = await merger.saveAsBlob();
+        const url = URL.createObjectURL(mergedPdf);
+
+        await window.open(url, '_blank').focus();
+        await files.pop();
+
+        setLoadingModal(false);
+      }
+    };
+
+    const noPhoto =
+      'https://res.cloudinary.com/porta-door/image/upload/v1634764886/none_2fcc23e82e.png';
+
+    if (data.orderType === 'Door Order') {
+      let itemNum = 0;
+
+      const newDataOrder = {
+        ...data,
+        part_list: data.part_list.map((i) => {
+          return {
+            ...i,
+            dimensions: i.dimensions.map((j) => {
+              itemNum += 1;
+              return {
+                ...j,
+                construction: i.construction,
+                profile: i.profile,
+                design: i.design,
+                edge: i.edge,
+                panel: i.panel,
+                orderType: i.orderType,
+                VERTICAL_GRAIN: i.VERTICAL_GRAIN,
+                item: itemNum,
+              };
+            }),
+          };
+        }),
+      };
+
+      let files = [];
+
+      for (let i = 0; i < p.packing_slip; i++) {
+        await PackingSlip(
+          newDataOrder,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          breakdowns,
+          p
+        ).then(async (v) => {
+          files.push(v);
+        });
+      }
+
+      for (let i = 0; i < p.qc; i++) {
+        await QC_Checklist(
+          newDataOrder,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          breakdowns,
+          p
+        ).then(async (v) => {
+          files.push(v);
+        });
+      }
+
+      if (p.door_labels > 0) {
+        await Door_Labels(
+          newDataOrder,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          breakdowns,
+          p
+        ).then(async (v) => {
+          files.push(v);
+        });
+      }
+
+      await generatePDF(files);
+    } else if (data.orderType === 'Drawer Order') {
+      let files = [];
+
+      // DrawerPDF(data, box_breakdowns, p, this.props.pricing);
+
+      for (let i = 0; i < p.packing_slip; i++) {
+        await Drawer_Packing_Slip(data, box_breakdowns, p).then(async (v) => {
+          files.push(v);
+        });
+      }
+
+      for (let i = 0; i < p.box_labels; i++) {
+        await Drawer_Box_Labels(data, box_breakdowns, p).then(async (v) => {
+          files.push(v);
+        });
+      }
+
+      await generatePDF(files);
+    } else if (data.orderType === 'Misc Items') {
+      // MiscItemsPDF(data, box_breakdowns, p, this.props.pricing);
+
+      let files = [];
+
+      for (let i = 0; i < p.packing_slip; i++) {
+        await Misc_Item_Packing_Slip(data, box_breakdowns, p).then(
+          async (v) => {
+            files.push(v);
+          }
+        );
+      }
+
+      for (let i = 0; i < p.qc; i++) {
+        await Misc_Item_QC(data, box_breakdowns, p).then(async (v) => {
+          files.push(v);
+        });
+      }
+
+      await generatePDF(files);
+    } else if (data.orderType === 'Mouldings') {
+      // MouldingsPDF(data, box_breakdowns, p, this.props.pricing);
+
+      let files = [];
+
+      for (let i = 0; i < p.packing_slip; i++) {
+        await Moulding_Packing_Slip(data, box_breakdowns, p).then(async (v) => {
+          files.push(v);
+        });
+      }
+
+      for (let i = 0; i < p.qc; i++) {
+        await Moulding_QC(data, box_breakdowns, p).then(async (v) => {
+          files.push(v);
+        });
+      }
+
+      await generatePDF(files);
+    } else if (data.orderType === 'Flat Stock') {
+      // MouldingsPDF(data, box_breakdowns, p, this.props.pricing);
+
+      let files = [];
+
+      for (let i = 0; i < p.packing_slip; i++) {
+        await FlatStock_Packing_Slip(data, box_breakdowns, p).then(
+          async (v) => {
+            files.push(v);
+          }
+        );
+      }
+
+      for (let i = 0; i < p.qc; i++) {
+        await FlatStock_QC(data, box_breakdowns, p).then(async (v) => {
+          files.push(v);
+        });
+      }
+
+      await generatePDF(files);
+    } else if (data.orderType === 'Face Frame') {
+      let files = [];
+
+      // FaceFramesPDF(data, breakdowns, p, this.props.pricing);
+
+      for (let i = 0; i < p.packing_slip; i++) {
+        await Face_Frame_Packing_Slip(data, breakdowns, p).then(async (v) => {
+          files.push(v);
+        });
+      }
+
+      for (let i = 0; i < p.qc; i++) {
+        await Face_Frame_QC(data, breakdowns, p).then(async (v) => {
+          files.push(v);
+        });
+      }
+
+      if (p.door_labels > 0) {
+        await Face_Frame_Labels(data, breakdowns, p).then(async (v) => {
+          files.push(v);
+        });
+      }
+
+      await generatePDF(files);
+    }
+  };
+
   return (
     <div>
+      <PrintModal
+        toggle={toggle}
+        modal={modal}
+        printer_options={props.printer_options}
+        selectedOrder={props.selectedOrder}
+        downloadPDF={downloadPDF}
+      />
+      <LoadingModal
+        modal={loadingModal}
+        toggle={toggleLoadingModal}
+        message={
+          <div>
+            <center>
+              <h3>Loading...</h3>
+            </center>
+          </div>
+        }
+        title={'Loading'}
+      />
       <Row className="mb-3">
         <Col lg="8" />
         <Col>
@@ -332,25 +591,29 @@ const OrderTable = (props: TablePropTypes) => {
         subHeader
         // subHeaderComponent={subHeaderComponentMemo}
       />
-      {modal ? (
+      {/* {modal ? (
         <OrderPage
           toggle={toggle}
           modal={modal}
           editable={editable}
           edit={edit}
         />
-      ) : null}
+      ) : null} */}
     </div>
   );
 };
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state) => ({
   orderNum: state.Orders.orderNum,
   ordersDBLoaded: state.Orders.ordersDBLoaded,
   user: state.users.user,
+  printer_options: state.misc_items.printer_options,
+  selectedOrder: state.Orders.selectedOrder,
+  breakdowns: state.part_list.breakdowns,
+  box_breakdowns: state.part_list.box_breakdowns,
 });
 
-const mapDispatchToProps = (dispatch: any) =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       updateStatus,
