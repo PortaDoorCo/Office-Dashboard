@@ -21,6 +21,7 @@ import styled from 'styled-components';
 import status from '../../../../../utils/status';
 import { useDebounce } from 'use-debounce';
 import PrintModal from '../../../../PrintOuts/Modal/Modal';
+import LoadingModal from '../../../../../utils/LoadingModal';
 
 const TextField = styled.input`
   height: 32px;
@@ -126,6 +127,7 @@ const OrderTable = (props) => {
   const [debounceValue] = useDebounce(encodeURIComponent(filterText), 500);
   const [selectedSearch, setSelectedSearch] = useState('ID');
   const [printModal, setPrintModal] = useState(false);
+  const [loadingModal, setLoadingModal] = useState(false);
 
   useEffect(() => {
     if (debounceValue) {
@@ -453,11 +455,32 @@ const OrderTable = (props) => {
     }
   };
 
+  const toggleLoadingModal = (e) => setLoadingModal(e);
+
   return (
     <div>
       {printModal ? (
-        <PrintModal {...props} toggle={togglePrint} modal={printModal} />
+        <PrintModal
+          {...props}
+          toggle={togglePrint}
+          modal={printModal}
+          toggleLoadingModal={toggleLoadingModal}
+          loadingModal={loadingModal}
+        />
       ) : null}
+
+      <LoadingModal
+        modal={loadingModal}
+        toggle={toggleLoadingModal}
+        message={
+          <div>
+            <center>
+              <h3>Loading...</h3>
+            </center>
+          </div>
+        }
+        title={'Loading'}
+      />
 
       <Row className="mb-3">
         <Col lg="8" />

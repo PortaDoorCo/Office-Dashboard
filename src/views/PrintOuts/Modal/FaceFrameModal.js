@@ -34,6 +34,7 @@ const PrintModal = (props) => {
     breakdowns,
     box_breakdowns,
     pricing,
+    toggleLoadingModal,
   } = props;
 
   const number_select = [0, 1, 2, 3, 4, 5];
@@ -233,7 +234,8 @@ const PrintModal = (props) => {
                 printMaterial,
                 breakdowns,
                 box_breakdowns,
-                pricing
+                pricing,
+                toggleLoadingModal
               );
             }}
           >

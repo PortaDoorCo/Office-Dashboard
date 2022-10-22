@@ -279,13 +279,18 @@ const OrderTable = (props) => {
     setEdit(!edit);
   };
 
-  const toggleLoadingModal = () => {
-    setLoadingModal(!loadingModal);
+  const toggleLoadingModal = (e) => {
+    setLoadingModal(e);
   };
 
   return (
     <div>
-      <PrintModal {...props} toggle={toggle} modal={modal} />
+      <PrintModal
+        {...props}
+        toggle={toggle}
+        modal={modal}
+        toggleLoadingModal={toggleLoadingModal}
+      />
       <LoadingModal
         modal={loadingModal}
         toggle={toggleLoadingModal}
@@ -361,6 +366,7 @@ const mapStateToProps = (state) => ({
   selectedOrder: state.Orders.selectedOrder,
   breakdowns: state.part_list.breakdowns,
   box_breakdowns: state.part_list.box_breakdowns,
+  pricing: state.part_list.pricing,
 });
 
 const mapDispatchToProps = (dispatch) =>

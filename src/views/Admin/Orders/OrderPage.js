@@ -248,9 +248,9 @@ class OrderPage extends Component {
     await this.props.toggle();
   };
 
-  toggleLoadingModal = () => {
+  toggleLoadingModal = (e) => {
     this.setState({
-      loadingModal: !this.state.loadingModal,
+      loadingModal: e,
     });
   };
 
@@ -656,6 +656,21 @@ class OrderPage extends Component {
           toggle={this.togglePrinter}
           modal={this.state.printModal}
           printer_options={printer_options}
+          loadingModal={this.state.loadingModal}
+          toggleLoadingModal={this.toggleLoadingModal}
+        />
+
+        <LoadingModal
+          modal={this.state.loadingModal}
+          toggle={this.toggleLoadingModal}
+          message={
+            <div>
+              <center>
+                <h3>Loading...</h3>
+              </center>
+            </div>
+          }
+          title={'Loading'}
         />
       </div>
     );

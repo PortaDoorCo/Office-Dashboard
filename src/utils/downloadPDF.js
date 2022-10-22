@@ -54,10 +54,19 @@ const toDataUrl = (url, callback) => {
   xhr.send();
 };
 
-const downloadPDF = async (p, data, breakdowns, box_breakdowns, pricing) => {
+const downloadPDF = async (
+  p,
+  data,
+  breakdowns,
+  box_breakdowns,
+  pricing,
+  toggle
+) => {
   console.log({ data, breakdowns, box_breakdowns, pricing });
 
   const merger = new PDFMerger();
+
+  toggle(true);
 
   const generatePDF = async (files) => {
     if (files.length > 0) {
@@ -68,6 +77,8 @@ const downloadPDF = async (p, data, breakdowns, box_breakdowns, pricing) => {
 
       await window.open(url, '_blank').focus();
       await files.pop();
+
+      await toggle(false);
     }
   };
 
