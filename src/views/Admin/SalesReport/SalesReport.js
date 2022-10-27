@@ -1,7 +1,7 @@
 import { Select } from 'antd';
 import classnames from 'classnames';
 import moment from 'moment';
-import React, { Suspense, useEffect, useState } from 'react';
+import React, { Suspense, useEffect, useState, forwardRef } from 'react';
 import { SingleDatePicker } from 'react-dates';
 // import momentLocaliser from 'react-widgets-moment';
 import 'react-dates/initialize';
@@ -25,8 +25,16 @@ import status from '../../../utils/report_status';
 import Charts from './components/Chart';
 import Chart1 from './components/SalesCharts/Chart1';
 import Cookies from 'js-cookie';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 const StatusTable = React.lazy(() => import('./components/StatusTable'));
+
+const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => (
+  <input className="example-custom-input" ref={ref}>
+    {value}
+  </input>
+));
 
 const { Option } = Select;
 
@@ -45,8 +53,8 @@ const SalesReport = (props) => {
   const { orders, role, user, searchOrders } = props;
   const [activeTab, setActiveTab] = useState('1');
   const [sortedDates, setSortedDate] = useState([]);
-  const [startDate, setStartDate] = useState(moment(new Date()));
-  const [endDate, setEndDate] = useState(moment(sortedDates[0]?.dueDate));
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
   const [data, setData] = useState(orders);
   const [startDateFocusedInput, setStartDateFocusedInput] = useState(null);
   const [endDateFocusedInput, setEndDateFocusedInput] = useState(null);
@@ -56,6 +64,8 @@ const SalesReport = (props) => {
   const toggle = (tab) => {
     if (activeTab !== tab) setActiveTab(tab);
   };
+
+  console.log({ startDate });
 
   useEffect(() => {
     setSortedDate(orders.sort((a, b) => b.dueDate - a.dueDate));
@@ -261,7 +271,7 @@ const SalesReport = (props) => {
       role.type === 'administrator') ? (
     <div>
       <Row className="mb-3">
-        <Col lg="9" />
+        <Col lg="10" />
         <Col>
           <Row>
             <Col>
@@ -271,58 +281,43 @@ const SalesReport = (props) => {
               </h3>
             </Col>
           </Row>
-          <Row>
+          <Row className="mt-2">
             <Col>
-              <SingleDatePicker
-                date={startDate} // momentPropTypes.momentObj or null
-                onDateChange={(date) => setStartDate(date)} // PropTypes.func.isRequired
-                focused={startDateFocusedInput} // PropTypes.bool
-                onFocusChange={({ focused }) =>
-                  setStartDateFocusedInput(focused)
-                } // PropTypes.func.isRequired
-                id="startDate" // PropTypes.string.isRequired,
-                isOutsideRange={(date) => {
-                  if (date < moment('1/1/1990')) {
-                    return true;
-                  } else {
-                    return false;
-                  }
-                }}
-              />
-
-              <SingleDatePicker
-                date={endDate} // momentPropTypes.momentObj or null
-                onDateChange={(date) => setEndDate(date)} // PropTypes.func.isRequired
-                focused={endDateFocusedInput} // PropTypes.bool
-                onFocusChange={({ focused }) => setEndDateFocusedInput(focused)} // PropTypes.func.isRequired
-                id="endDate" // PropTypes.string.isRequired,
-                isOutsideRange={(date) => {
-                  if (date < moment(startDate)) {
-                    return true; // return true if you want the particular date to be disabled
-                  } else {
-                    return false;
-                  }
-                }}
+              <h4>Start Date</h4>
+              <DatePicker
+                selected={startDate}
+                onChange={(date) => setStartDate(date)}
+                style={{ width: '100%' }}
+                customInput={<Input />}
               />
             </Col>
           </Row>
           <Row>
             <Col>
-              <FormGroup style={{ height: '100%', width: '60%' }}>
-                <Input
-                  type="select"
-                  name="select"
-                  id="status_dropdown"
-                  defaultValue="Quote"
-                  onChange={(e) => setFilterStatus(e.target.value)}
-                >
-                  {status.map((i, index) => (
-                    <option key={index} value={i.value}>
-                      {i.value}
-                    </option>
-                  ))}
-                </Input>
-              </FormGroup>
+              <h4>End Date</h4>
+              <DatePicker
+                selected={endDate}
+                onChange={(date) => setEndDate(date)}
+                customInput={<Input />}
+              />
+            </Col>
+          </Row>
+          <Row className="mt-1">
+            <Col>
+              <h4>Status</h4>
+              <Input
+                type="select"
+                name="select"
+                id="status_dropdown"
+                defaultValue="Quote"
+                onChange={(e) => setFilterStatus(e.target.value)}
+              >
+                {status.map((i, index) => (
+                  <option key={index} value={i.value}>
+                    {i.value}
+                  </option>
+                ))}
+              </Input>
             </Col>
           </Row>
         </Col>

@@ -39,6 +39,8 @@ import Edges from './Charts/Edges';
 import Woodtype from './Charts/Woodtype';
 import Customers from './Charts/Customers';
 import CustomerTotal from './Charts/CustomersTotal';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 // momentLocaliser(moment);
 
@@ -139,8 +141,8 @@ const OrderTable = (props) => {
   const [modal, setModal] = useState(false);
   const [edit, setEdit] = useState(false);
   const [data, setData] = useState(orders);
-  const [startDate, setStartDate] = useState(moment(new Date()));
-  const [endDate, setEndDate] = useState(moment(new Date()));
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
   const [startDateFocusedInput, setStartDateFocusedInput] = useState(null);
   const [endDateFocusedInput, setEndDateFocusedInput] = useState(null);
   const [filterStatus, setFilterStatus] = useState('Quote');
@@ -689,7 +691,7 @@ const OrderTable = (props) => {
   return (
     <div>
       <Row className="mb-3">
-        <Col lg="9" />
+        <Col lg="10" />
         <Col>
           <Row>
             <Col>
@@ -699,63 +701,42 @@ const OrderTable = (props) => {
               </h3>
             </Col>
           </Row>
-          {filterStatus !== 'Order Numbers' ? (
-            <Row>
-              <Col>
-                <SingleDatePicker
-                  date={startDate} // momentPropTypes.momentObj or null
-                  onDateChange={(date) => setStartDate(date)} // PropTypes.func.isRequired
-                  focused={startDateFocusedInput} // PropTypes.bool
-                  onFocusChange={({ focused }) =>
-                    setStartDateFocusedInput(focused)
-                  } // PropTypes.func.isRequired
-                  id="startDate" // PropTypes.string.isRequired,
-                  isOutsideRange={(date) => {
-                    if (date < moment('1/1/1990')) {
-                      return true;
-                    } else {
-                      return false;
-                    }
-                  }}
-                />
-
-                <SingleDatePicker
-                  date={endDate} // momentPropTypes.momentObj or null
-                  onDateChange={(date) => setEndDate(date)} // PropTypes.func.isRequired
-                  focused={endDateFocusedInput} // PropTypes.bool
-                  onFocusChange={({ focused }) =>
-                    setEndDateFocusedInput(focused)
-                  } // PropTypes.func.isRequired
-                  id="endDate" // PropTypes.string.isRequired,
-                  isOutsideRange={(date) => {
-                    if (date < moment(startDate)) {
-                      return true; // return true if you want the particular date to be disabled
-                    } else {
-                      return false;
-                    }
-                  }}
-                />
-              </Col>
-            </Row>
-          ) : null}
-
+          <Row className="mt-2">
+            <Col>
+              <h4>Start Date</h4>
+              <DatePicker
+                selected={startDate}
+                onChange={(date) => setStartDate(date)}
+                style={{ width: '100%' }}
+                customInput={<Input />}
+              />
+            </Col>
+          </Row>
           <Row>
             <Col>
-              <FormGroup style={{ height: '100%', width: '60%' }}>
-                <Input
-                  type="select"
-                  name="select"
-                  id="status_dropdown"
-                  defaultValue="Quote"
-                  onChange={(e) => setFilterStatus(e.target.value)}
-                >
-                  {reportStatus.map((i, index) => (
-                    <option key={index} value={i.value}>
-                      {i.value}
-                    </option>
-                  ))}
-                </Input>
-              </FormGroup>
+              <h4>End Date</h4>
+              <DatePicker
+                selected={endDate}
+                onChange={(date) => setEndDate(date)}
+                customInput={<Input />}
+              />
+            </Col>
+          </Row>
+          <Row className="mt-3">
+            <Col>
+              <Input
+                type="select"
+                name="select"
+                id="status_dropdown"
+                defaultValue="Quote"
+                onChange={(e) => setFilterStatus(e.target.value)}
+              >
+                {reportStatus.map((i, index) => (
+                  <option key={index} value={i.value}>
+                    {i.value}
+                  </option>
+                ))}
+              </Input>
             </Col>
           </Row>
           <Row className="mt-3">
