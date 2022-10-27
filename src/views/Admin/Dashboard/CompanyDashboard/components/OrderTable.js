@@ -6,6 +6,7 @@ import moment from 'moment';
 import OrderPage from '../../../Orders/OrderPage';
 import { Tooltip, IconButton } from '@material-ui/core';
 import Inbox from '@material-ui/icons/Inbox';
+import Print from '@material-ui/icons/Print';
 // import { Select } from 'antd';
 import {
   updateStatus,
@@ -15,24 +16,12 @@ import {
   searchOrders,
 } from '../../../../../redux/orders/actions';
 import Cookies from 'js-cookie';
-import {
-  Button,
-  Row,
-  Col,
-  FormGroup,
-  Input,
-  InputGroup,
-  Dropdown,
-  DropdownToggle,
-  DropdownItem,
-  DropdownMenu,
-  InputGroupButtonDropdown,
-  Label,
-} from 'reactstrap';
+import { Button, Row, Col, FormGroup, Input, InputGroup } from 'reactstrap';
 import styled from 'styled-components';
 import status from '../../../../../utils/status';
 import { useDebounce } from 'use-debounce';
-import qs from 'qs';
+import PrintModal from '../../../../PrintOuts/Modal/Modal';
+import LoadingModal from '../../../../../utils/LoadingModal';
 
 const TextField = styled.input`
   height: 32px;
@@ -68,12 +57,7 @@ const cookie = Cookies.get('jwt');
 
 const conditionalRowStyles = [
   {
-    when: (row: {
-      late: any;
-      Shipping_Scheduled: any;
-      status: String;
-      dueDate: any;
-    }) => {
+    when: (row) => {
       return (
         moment(row.dueDate).startOf('day').valueOf() <
           moment(new Date()).startOf('day').valueOf() &&
@@ -133,18 +117,7 @@ const FilterComponent = ({ filterText, onFilter, onClear }) => (
   </>
 );
 
-type TablePropTypes = {
-  setSelectedOrder: (date: any) => null;
-  setOrderType: (date: any) => null;
-  loadOrders: (date: any, user: any) => null;
-  searchOrders: (date: any, user: any, search: any) => null;
-  orders: Array<any>;
-  updateStatus: any;
-  ordersDBLoaded: boolean;
-  user: any;
-};
-
-const OrderTable = (props: TablePropTypes) => {
+const OrderTable = (props) => {
   const { orders, user } = props;
   const [modal, setModal] = useState(false);
   const [edit, setEdit] = useState(false);
@@ -153,6 +126,8 @@ const OrderTable = (props: TablePropTypes) => {
   const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
   const [debounceValue] = useDebounce(encodeURIComponent(filterText), 500);
   const [selectedSearch, setSelectedSearch] = useState('ID');
+  const [printModal, setPrintModal] = useState(false);
+  const [loadingModal, setLoadingModal] = useState(false);
 
   useEffect(() => {
     if (debounceValue) {
@@ -193,7 +168,7 @@ const OrderTable = (props: TablePropTypes) => {
     );
   }, [filterText, resetPaginationToggle]);
 
-  const handleStatusChange = async (e: any, row: { id: string }) => {
+  const handleStatusChange = async (e, row) => {
     const { updateStatus, user } = props;
     const status = {
       status: e.target.value,
@@ -412,27 +387,41 @@ const OrderTable = (props: TablePropTypes) => {
       ),
       sortable: true,
     },
+
     {
       name: ' ',
       button: true,
       grow: 2,
       cell: (row) => (
-        <Tooltip title="View Order" placement="top">
-          <IconButton
-            onClick={function (event) {
-              event.preventDefault();
-              toggle(row);
-            }}
-            id={row.id}
-          >
-            <Inbox>Open</Inbox>
-          </IconButton>
-        </Tooltip>
+        <div>
+          <Tooltip title="View Order" placement="top">
+            <IconButton
+              onClick={function (event) {
+                event.preventDefault();
+                toggle(row);
+              }}
+              id={row.id}
+            >
+              <Inbox>Open</Inbox>
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Print" placement="top">
+            <IconButton
+              onClick={function (event) {
+                event.preventDefault();
+                togglePrint(row);
+              }}
+              id={row.id}
+            >
+              <Print>Print</Print>
+            </IconButton>
+          </Tooltip>
+        </div>
       ),
     },
   ];
 
-  const toggle = (row: { orderType: any }) => {
+  const toggle = (row) => {
     const { setSelectedOrder, setOrderType } = props;
 
     setEdit(false);
@@ -451,8 +440,48 @@ const OrderTable = (props: TablePropTypes) => {
     setEdit(!edit);
   };
 
+  const togglePrint = (row) => {
+    const { setSelectedOrder, setOrderType } = props;
+
+    setEdit(false);
+    setPrintModal(!printModal);
+
+    if (!modal) {
+      setSelectedOrder(row);
+      setOrderType(row.orderType);
+    } else {
+      setSelectedOrder(null);
+      setOrderType(null);
+    }
+  };
+
+  const toggleLoadingModal = (e) => setLoadingModal(e);
+
   return (
     <div>
+      {printModal ? (
+        <PrintModal
+          {...props}
+          toggle={togglePrint}
+          modal={printModal}
+          toggleLoadingModal={toggleLoadingModal}
+          loadingModal={loadingModal}
+        />
+      ) : null}
+
+      <LoadingModal
+        modal={loadingModal}
+        toggle={toggleLoadingModal}
+        message={
+          <div>
+            <center>
+              <h3>Loading...</h3>
+            </center>
+          </div>
+        }
+        title={'Loading'}
+      />
+
       <Row className="mb-3">
         <Col lg="8" />
         <Col>
@@ -508,13 +537,18 @@ const OrderTable = (props: TablePropTypes) => {
   );
 };
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state) => ({
   orderNum: state.Orders.orderNum,
   ordersDBLoaded: state.Orders.ordersDBLoaded,
   user: state.users.user,
+  printer_options: state.misc_items.printer_options,
+  selectedOrder: state.Orders.selectedOrder,
+  breakdowns: state.part_list.breakdowns,
+  box_breakdowns: state.part_list.box_breakdowns,
+  pricing: state.part_list.pricing,
 });
 
-const mapDispatchToProps = (dispatch: any) =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       updateStatus,

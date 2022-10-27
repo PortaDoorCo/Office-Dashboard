@@ -3,11 +3,24 @@ import Cookies from 'js-cookie';
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { DropdownList } from 'react-widgets';
-import { Button, Col, Form, FormGroup, Label, Modal, ModalBody, ModalFooter, ModalHeader, Row } from 'reactstrap';
+import {
+  Button,
+  Col,
+  Form,
+  FormGroup,
+  Label,
+  Modal,
+  ModalBody,
+  ModalFooter,
+  ModalHeader,
+  Row,
+} from 'reactstrap';
 import { bindActionCreators } from 'redux';
 import db_url from '../../../redux/db_url';
-import { addPrinterOption, savePrinterOption } from '../../../redux/misc_items/actions';
-
+import {
+  addPrinterOption,
+  savePrinterOption,
+} from '../../../redux/misc_items/actions';
 
 const cookie = Cookies.get('jwt');
 
@@ -19,13 +32,19 @@ const PrintModal = (props) => {
     toggle,
     printer_options,
     downloadPDF,
-    user
+    user,
+    printMaterial,
+    breakdowns,
+    box_breakdowns,
+    pricing,
+    toggleLoadingModal,
   } = props;
 
-  const number_select = [0,1,2,3,4,5];
+  const number_select = [0, 1, 2, 3, 4, 5];
 
   const [value, setValue] = useState(null);
-  const [new_printer_option, set_new_printer_option] = useState(printer_options);
+  const [new_printer_option, set_new_printer_option] =
+    useState(printer_options);
   const [printer_option, set_printer_option] = useState({
     id: '',
     NAME: printer_options[0].NAME,
@@ -35,16 +54,16 @@ const PrintModal = (props) => {
     box_sides: printer_options[0].box_sides,
     box_bottoms: printer_options[0].box_bottoms,
     packing_slip: printer_options[0].packing_slip,
-    box_labels: printer_options[0].box_labels
+    box_labels: printer_options[0].box_labels,
   });
 
   const change = (e, name) => {
     const value = e;
     set_printer_option((prevState) => {
-      return ({
+      return {
         ...prevState,
-        [name]: value
-      });
+        [name]: value,
+      };
     });
   };
 
@@ -57,27 +76,23 @@ const PrintModal = (props) => {
       box_sides: 0,
       box_bottoms: 0,
       packing_slip: 0,
-      box_labels: 0
+      box_labels: 0,
     };
 
-
-    const res = await axios.post(`${db_url}/printer-options`, newOption,
-      {
-        headers: {
-          'Authorization': `Bearer ${cookie}`
-        }
-      }
-    );
+    const res = await axios.post(`${db_url}/printer-options`, newOption, {
+      headers: {
+        Authorization: `Bearer ${cookie}`,
+      },
+    });
     const data = await res;
     await addPrinterOption(data.data);
     await set_printer_option(data.data);
   };
- 
+
   const saveOption = async () => {
     const id = printer_option.id;
     await savePrinterOption(id, printer_option, cookie);
   };
-
 
   return (
     <div>
@@ -86,33 +101,36 @@ const PrintModal = (props) => {
         <ModalBody>
           <h2>Print</h2>
 
-          <Row>
-            <Col>
-              <Form>
-                <FormGroup>
-                  <Label for="printer_settings">Settings</Label>
-                  <DropdownList filter
-                    data={new_printer_option}
-                    value={printer_option}
-                    // allowCreate={true}
-                    // onCreate={name => handleCreate(name)}
-                    onChange={value => set_printer_option(value)}
-                    textField="NAME"
-                  />
-                </FormGroup>
-              </Form>
-            </Col>
-          </Row>
+          {user?.role?.type !== 'quality_control' ? (
+            <Row>
+              <Col>
+                <Form>
+                  <FormGroup>
+                    <Label for="printer_settings">Settings</Label>
+                    <DropdownList
+                      filter
+                      data={printer_options}
+                      value={printer_option}
+                      // allowCreate={true}
+                      // onCreate={name => handleCreate(name)}
+                      onChange={(value) => set_printer_option(value)}
+                      textField="NAME"
+                    />
+                  </FormGroup>
+                </Form>
+              </Col>
+            </Row>
+          ) : null}
 
-          {user?.role?.type !== 'quality_control' ? 
-
+          {user?.role?.type !== 'quality_control' ? (
             <div>
               <Row>
                 <Col>
                   <Form>
                     <FormGroup>
                       <Label for="acknowledgement">Acknowledgement</Label>
-                      <DropdownList filter
+                      <DropdownList
+                        filter
                         data={number_select}
                         value={printer_option.acknowledgement}
                         onChange={(e) => change(e, 'acknowledgement')}
@@ -126,7 +144,8 @@ const PrintModal = (props) => {
                   <Form>
                     <FormGroup>
                       <Label for="invoice">Invoice</Label>
-                      <DropdownList filter
+                      <DropdownList
+                        filter
                         data={number_select}
                         value={printer_option.invoice}
                         onChange={(e) => change(e, 'invoice')}
@@ -143,7 +162,8 @@ const PrintModal = (props) => {
                   <Form>
                     <FormGroup>
                       <Label for="assembly_list">Assembly List</Label>
-                      <DropdownList filter
+                      <DropdownList
+                        filter
                         data={number_select}
                         value={printer_option.assembly_list}
                         onChange={(e) => change(e, 'assembly_list')}
@@ -157,7 +177,8 @@ const PrintModal = (props) => {
                   <Form>
                     <FormGroup>
                       <Label for="box_sides">Box Sides</Label>
-                      <DropdownList filter
+                      <DropdownList
+                        filter
                         data={number_select}
                         value={printer_option.box_sides}
                         onChange={(e) => change(e, 'box_sides')}
@@ -172,7 +193,8 @@ const PrintModal = (props) => {
                   <Form>
                     <FormGroup>
                       <Label for="box_bottoms">Box Bottoms</Label>
-                      <DropdownList filter
+                      <DropdownList
+                        filter
                         data={number_select}
                         value={printer_option.box_bottoms}
                         onChange={(e) => change(e, 'box_bottoms')}
@@ -183,20 +205,16 @@ const PrintModal = (props) => {
                   </Form>
                 </Col>
               </Row>
-
-
             </div>
-            : null}
-
-         
-
+          ) : null}
 
           <Row>
             <Col>
               <Form>
                 <FormGroup>
                   <Label for="packing_slip">Packing Slip</Label>
-                  <DropdownList filter
+                  <DropdownList
+                    filter
                     data={number_select}
                     value={printer_option.packing_slip}
                     onChange={(e) => change(e, 'packing_slip')}
@@ -210,7 +228,8 @@ const PrintModal = (props) => {
               <Form>
                 <FormGroup>
                   <Label for="qc">Box Labels</Label>
-                  <DropdownList filter
+                  <DropdownList
+                    filter
                     data={number_select}
                     value={printer_option && printer_option.box_labels}
                     onChange={(e) => change(e, 'box_labels')}
@@ -221,20 +240,30 @@ const PrintModal = (props) => {
               </Form>
             </Col>
           </Row>
-        
 
           <Row className="mt-3">
             <Col>
-              <Button color="primary" onClick={saveOption}>Save</Button>
+              <Button color="primary" onClick={saveOption}>
+                Save
+              </Button>
             </Col>
             <Col />
           </Row>
-
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" onClick={(e) => {
-            downloadPDF(printer_option);
-          }}>
+          <Button
+            color="primary"
+            onClick={(e) => {
+              downloadPDF(
+                printer_option,
+                printMaterial,
+                breakdowns,
+                box_breakdowns,
+                pricing,
+                toggleLoadingModal
+              );
+            }}
+          >
             Print
           </Button>{' '}
           <Button color="secondary" onClick={toggle}>
@@ -246,16 +275,15 @@ const PrintModal = (props) => {
   );
 };
 
-
 const mapStateToProps = (state, prop) => ({
-  user: state.users.user
+  user: state.users.user,
 });
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       addPrinterOption,
-      savePrinterOption
+      savePrinterOption,
     },
     dispatch
   );
