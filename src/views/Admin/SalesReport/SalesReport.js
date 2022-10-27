@@ -292,7 +292,7 @@ const SalesReport = (props) => {
               />
             </Col>
           </Row>
-          <Row>
+          <Row className="mt-1">
             <Col>
               <h4>End Date</h4>
               <DatePicker
@@ -302,9 +302,8 @@ const SalesReport = (props) => {
               />
             </Col>
           </Row>
-          <Row className="mt-1">
+          <Row className="mt-3">
             <Col>
-              <h4>Status</h4>
               <Input
                 type="select"
                 name="select"

@@ -712,7 +712,7 @@ const OrderTable = (props) => {
               />
             </Col>
           </Row>
-          <Row>
+          <Row className="mt-1">
             <Col>
               <h4>End Date</h4>
               <DatePicker
