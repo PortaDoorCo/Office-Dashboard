@@ -10,12 +10,8 @@ export default (data, startDate, endDate, account, role, status) => {
       { text: 'Status' },
       { text: 'Description' },
       { text: 'Total' },
-      role?.type === 'administrator' || role?.type === 'owner'
-        ? { text: 'Commission (%)' }
-        : null,
-      role?.type === 'administrator' || role?.type === 'owner'
-        ? { text: 'Commission ($)' }
-        : null,
+      role?.type === 'owner' ? { text: 'Commission (%)' } : null,
+      role?.type === 'owner' ? { text: 'Commission ($)' } : null,
       { text: 'Due On' },
     ],
   ];
@@ -43,10 +39,8 @@ export default (data, startDate, endDate, account, role, status) => {
       i.status,
       name,
       i.total?.toFixed(2),
-      role?.type === 'administrator' || role?.type === 'owner'
-        ? `${i.companyprofile?.SC * 100}%`
-        : null,
-      role?.type === 'administrator' || role?.type === 'owner'
+      role?.type === 'owner' ? `${i.companyprofile?.SC * 100}%` : null,
+      role?.type === 'owner'
         ? `$${currency((i.total - i.tax) * i.companyprofile?.SC).value.toFixed(
             2
           )}`
@@ -63,7 +57,7 @@ export default (data, startDate, endDate, account, role, status) => {
 
   let totalWidths = [415, '*'];
 
-  if (role.type === 'administrator' || role.type === 'owner') {
+  if (role.type === 'owner') {
     totalBody = [
       ['', 'Total', 'Commission'],
       ['', `$${total.toFixed(2)}`, `$${commission.toFixed(2)}`],

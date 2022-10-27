@@ -265,10 +265,7 @@ const SalesReport = (props) => {
       ? new Date(orders[orders.length - 1].created_at)
       : new Date();
 
-  return role &&
-    (role.type === 'authenticated' ||
-      role.type === 'owner' ||
-      role.type === 'administrator') ? (
+  return role && role.type === 'owner' ? (
     <div>
       <Row className="mb-3">
         <Col lg="10" />
@@ -434,7 +431,7 @@ const SalesReport = (props) => {
         </TabPane>
       </TabContent>
     </div>
-  ) : role && role.type === 'sales' ? (
+  ) : (role && role.type === 'sales') || role.type === 'administrator' ? (
     <div>
       <Row className="mb-3">
         <Col lg="10" />
