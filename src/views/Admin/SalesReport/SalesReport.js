@@ -265,10 +265,7 @@ const SalesReport = (props) => {
       ? new Date(orders[orders.length - 1].created_at)
       : new Date();
 
-  return role &&
-    (role.type === 'authenticated' ||
-      role.type === 'owner' ||
-      role.type === 'administrator') ? (
+  return role && role.type === 'owner' ? (
     <div>
       <Row className="mb-3">
         <Col lg="10" />
@@ -434,64 +431,55 @@ const SalesReport = (props) => {
         </TabPane>
       </TabContent>
     </div>
-  ) : role && role.type === 'sales' ? (
+  ) : (role && role.type === 'sales') || role.type === 'administrator' ? (
     <div>
       <Row className="mb-3">
-        <Col lg="9" />
+        <Col lg="10" />
         <Col>
           <Row>
             <Col>
-              <SingleDatePicker
-                date={startDate} // momentPropTypes.momentObj or null
-                onDateChange={(date) => setStartDate(date)} // PropTypes.func.isRequired
-                focused={startDateFocusedInput} // PropTypes.bool
-                onFocusChange={({ focused }) =>
-                  setStartDateFocusedInput(focused)
-                } // PropTypes.func.isRequired
-                id="startDate" // PropTypes.string.isRequired,
-                isOutsideRange={(date) => {
-                  if (date < moment('1/1/1990')) {
-                    return true;
-                  } else {
-                    return false;
-                  }
-                }}
-              />
-
-              <SingleDatePicker
-                date={endDate} // momentPropTypes.momentObj or null
-                onDateChange={(date) => setEndDate(date)} // PropTypes.func.isRequired
-                focused={endDateFocusedInput} // PropTypes.bool
-                onFocusChange={({ focused }) => setEndDateFocusedInput(focused)} // PropTypes.func.isRequired
-                id="endDate" // PropTypes.string.isRequired,
-                isOutsideRange={(date) => {
-                  if (date < moment(startDate)) {
-                    return true; // return true if you want the particular date to be disabled
-                  } else {
-                    return false;
-                  }
-                }}
+              <h3>
+                Filter Date{' '}
+                {filterStatus === 'Quote' ? 'Entered' : filterStatus}
+              </h3>
+            </Col>
+          </Row>
+          <Row className="mt-2">
+            <Col>
+              <h4>Start Date</h4>
+              <DatePicker
+                selected={startDate}
+                onChange={(date) => setStartDate(date)}
+                style={{ width: '100%' }}
+                customInput={<Input />}
               />
             </Col>
           </Row>
-          <Row>
+          <Row className="mt-1">
             <Col>
-              <FormGroup style={{ height: '100%', width: '60%' }}>
-                <Input
-                  type="select"
-                  name="select"
-                  id="status_dropdown"
-                  defaultValue="All"
-                  onChange={(e) => setFilterStatus(e.target.value)}
-                >
-                  <option value={'All'}>All</option>
-                  {status.map((i, index) => (
-                    <option key={index} value={i.value}>
-                      {i.value}
-                    </option>
-                  ))}
-                </Input>
-              </FormGroup>
+              <h4>End Date</h4>
+              <DatePicker
+                selected={endDate}
+                onChange={(date) => setEndDate(date)}
+                customInput={<Input />}
+              />
+            </Col>
+          </Row>
+          <Row className="mt-3">
+            <Col>
+              <Input
+                type="select"
+                name="select"
+                id="status_dropdown"
+                defaultValue="Quote"
+                onChange={(e) => setFilterStatus(e.target.value)}
+              >
+                {status.map((i, index) => (
+                  <option key={index} value={i.value}>
+                    {i.value}
+                  </option>
+                ))}
+              </Input>
             </Col>
           </Row>
         </Col>
