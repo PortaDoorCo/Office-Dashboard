@@ -141,7 +141,7 @@ export const renderDropdownListFilter = ({
       // onChange={() => input.onChange()}
       onBlur={() => input.onBlur()}
       allowCreate={false}
-      filter
+      filter="contains"
       disabled={!edit}
     />
     {touched &&
@@ -168,7 +168,7 @@ export const renderDropdownListFilterNoPhoto = ({
       // onChange={() => input.onChange()}
       onBlur={() => input.onBlur()}
       allowCreate={false}
-      filter
+      filter="contains"
       disabled={!edit}
     />
     {touched &&
@@ -196,7 +196,7 @@ export const renderMouldingInputs = ({
       // onChange={() => input.onChange()}
       onBlur={() => input.onBlur()}
       allowCreate={false}
-      filter
+      filter="contains"
       disabled={!edit}
     />
     {touched &&
@@ -224,7 +224,7 @@ export const renderMouldingsEdit = ({
       // onChange={() => input.onChange()}
       onBlur={() => input.onBlur()}
       allowCreate={false}
-      filter
+      filter="contains"
       disabled={!edit}
     />
     {touched &&
@@ -251,7 +251,7 @@ export const renderDropdownListNoPhoto = ({
       // onChange={() => input.onChange()}
       onBlur={() => input.onBlur()}
       allowCreate={false}
-      filter
+      filter="contains"
       disabled={!edit}
     />
     {touched &&
