@@ -1,5 +1,5 @@
-import currency from 'currency.js';
 import numQty from 'numeric-quantity';
+import currency from 'currency.js';
 
 const pricing = (parts, pricer, itemPrice) => {
   const item = parts.map((part, index) => {
@@ -222,6 +222,131 @@ const pricing = (parts, pricer, itemPrice) => {
         }
       }
 
+      // if(part.orderType?.value === 'DF') {
+      //   if (part.profile) {
+      //     //leftStile
+      //     if (
+      //       (part.profile && part.profile.PROFILE_WIDTH) !==
+      //       numQty(i.leftStile)
+      //     ) {
+      //       calc('leftStile', part.profile?.PROFILE_WIDTH, price);
+      //     }
+      //     //rightStile
+      //     if (
+      //       (part.profile && part.profile.PROFILE_WIDTH) !==
+      //       numQty(i.rightStile)
+      //     ) {
+      //       calc('rightStile', part.profile?.PROFILE_WIDTH, price);
+      //     }
+      //     //topRail
+      //     if (
+      //       (part.profile && part.profile.DF_Reduction) !==
+      //       numQty(i.topRail)
+      //     ) {
+      //       calc('topRail', part.profile?.DF_Reduction, price);
+      //     }
+      //     //bottomRail
+      //     if (
+      //       (part.profile && part.profile.DF_Reduction) !==
+      //       numQty(i.bottomRail)
+      //     ) {
+      //       calc('bottomRail', part.profile?.DF_Reduction, price);
+      //     }
+      //   } else {
+      //     //leftStile
+      //     if (
+      //       (part.design && part.design.PROFILE_WIDTH) !==
+      //       numQty(i.leftStile)
+      //     ) {
+      //       calc('leftStile', part.design?.PROFILE_WIDTH, price);
+      //     }
+      //     //rightStile
+      //     if (
+      //       (part.design && part.design.PROFILE_WIDTH) !==
+      //       numQty(i.rightStile)
+      //     ) {
+      //       calc('rightStile', part.design?.PROFILE_WIDTH, price);
+      //     }
+      //     //topRail
+      //     if (
+      //       (part.design && part.design.DF_Reduction) !==
+      //       numQty(i.topRail)
+      //     ) {
+      //       calc('topRail', part.design?.DF_Reduction, price);
+      //     }
+      //     //bottomRail
+      //     if (
+      //       (part.design && part.design.DF_Reduction) !==
+      //       numQty(i.bottomRail)
+      //     ) {
+      //       calc('bottomRail', part.design?.DF_Reduction, price);
+      //     }
+      //   }
+      // } else {
+      //   if (part.profile) {
+      //     //leftStile
+      //     if (
+      //       (part.profile && part.profile.PROFILE_WIDTH) !==
+      //       numQty(i.leftStile)
+      //     ) {
+      //       calc('leftStile', part.profile?.PROFILE_WIDTH, price);
+      //     }
+      //     //rightStile
+      //     if (
+      //       (part.profile && part.profile.PROFILE_WIDTH) !==
+      //       numQty(i.rightStile)
+      //     ) {
+      //       calc('rightStile', part.profile?.PROFILE_WIDTH, price);
+      //     }
+      //     //topRail
+      //     if (
+      //       (part.profile && part.profile.PROFILE_WIDTH) !==
+      //       numQty(i.topRail)
+      //     ) {
+      //       calc('topRail', part.profile?.PROFILE_WIDTH, price);
+      //     }
+      //     //bottomRail
+      //     if (
+      //       (part.profile && part.profile.PROFILE_WIDTH) !==
+      //       numQty(i.bottomRail)
+      //     ) {
+      //       calc('bottomRail', part.profile?.PROFILE_WIDTH, price);
+      //     }
+      //   } else {
+      //     //leftStile
+      //     if (
+      //       (part.design && part.design.PROFILE_WIDTH) !==
+      //       numQty(i.leftStile)
+      //     ) {
+      //       calc('leftStile', part.design?.PROFILE_WIDTH, price);
+      //     }
+      //     //rightStile
+      //     if (
+      //       (part.design && part.design.PROFILE_WIDTH) !==
+      //       numQty(i.rightStile)
+      //     ) {
+      //       calc('rightStile', part.design?.PROFILE_WIDTH, price);
+      //     }
+      //     //topRail
+      //     if (
+      //       (part.design && part.design.PROFILE_WIDTH) !==
+      //       numQty(i.topRail)
+      //     ) {
+      //       calc('topRail', part.design?.PROFILE_WIDTH, price);
+      //     }
+      //     //bottomRail
+      //     if (
+      //       (part.design && part.design.PROFILE_WIDTH) !==
+      //       numQty(i.bottomRail)
+      //     ) {
+      //       calc('bottomRail', part.design?.PROFILE_WIDTH, price);
+      //     }
+      //   }
+      // }
+
+      //test
+      //Slab Doors here
+
       if (
         part.orderType.value === 'Door' &&
         part.construction.value === 'Slab'
@@ -256,18 +381,9 @@ const pricing = (parts, pricer, itemPrice) => {
           extraCost;
       }
 
-      if (itemPrice?.length > 0 && itemPrice[index]?.length > 0) {
-        return currency(itemPrice[index][p]).value;
-      } else {
-        if (
-          (parseInt(panelsH) === 1 && numQty(i.height) >= 48) ||
-          (parseInt(panelsW) === 1 && numQty(i.width) >= 24)
-        ) {
-          return currency(price).multiply(1.2).value;
-        } else {
-          return currency(price).value;
-        }
-      }
+      return itemPrice?.length > 0 && itemPrice[index]?.length > 0
+        ? itemPrice[index][p]
+        : Math.floor(price * 100) / 100;
     });
 
     const customPrice = part.dimensions.map((i) => {
@@ -283,11 +399,27 @@ const pricing = (parts, pricer, itemPrice) => {
 
   const addCharge = parts.map((part, index) => {
     return part.dimensions.map((i, p) => {
-      const base =
-        Math.round(item[index][p] * 100) / 100 +
-        (i.price_adjustment ? Math.floor(i.price_adjustment * 100) / 100 : 0);
-
-      return currency(base).multiply(i.qty).value;
+      if (
+        (part.orderType.value === 'Door' ||
+          part?.orderType?.value === 'DF' ||
+          part.orderType.value === 'Glass' ||
+          part.orderType.value === 'One_Piece' ||
+          part.orderType.value === 'Two_Piece') &&
+        ((parseInt(i.panelsH) === 1 && numQty(i.height) >= 48) ||
+          (parseInt(i.panelsW) === 1 && numQty(i.width) >= 24))
+      ) {
+        const k = currency(item[index][p]).multiply(1.2).value;
+        const base = currency(k)
+          .multiply(parseInt(i.qty))
+          .add(i.price_adjustment ? currency(i.price_adjustment) : 0).value;
+        return currency(base).value;
+        // return base + add;
+      } else {
+        const base = currency(item[index][p])
+          .multiply(parseInt(i.qty))
+          .add(i.price_adjustment ? currency(i.price_adjustment) : 0).value;
+        return base;
+      }
     });
   });
 
