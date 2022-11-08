@@ -780,14 +780,7 @@ export const itemPriceSelector = createSelector(
                       return currency(price).value;
                     }
                   } else {
-                    if (
-                      (parseInt(panelsH) === 1 && numQty(i.height) >= 48) ||
-                      (parseInt(panelsW) === 1 && numQty(i.width) >= 24)
-                    ) {
-                      return currency(itemPrice[index][j]).multiply(1.2).value;
-                    } else {
-                      return currency(itemPrice[index][j]).value;
-                    }
+                    return currency(itemPrice[index][j]).value;
                   }
                 } else {
                   return currency(price).value;

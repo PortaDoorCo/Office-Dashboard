@@ -257,14 +257,7 @@ const pricing = (parts, pricer, itemPrice) => {
       }
 
       if (itemPrice?.length > 0 && itemPrice[index]?.length > 0) {
-        if (
-          (parseInt(panelsH) === 1 && numQty(i.height) >= 48) ||
-          (parseInt(panelsW) === 1 && numQty(i.width) >= 24)
-        ) {
-          return currency(itemPrice[index][p]).multiply(1.2).value;
-        } else {
-          return currency(itemPrice[index][p]).value;
-        }
+        return currency(itemPrice[index][p]).value;
       } else {
         if (
           (parseInt(panelsH) === 1 && numQty(i.height) >= 48) ||
