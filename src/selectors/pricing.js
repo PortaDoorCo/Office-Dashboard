@@ -775,23 +775,17 @@ export const itemPriceSelector = createSelector(
                       (parseInt(panelsH) === 1 && numQty(i.height) >= 48) ||
                       (parseInt(panelsW) === 1 && numQty(i.width) >= 24)
                     ) {
-                      console.log('no here');
                       return currency(price).multiply(1.2).value;
                     } else {
-                      console.log('here');
                       return currency(price).value;
                     }
                   } else {
-                    console.log({ price: itemPrice[index][j] * 1.2 });
                     if (
                       (parseInt(panelsH) === 1 && numQty(i.height) >= 48) ||
                       (parseInt(panelsW) === 1 && numQty(i.width) >= 24)
                     ) {
-                      console.log('here');
-                      console.log({ test: itemPrice[index][j] });
                       return currency(itemPrice[index][j]).multiply(1.2).value;
                     } else {
-                      console.log('no here');
                       return currency(itemPrice[index][j]).value;
                     }
                   }
@@ -988,8 +982,6 @@ export const linePriceSelector = createSelector(
                 ((parseInt(i.panelsH) === 1 && numQty(i.height) >= 48) ||
                   (parseInt(i.panelsW) === 1 && numQty(i.width) >= 24))
               ) {
-                console.log('flksdfjsdflkj');
-
                 const base = currency(item[index][p]).multiply(i.qty).value;
                 const price = currency(base).value;
 
