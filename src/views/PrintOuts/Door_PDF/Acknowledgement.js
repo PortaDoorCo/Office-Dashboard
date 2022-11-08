@@ -116,12 +116,12 @@ export default (data, pricing) => {
         },
 
         {
-          text: `${(item.price / parseInt(item.qty)).toFixed(2)}`,
+          text: `${currency(item.price).divide(parseInt(item.qty)).format()}`,
           style: 'fonts',
           alignment: 'right',
         },
         {
-          text: `${item.price?.toFixed(2)}`,
+          text: `${currency(item.price).format()}`,
           style: 'fonts',
           alignment: 'right',
           width: 210,
