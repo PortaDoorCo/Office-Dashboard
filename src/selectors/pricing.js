@@ -606,6 +606,131 @@ export const itemPriceSelector = createSelector(
                 }
               }
 
+              // if(part.orderType?.value === 'DF') {
+              //   if (part.profile) {
+              //     //leftStile
+              //     if (
+              //       (part.profile && part.profile.PROFILE_WIDTH) !==
+              //       numQty(i.leftStile)
+              //     ) {
+              //       calc('leftStile', part.profile?.PROFILE_WIDTH, price);
+              //     }
+              //     //rightStile
+              //     if (
+              //       (part.profile && part.profile.PROFILE_WIDTH) !==
+              //       numQty(i.rightStile)
+              //     ) {
+              //       calc('rightStile', part.profile?.PROFILE_WIDTH, price);
+              //     }
+              //     //topRail
+              //     if (
+              //       (part.profile && part.profile.DF_Reduction) !==
+              //       numQty(i.topRail)
+              //     ) {
+              //       calc('topRail', part.profile?.DF_Reduction, price);
+              //     }
+              //     //bottomRail
+              //     if (
+              //       (part.profile && part.profile.DF_Reduction) !==
+              //       numQty(i.bottomRail)
+              //     ) {
+              //       calc('bottomRail', part.profile?.DF_Reduction, price);
+              //     }
+              //   } else {
+              //     //leftStile
+              //     if (
+              //       (part.design && part.design.PROFILE_WIDTH) !==
+              //       numQty(i.leftStile)
+              //     ) {
+              //       calc('leftStile', part.design?.PROFILE_WIDTH, price);
+              //     }
+              //     //rightStile
+              //     if (
+              //       (part.design && part.design.PROFILE_WIDTH) !==
+              //       numQty(i.rightStile)
+              //     ) {
+              //       calc('rightStile', part.design?.PROFILE_WIDTH, price);
+              //     }
+              //     //topRail
+              //     if (
+              //       (part.design && part.design.DF_Reduction) !==
+              //       numQty(i.topRail)
+              //     ) {
+              //       calc('topRail', part.design?.DF_Reduction, price);
+              //     }
+              //     //bottomRail
+              //     if (
+              //       (part.design && part.design.DF_Reduction) !==
+              //       numQty(i.bottomRail)
+              //     ) {
+              //       calc('bottomRail', part.design?.DF_Reduction, price);
+              //     }
+              //   }
+              // } else {
+              //   if (part.profile) {
+              //     //leftStile
+              //     if (
+              //       (part.profile && part.profile.PROFILE_WIDTH) !==
+              //       numQty(i.leftStile)
+              //     ) {
+              //       calc('leftStile', part.profile?.PROFILE_WIDTH, price);
+              //     }
+              //     //rightStile
+              //     if (
+              //       (part.profile && part.profile.PROFILE_WIDTH) !==
+              //       numQty(i.rightStile)
+              //     ) {
+              //       calc('rightStile', part.profile?.PROFILE_WIDTH, price);
+              //     }
+              //     //topRail
+              //     if (
+              //       (part.profile && part.profile.PROFILE_WIDTH) !==
+              //       numQty(i.topRail)
+              //     ) {
+              //       calc('topRail', part.profile?.PROFILE_WIDTH, price);
+              //     }
+              //     //bottomRail
+              //     if (
+              //       (part.profile && part.profile.PROFILE_WIDTH) !==
+              //       numQty(i.bottomRail)
+              //     ) {
+              //       calc('bottomRail', part.profile?.PROFILE_WIDTH, price);
+              //     }
+              //   } else {
+              //     //leftStile
+              //     if (
+              //       (part.design && part.design.PROFILE_WIDTH) !==
+              //       numQty(i.leftStile)
+              //     ) {
+              //       calc('leftStile', part.design?.PROFILE_WIDTH, price);
+              //     }
+              //     //rightStile
+              //     if (
+              //       (part.design && part.design.PROFILE_WIDTH) !==
+              //       numQty(i.rightStile)
+              //     ) {
+              //       calc('rightStile', part.design?.PROFILE_WIDTH, price);
+              //     }
+              //     //topRail
+              //     if (
+              //       (part.design && part.design.PROFILE_WIDTH) !==
+              //       numQty(i.topRail)
+              //     ) {
+              //       calc('topRail', part.design?.PROFILE_WIDTH, price);
+              //     }
+              //     //bottomRail
+              //     if (
+              //       (part.design && part.design.PROFILE_WIDTH) !==
+              //       numQty(i.bottomRail)
+              //     ) {
+              //       calc('bottomRail', part.design?.PROFILE_WIDTH, price);
+              //     }
+              //   }
+              // }
+
+              //test
+              //Slab Doors here
+
               if (
                 part?.orderType?.value === 'Door' &&
                 (part?.construction?.value === 'Slab' ||
@@ -771,19 +896,12 @@ export const itemPriceSelector = createSelector(
                       formState?.values?.part_list[index]?.construction !==
                         formState?.initial.part_list[index]?.construction)
                   ) {
-                    if (
-                      (parseInt(panelsH) === 1 && numQty(i.height) >= 48) ||
-                      (parseInt(panelsW) === 1 && numQty(i.width) >= 24)
-                    ) {
-                      return currency(price).multiply(1.2).value;
-                    } else {
-                      return currency(price).value;
-                    }
+                    return Math.floor(price * 100) / 100;
                   } else {
-                    return currency(itemPrice[index][j]).value;
+                    return Math.round(itemPrice[index][j] * 100) / 100;
                   }
                 } else {
-                  return currency(price).value;
+                  return Math.floor(price * 100) / 100;
                 }
               } else {
                 return 0;
@@ -860,12 +978,12 @@ export const itemPriceSelector = createSelector(
                     formState?.values?.part_list[index]?.box_thickness !==
                       formState?.initial.part_list[index]?.box_thickness)
                 ) {
-                  return currency(price).value;
+                  return Math.floor(price * 100) / 100;
                 } else {
-                  return currency(itemPrice[index][j]).value;
+                  return Math.round(itemPrice[index][j] * 100) / 100;
                 }
               } else {
-                return currency(price).value;
+                return Math.floor(price * 100) / 100;
               }
             } else {
               return 0;
@@ -975,21 +1093,18 @@ export const linePriceSelector = createSelector(
                 ((parseInt(i.panelsH) === 1 && numQty(i.height) >= 48) ||
                   (parseInt(i.panelsW) === 1 && numQty(i.width) >= 24))
               ) {
-                const base = currency(item[index][p]).multiply(i.qty).value;
-                const price = currency(base).value;
-
+                const k = currency(item[index][p]).multiply(1.2).value;
+                const base = currency(k).multiply(parseInt(i.qty)).value;
+                const price = base;
                 return currency(price).value;
               } else {
                 if (part?.orderType?.value === 'Face_Frame') {
-                  return (
-                    Math.round(
-                      (item[index][p] + finish[index][p]) *
-                        parseInt(i.qty) *
-                        100
-                    ) / 100
-                  );
+                  return currency(item[index][p])
+                    .add(finish[index][p])
+                    .multiply(parseInt(i.qty)).value;
                 } else {
-                  return currency(item[index][p]).multiply(i.qty).value;
+                  return currency(item[index][p]).multiply(parseInt(i.qty))
+                    .value;
                 }
               }
             } else {
