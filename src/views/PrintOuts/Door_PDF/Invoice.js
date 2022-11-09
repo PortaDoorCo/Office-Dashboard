@@ -4,7 +4,12 @@ import Glass_Selection from '../Sorting/Glass_Selection';
 import currency from 'currency.js';
 
 export default (data, pricing) => {
-  const prices = pdfDoorPricing(data.part_list, pricing[0], data.itemPrice);
+  const prices = pdfDoorPricing(
+    data.part_list,
+    pricing[0],
+    data.itemPrice,
+    data
+  );
 
   const pricingData = {
     ...data,
