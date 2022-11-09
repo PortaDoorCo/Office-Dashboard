@@ -49,7 +49,9 @@ const stateSelector = (state) => {
 
 const orderTypeSelector = (state) => state?.Orders?.orderType;
 
-const OrderSelector = (state) => {
+const OrderSelector = (state) => state.Orders?.selectedOrder;
+
+const MouldingOrderSelector = (state) => {
   const orders = state.form.Order;
 
   if (orders) {
@@ -606,131 +608,6 @@ export const itemPriceSelector = createSelector(
                 }
               }
 
-              // if(part.orderType?.value === 'DF') {
-              //   if (part.profile) {
-              //     //leftStile
-              //     if (
-              //       (part.profile && part.profile.PROFILE_WIDTH) !==
-              //       numQty(i.leftStile)
-              //     ) {
-              //       calc('leftStile', part.profile?.PROFILE_WIDTH, price);
-              //     }
-              //     //rightStile
-              //     if (
-              //       (part.profile && part.profile.PROFILE_WIDTH) !==
-              //       numQty(i.rightStile)
-              //     ) {
-              //       calc('rightStile', part.profile?.PROFILE_WIDTH, price);
-              //     }
-              //     //topRail
-              //     if (
-              //       (part.profile && part.profile.DF_Reduction) !==
-              //       numQty(i.topRail)
-              //     ) {
-              //       calc('topRail', part.profile?.DF_Reduction, price);
-              //     }
-              //     //bottomRail
-              //     if (
-              //       (part.profile && part.profile.DF_Reduction) !==
-              //       numQty(i.bottomRail)
-              //     ) {
-              //       calc('bottomRail', part.profile?.DF_Reduction, price);
-              //     }
-              //   } else {
-              //     //leftStile
-              //     if (
-              //       (part.design && part.design.PROFILE_WIDTH) !==
-              //       numQty(i.leftStile)
-              //     ) {
-              //       calc('leftStile', part.design?.PROFILE_WIDTH, price);
-              //     }
-              //     //rightStile
-              //     if (
-              //       (part.design && part.design.PROFILE_WIDTH) !==
-              //       numQty(i.rightStile)
-              //     ) {
-              //       calc('rightStile', part.design?.PROFILE_WIDTH, price);
-              //     }
-              //     //topRail
-              //     if (
-              //       (part.design && part.design.DF_Reduction) !==
-              //       numQty(i.topRail)
-              //     ) {
-              //       calc('topRail', part.design?.DF_Reduction, price);
-              //     }
-              //     //bottomRail
-              //     if (
-              //       (part.design && part.design.DF_Reduction) !==
-              //       numQty(i.bottomRail)
-              //     ) {
-              //       calc('bottomRail', part.design?.DF_Reduction, price);
-              //     }
-              //   }
-              // } else {
-              //   if (part.profile) {
-              //     //leftStile
-              //     if (
-              //       (part.profile && part.profile.PROFILE_WIDTH) !==
-              //       numQty(i.leftStile)
-              //     ) {
-              //       calc('leftStile', part.profile?.PROFILE_WIDTH, price);
-              //     }
-              //     //rightStile
-              //     if (
-              //       (part.profile && part.profile.PROFILE_WIDTH) !==
-              //       numQty(i.rightStile)
-              //     ) {
-              //       calc('rightStile', part.profile?.PROFILE_WIDTH, price);
-              //     }
-              //     //topRail
-              //     if (
-              //       (part.profile && part.profile.PROFILE_WIDTH) !==
-              //       numQty(i.topRail)
-              //     ) {
-              //       calc('topRail', part.profile?.PROFILE_WIDTH, price);
-              //     }
-              //     //bottomRail
-              //     if (
-              //       (part.profile && part.profile.PROFILE_WIDTH) !==
-              //       numQty(i.bottomRail)
-              //     ) {
-              //       calc('bottomRail', part.profile?.PROFILE_WIDTH, price);
-              //     }
-              //   } else {
-              //     //leftStile
-              //     if (
-              //       (part.design && part.design.PROFILE_WIDTH) !==
-              //       numQty(i.leftStile)
-              //     ) {
-              //       calc('leftStile', part.design?.PROFILE_WIDTH, price);
-              //     }
-              //     //rightStile
-              //     if (
-              //       (part.design && part.design.PROFILE_WIDTH) !==
-              //       numQty(i.rightStile)
-              //     ) {
-              //       calc('rightStile', part.design?.PROFILE_WIDTH, price);
-              //     }
-              //     //topRail
-              //     if (
-              //       (part.design && part.design.PROFILE_WIDTH) !==
-              //       numQty(i.topRail)
-              //     ) {
-              //       calc('topRail', part.design?.PROFILE_WIDTH, price);
-              //     }
-              //     //bottomRail
-              //     if (
-              //       (part.design && part.design.PROFILE_WIDTH) !==
-              //       numQty(i.bottomRail)
-              //     ) {
-              //       calc('bottomRail', part.design?.PROFILE_WIDTH, price);
-              //     }
-              //   }
-              // }
-
-              //test
-              //Slab Doors here
-
               if (
                 part?.orderType?.value === 'Door' &&
                 (part?.construction?.value === 'Slab' ||
@@ -1077,8 +954,8 @@ export const finishTotalSelector = createSelector(
 );
 
 export const linePriceSelector = createSelector(
-  [partListSelector, finishingSelector, itemPriceSelector],
-  (parts, finish, item) =>
+  [partListSelector, finishingSelector, itemPriceSelector, OrderSelector],
+  (parts, finish, item, order) =>
     parts.map((part, index) => {
       if (part.dimensions) {
         return part?.dimensions?.map((i, p) => {
@@ -1093,24 +970,30 @@ export const linePriceSelector = createSelector(
                 ((parseInt(i.panelsH) === 1 && numQty(i.height) >= 48) ||
                   (parseInt(i.panelsW) === 1 && numQty(i.width) >= 24))
               ) {
-                const base =
-                  Math.round(item[index][p] * parseInt(i.qty) * 100) / 100;
-                const add = base * 0.2;
-                const price = base + add;
-                return Math.round(price * 100) / 100;
+                console.log({ order });
+
+                if (moment(order?.created_at) > moment('11-08-2022')) {
+                  console.log('less');
+                  const k = currency(item[index][p]).multiply(1.2).value;
+                  const base = currency(k).multiply(parseInt(i.qty)).value;
+                  const price = base;
+                  return currency(price).value;
+                } else {
+                  console.log('more');
+                  const base =
+                    Math.round(item[index][p] * parseInt(i.qty) * 100) / 100;
+                  const add = base * 0.2;
+                  const price = base + add;
+                  return Math.round(price * 100) / 100;
+                }
               } else {
                 if (part?.orderType?.value === 'Face_Frame') {
-                  return (
-                    Math.round(
-                      (item[index][p] + finish[index][p]) *
-                        parseInt(i.qty) *
-                        100
-                    ) / 100
-                  );
+                  return currency(item[index][p])
+                    .add(finish[index][p])
+                    .multiply(parseInt(i.qty)).value;
                 } else {
-                  return (
-                    Math.round(item[index][p] * parseInt(i.qty) * 100) / 100
-                  );
+                  return currency(item[index][p]).multiply(parseInt(i.qty))
+                    .value;
                 }
               }
             } else {
@@ -1170,104 +1053,115 @@ export const addPriceSelector = createSelector(
   }
 );
 
-export const mouldingPriceSelector = createSelector([OrderSelector], (Order) =>
-  Order.map((i) => {
-    let price = 0;
+export const mouldingPriceSelector = createSelector(
+  [MouldingOrderSelector],
+  (Order) =>
+    Order.map((i) => {
+      let price = 0;
 
-    const { item, woodtype, linearFT, grade, extraCost } = i;
+      const { item, woodtype, linearFT, grade, extraCost } = i;
 
-    if (i.style?.value === 'custom') {
-      price = 0;
+      if (i.style?.value === 'custom') {
+        price = 0;
 
-      const width = i.width ? numQty(i.width) : 0;
-      const thickness = i.thickness ? numQty(i.thickness) : 0;
-      const linFt = numQty(linearFT);
+        const width = i.width ? numQty(i.width) : 0;
+        const thickness = i.thickness ? numQty(i.thickness) : 0;
+        const linFt = numQty(linearFT);
 
-      let wood = 0;
+        let wood = 0;
 
-      let feet = Math.floor(((width * 12) / 144) * 100) / 100;
-      let waste = feet * 1.25;
-
-      let premium = 1;
-
-      if (thickness <= 0.8125) {
-        premium = 1;
-      } else if (thickness <= 1.125) {
-        premium = 1.25;
-      } else if (thickness <= 1.31) {
-        premium = 1.5;
-      } else if (thickness <= 1.8125) {
-        premium = 2;
-      } else if (thickness <= 2.31) {
-        premium = 2.5;
-      } else {
-        premium = 3;
-      }
-
-      if (thickness <= 1) {
-        if (grade?.name === 'Standard Grade') {
-          wood = woodtype?.STANDARD_GRADE ? woodtype?.STANDARD_GRADE / 4 : 0;
-        } else if (grade?.name === 'Select Grade') {
-          wood = woodtype?.SELECT_GRADE ? woodtype?.SELECT_GRADE / 4 : 0;
-        }
-      } else {
-        if (grade?.name === 'Standard Grade') {
-          wood = woodtype?.STANDARD_GRADE_THICK
-            ? woodtype?.STANDARD_GRADE_THICK / 4
-            : 0;
-        } else if (grade?.name === 'Select Grade') {
-          wood = woodtype?.SELECT_GRADE_THICK
-            ? woodtype?.SELECT_GRADE_THICK / 4
-            : 0;
-        }
-      }
-
-      const bd_ft = waste * premium;
-      const adjust_price = extraCost ? Math.round(extraCost * 100) / 100 : 0;
-
-      price = bd_ft * wood * linFt * 4 + adjust_price;
-    } else {
-      if (i.item) {
-        let feet = Math.floor(((item.MOULDING_WIDTH * 12) / 144) * 100) / 100;
+        let feet = Math.floor(((width * 12) / 144) * 100) / 100;
         let waste = feet * 1.25;
-        let multiplier = item.Multiplier;
-        let wood = woodtype ? woodtype[grade?.db_name] * 0.25 : 0;
-        let premium = 0;
 
-        let newWood = wood;
+        let premium = 1;
 
-        if (multiplier <= 1) {
-          newWood = wood;
+        if (thickness <= 0.8125) {
+          premium = 1;
+        } else if (thickness <= 1.125) {
+          premium = 1.25;
+        } else if (thickness <= 1.31) {
+          premium = 1.5;
+        } else if (thickness <= 1.8125) {
+          premium = 2;
+        } else if (thickness <= 2.31) {
+          premium = 2.5;
         } else {
-          newWood = wood * 1.25;
+          premium = 3;
         }
 
-        let a = waste * multiplier;
-
-        if (parseFloat(linearFT) > 0 && parseFloat(linearFT) <= 30) {
-          premium = 3 + 1;
-        } else if (parseFloat(linearFT) >= 31 && parseFloat(linearFT) <= 50) {
-          premium = 2 + 1;
-        } else if (parseFloat(linearFT) >= 51 && parseFloat(linearFT) <= 100) {
-          premium = 1.75 + 1;
-        } else if (parseFloat(linearFT) > 101 && parseFloat(linearFT) <= 250) {
-          premium = 1.4 + 1;
-        } else if (parseFloat(linearFT) > 251 && parseFloat(linearFT) <= 500) {
-          premium = 1.1 + 1;
+        if (thickness <= 1) {
+          if (grade?.name === 'Standard Grade') {
+            wood = woodtype?.STANDARD_GRADE ? woodtype?.STANDARD_GRADE / 4 : 0;
+          } else if (grade?.name === 'Select Grade') {
+            wood = woodtype?.SELECT_GRADE ? woodtype?.SELECT_GRADE / 4 : 0;
+          }
         } else {
-          premium = 1 + 1;
+          if (grade?.name === 'Standard Grade') {
+            wood = woodtype?.STANDARD_GRADE_THICK
+              ? woodtype?.STANDARD_GRADE_THICK / 4
+              : 0;
+          } else if (grade?.name === 'Select Grade') {
+            wood = woodtype?.SELECT_GRADE_THICK
+              ? woodtype?.SELECT_GRADE_THICK / 4
+              : 0;
+          }
         }
 
-        price = a * newWood * parseFloat(linearFT) * premium;
+        const bd_ft = waste * premium;
+        const adjust_price = extraCost ? Math.round(extraCost * 100) / 100 : 0;
+
+        price = bd_ft * wood * linFt * 4 + adjust_price;
+      } else {
+        if (i.item) {
+          let feet = Math.floor(((item.MOULDING_WIDTH * 12) / 144) * 100) / 100;
+          let waste = feet * 1.25;
+          let multiplier = item.Multiplier;
+          let wood = woodtype ? woodtype[grade?.db_name] * 0.25 : 0;
+          let premium = 0;
+
+          let newWood = wood;
+
+          if (multiplier <= 1) {
+            newWood = wood;
+          } else {
+            newWood = wood * 1.25;
+          }
+
+          let a = waste * multiplier;
+
+          if (parseFloat(linearFT) > 0 && parseFloat(linearFT) <= 30) {
+            premium = 3 + 1;
+          } else if (parseFloat(linearFT) >= 31 && parseFloat(linearFT) <= 50) {
+            premium = 2 + 1;
+          } else if (
+            parseFloat(linearFT) >= 51 &&
+            parseFloat(linearFT) <= 100
+          ) {
+            premium = 1.75 + 1;
+          } else if (
+            parseFloat(linearFT) > 101 &&
+            parseFloat(linearFT) <= 250
+          ) {
+            premium = 1.4 + 1;
+          } else if (
+            parseFloat(linearFT) > 251 &&
+            parseFloat(linearFT) <= 500
+          ) {
+            premium = 1.1 + 1;
+          } else {
+            premium = 1 + 1;
+          }
+
+          price = a * newWood * parseFloat(linearFT) * premium;
+        }
       }
-    }
 
-    return Math.floor(price * 100) / 100;
-  })
+      return Math.floor(price * 100) / 100;
+    })
 );
 
 export const mouldingLinePriceSelector = createSelector(
-  [mouldingPriceSelector, OrderSelector],
+  [mouldingPriceSelector, MouldingOrderSelector],
   (pricer, parts, item) =>
     pricer.map((i, index) => {
       const price = i ? i : 0;
@@ -1371,7 +1265,7 @@ export const subTotalSelector = createSelector(
 );
 
 export const mouldingLineItemSelector = createSelector(
-  [OrderSelector],
+  [MouldingOrderSelector],
   (misc) => misc
 );
 
