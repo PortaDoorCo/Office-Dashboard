@@ -1,5 +1,4 @@
 import numQty from 'numeric-quantity';
-import currency from 'currency.js';
 
 const pricing = (parts, pricer, itemPrice) => {
   const item = parts.map((part, index) => {
@@ -399,6 +398,10 @@ const pricing = (parts, pricer, itemPrice) => {
 
   const addCharge = parts.map((part, index) => {
     return part.dimensions.map((i, p) => {
+      const base =
+        Math.round(item[index][p] * parseInt(i.qty) * 100) / 100 +
+        (i.price_adjustment ? Math.floor(i.price_adjustment * 100) / 100 : 0);
+
       if (
         (part.orderType.value === 'Door' ||
           part?.orderType?.value === 'DF' ||
@@ -408,16 +411,9 @@ const pricing = (parts, pricer, itemPrice) => {
         ((parseInt(i.panelsH) === 1 && numQty(i.height) >= 48) ||
           (parseInt(i.panelsW) === 1 && numQty(i.width) >= 24))
       ) {
-        const k = currency(item[index][p]).multiply(1.2).value;
-        const base = currency(k)
-          .multiply(parseInt(i.qty))
-          .add(i.price_adjustment ? currency(i.price_adjustment) : 0).value;
-        return currency(base).value;
-        // return base + add;
+        const add = base * 0.2;
+        return base + add;
       } else {
-        const base = currency(item[index][p])
-          .multiply(parseInt(i.qty))
-          .add(i.price_adjustment ? currency(i.price_adjustment) : 0).value;
         return base;
       }
     });
