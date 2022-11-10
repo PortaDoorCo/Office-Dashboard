@@ -972,7 +972,12 @@ export const linePriceSelector = createSelector(
               ) {
                 console.log({ order });
 
-                if (moment(order?.created_at) > moment('11-08-2022')) {
+                console.log({ moment: moment(order?.created_at) });
+
+                if (
+                  !order?.oldPricing &&
+                  moment(order?.created_at) > moment('11-08-2022')
+                ) {
                   console.log('less');
                   const k = currency(item[index][p]).multiply(1.2).value;
                   const base = currency(k).multiply(parseInt(i.qty)).value;

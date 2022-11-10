@@ -286,7 +286,10 @@ const pricing = (parts, pricer, itemPrice, order) => {
         ((parseInt(i.panelsH) === 1 && numQty(i.height) >= 48) ||
           (parseInt(i.panelsW) === 1 && numQty(i.width) >= 24))
       ) {
-        if (moment(order?.created_at) > moment('11-08-2022')) {
+        if (
+          !order?.oldPricing &&
+          moment(order?.created_at) > moment('11-08-2022')
+        ) {
           const k = currency(item[index][p]).multiply(1.2).value;
           const base = currency(k)
             .multiply(parseInt(i.qty))
