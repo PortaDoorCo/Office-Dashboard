@@ -55,16 +55,10 @@ export default (info, part, breakdowns) => {
     (width - leftStile - rightStile - vertMull) / panelsW +
     (inset + edge_factor / 2);
 
-  console.log({ midStileWidth });
-  console.log({ vertMull });
-
-  console.log({ '1midrail': eval(breakdowns.horizontal_mid_rail_height) });
-
   const unEven = [
     ...Array.from(Array(panelsH).keys())
       .slice(1)
       .map((i, v) => {
-        console.log({ i });
         if (v === 0) {
           if (info.fullMidStile) {
             return {
@@ -135,8 +129,6 @@ export default (info, part, breakdowns) => {
       }),
   ];
 
-  console.log({ unEven });
-
   if (eval(breakdowns.topRail_width) === eval(breakdowns.bottomRail_width)) {
     if ((panelsW > 1 && panelsH > 1) || (panelsH > 1 && panelsW === 1)) {
       return _.flatten([
@@ -157,7 +149,6 @@ export default (info, part, breakdowns) => {
         },
         unequalMidRails
           ? unEven.map((i) => {
-              console.log({ i });
               return i;
             })
           : info.fullMidStile
@@ -245,7 +236,6 @@ export default (info, part, breakdowns) => {
         },
         unequalMidRails
           ? unEven.map((i) => {
-              console.log({ i });
               return i;
             })
           : {

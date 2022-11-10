@@ -130,9 +130,6 @@ class Door extends Component {
       (panel) => panel.panel_wrap && panel.Thickness < thickness_val
     );
 
-    console.log({ customer });
-    console.log({ thickness_val });
-
     return (
       <div>
         <ModalUtil

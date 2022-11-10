@@ -22,8 +22,6 @@ const columns = [
 ];
 
 const ExpandedComponent = ({ data, selectedOrder }) => {
-  console.log({ data });
-
   let item = 0;
 
   return (
@@ -47,8 +45,6 @@ const ExpandedComponent = ({ data, selectedOrder }) => {
               {data?.changes?.part_list.map((i, index) => {
                 if (i) {
                   return Object.keys(i).map((k) => {
-                    console.log({ k: i[k] });
-
                     if (i[k].length) {
                       return (
                         <div>
@@ -57,7 +53,6 @@ const ExpandedComponent = ({ data, selectedOrder }) => {
                             ? i[k]?.map((j, p) => {
                                 item += 1;
                                 if (j) {
-                                  console.log({ j });
                                   return Object.keys(j).map((k) => {
                                     return (
                                       <li>
@@ -124,8 +119,6 @@ const Tracking = (props) => {
   const { selectedOrder } = props;
 
   const data = selectedOrder?.tracking?.slice(0).reverse();
-
-  console.log({ data });
 
   return (
     <Card>

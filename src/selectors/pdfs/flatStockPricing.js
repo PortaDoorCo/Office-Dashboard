@@ -7,8 +7,6 @@ const pricing = (parts, pricer) => {
 
     const { width, length, woodtype, thickness, extraCost, qty } = i;
 
-    console.log({ width, length, woodtype, thickness });
-
     if (width && length && woodtype && thickness) {
       price =
         ((numQty(width) * numQty(length)) / 144) *

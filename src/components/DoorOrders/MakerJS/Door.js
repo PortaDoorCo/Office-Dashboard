@@ -1589,8 +1589,6 @@ var vRails = (function () {
     let vr;
     let v;
 
-    console.log({ unevenCheck });
-
     if (unequalMidRails) {
       if (fullMidStile) {
         vr = Array.from(Array(panelsW).keys())
@@ -1626,7 +1624,6 @@ var vRails = (function () {
             v = _.flatten(vr);
             break;
           case 2:
-            console.log({ unevenInput1 });
             vr = Array.from(Array(panelsW).keys())
               .slice(1)
               .map((i) => {
@@ -1880,7 +1877,6 @@ var vRails = (function () {
             v = _.flatten(vr);
             break;
           case 2:
-            console.log({ unevenInput1 });
             vr = Array.from(Array(panelsW).keys())
               .slice(1)
               .map((i) => {

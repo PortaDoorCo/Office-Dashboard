@@ -65,8 +65,6 @@ const SalesReport = (props) => {
     if (activeTab !== tab) setActiveTab(tab);
   };
 
-  console.log({ startDate });
-
   useEffect(() => {
     setSortedDate(orders.sort((a, b) => b.dueDate - a.dueDate));
   }, [orders]);

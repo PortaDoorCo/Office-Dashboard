@@ -36,8 +36,6 @@ export default (info, part, breakdowns) => {
 
   const unequalMidRails = info[`unequalMidRails`];
 
-  console.log({ info });
-
   return [
     {
       qty: '',

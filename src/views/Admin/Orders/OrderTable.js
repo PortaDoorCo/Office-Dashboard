@@ -245,12 +245,6 @@ const OrderTable = (props) => {
           item.balance_due < 0
         );
       } else if (filterStatus === 'One Piece') {
-        console.log(
-          'ddd==>>',
-          item?.part_list?.filter((j) => {
-            return j.orderType?.value === 'One_Piece';
-          })
-        );
         return item?.part_list?.filter((j) => {
           return (
             j.orderType?.name === 'One Piece' ||

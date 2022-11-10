@@ -63,8 +63,6 @@ export default (info, part, breakdowns) => {
 
   const unevenInset = 0.75;
 
-  console.log({ topRail });
-
   const unevenSplitArray = Array.from(Array(panelsH).keys())
     .slice(1)
     .map((i, v) => {
@@ -144,25 +142,17 @@ export default (info, part, breakdowns) => {
     let panelTotal = 0;
 
     const unevenSplitInput = (v) => {
-      console.log({ v });
-
       let arr = new Array(v).fill('').map((_, i) => i + 1);
-
-      console.log({ arr });
 
       let mullions = [];
 
       const a = arr.map((i, index) => {
         if (!info[`unequalMidRails`]) {
-          console.log('hereeee');
           mullions.push(horizMull);
         } else {
           if (index === 0) {
             mullions.push(horizMull);
           }
-
-          console.log({ index });
-          console.log({ HRail: numQty(info[`horizontalMidRailSize${v}`]) });
 
           if (
             index === v - 1 &&
@@ -175,8 +165,6 @@ export default (info, part, breakdowns) => {
         }
       });
 
-      console.log({ mullions });
-
       const mullionTotal = mullions?.reduce((acc, item) => acc + item, 0);
 
       const panel =
@@ -186,10 +174,6 @@ export default (info, part, breakdowns) => {
         mullionTotal +
         panel_factor * (v + 1) +
         lip_factor / 2;
-
-      console.log({ panel });
-      console.log({ panelTotal });
-      console.log({ mullionTotal: mullionTotal });
 
       panelTotal += panel;
 
@@ -239,8 +223,6 @@ export default (info, part, breakdowns) => {
 
     const unevenDoor = [...unEven, bottom];
 
-    console.log({ unevenDoor });
-
     const convert = (arr) => {
       const res = {};
       arr.forEach((obj) => {
@@ -254,8 +236,6 @@ export default (info, part, breakdowns) => {
       });
       return Object.values(res);
     };
-
-    console.log({ convert: convert(unevenDoor) });
 
     if (glassCheck(panelsH - 1)) {
       return [

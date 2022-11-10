@@ -62,8 +62,6 @@ const downloadPDF = async (
   pricing,
   toggle
 ) => {
-  console.log({ data, breakdowns, box_breakdowns, pricing });
-
   const merger = new PDFMerger();
 
   toggle(true);
