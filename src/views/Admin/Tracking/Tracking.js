@@ -133,10 +133,6 @@ const OrderTable = (props) => {
   const [statusDebounce] = useDebounce(filterStatus, 500);
   const [orderTypeDebounce] = useDebounce(orderType, 500);
 
-  console.log({ customerDebounce });
-  console.log({ statusDebounce });
-  console.log({ orderTypeDebounce });
-
   const minDate =
     orders?.length > 0
       ? new Date(orders[orders?.length - 1].created_at)
@@ -154,7 +150,6 @@ const OrderTable = (props) => {
             .endOf('day')
             .valueOf()}&_status_nin=Quote&_status_nin=Invoiced&_status_nin=Ordered&_status_nin=Complete&_status_nin=Shipped&_limit=50000&_sort=id:DESC`;
         } else if (statusDebounce === 'Open Orders') {
-          console.log('hereee');
           search =
             '?status_nin=Quote&status_nin=Invoiced&status_nin=Ordered&status_nin=Complete&status_nin=Shipped&_limit=50000&_sort=id:DESC';
         } else if (statusDebounce === 'Late') {
@@ -207,7 +202,6 @@ const OrderTable = (props) => {
             customerDebounce?.id
           }&_limit=50000&_sort=id:DESC`;
         } else if (statusDebounce === 'Open Orders') {
-          console.log('hereee');
           search = `?status_nin=Quote&status_nin=Invoiced&status_nin=Ordered&status_nin=Complete&status_nin=Shipped&companyprofile.id=${customerDebounce?.id}&_limit=50000&_sort=id:DESC`;
         } else if (statusDebounce === 'Late') {
           search = `?dueDate_gte=${moment(startDate)

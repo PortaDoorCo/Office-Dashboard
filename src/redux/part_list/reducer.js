@@ -154,12 +154,10 @@ export default function (state = initialState, action) {
         [_.snakeCase(product)]: [...state[_.snakeCase(product)], data],
       };
     case PRODUCT_DELETED:
-      console.log({ data });
       return {
         ...state,
         [_.snakeCase(data.product)]: state[_.snakeCase(data.product)].filter(
           (item) => {
-            console.log({ item });
             return item.id !== parseInt(data.id);
           }
         ),

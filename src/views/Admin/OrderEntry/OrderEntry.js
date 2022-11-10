@@ -127,11 +127,6 @@ class OrderEntry extends Component {
   async componentDidUpdate(prevProps) {
     const { formState, total } = this.props;
 
-    console.log({ prev: prevProps.total });
-    console.log({ total });
-
-    console.log({ formState });
-
     if (formState?.job_info?.status?.value !== 'Quote') {
       if (!this.state.priceChange) {
         if (prevProps.total !== 0) {
@@ -407,8 +402,6 @@ class OrderEntry extends Component {
         canSubmit = true;
       }
     }
-
-    console.log({ order });
 
     if (!isEdit) {
       if (canSubmit) {

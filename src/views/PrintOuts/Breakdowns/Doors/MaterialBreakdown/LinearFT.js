@@ -17,8 +17,6 @@ export default (parts, breakdowns, thickness) => {
       //   return r;
       // }, {});
 
-      console.log({ j });
-
       let stile = {};
       let rail = {};
 
@@ -52,8 +50,6 @@ export default (parts, breakdowns, thickness) => {
         }
       }, {});
 
-      console.log({ stile_map });
-
       const stiles = Stiles(stile, part.part, breakdowns).map((stile) => {
         if (numQty(stile.width) > 0 && numQty(stile.height) > 0) {
           const width =
@@ -74,10 +70,7 @@ export default (parts, breakdowns, thickness) => {
         }
       });
 
-      console.log({ stiles });
-
       const rails = Rails(rail, part.part, breakdowns).map((stile) => {
-        console.log({ stile });
         if (stile.width > 0 && stile.height > 0) {
           const width =
             numQty(stile.width) === 2.376 ? 2.375 : numQty(stile.width);
@@ -85,7 +78,6 @@ export default (parts, breakdowns, thickness) => {
             numQty(stile.height) * stile.multiplier * parseInt(j.qty);
 
           const sum = height / 12;
-          console.log({ sum });
           return {
             sum,
             width,

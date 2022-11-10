@@ -38,7 +38,6 @@ import ordinal from 'ordinal';
 
 const required = (value) => (value ? undefined : 'Required');
 const panelsCount = (value) => {
-  console.log({ value });
   return parseInt(value) > 0 ? undefined : 'Must be greater than 0';
 };
 

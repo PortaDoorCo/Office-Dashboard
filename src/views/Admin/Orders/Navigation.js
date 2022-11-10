@@ -10,8 +10,6 @@ import Chat from '@material-ui/icons/Chat';
 import Attachment from '@material-ui/icons/Attachment';
 
 const Navigation = (props) => {
-  console.log({ props });
-
   if (props.user?.role?.type !== 'quality_control') {
     return (
       <Col>

@@ -3,8 +3,6 @@ import currency from 'currency.js';
 import moment from 'moment';
 
 const pricing = (parts, pricer, itemPrice, order) => {
-  console.log({ order });
-
   const item = parts.map((part, index) => {
     const design =
       (part.design && part.thickness.value === 1) ||

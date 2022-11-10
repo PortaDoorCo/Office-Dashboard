@@ -177,8 +177,6 @@ class Door extends Component {
           : null)
     );
 
-    console.log({ filtered_woodtypes });
-
     const customer = formState?.job_info?.customer;
 
     const CBD_Panels = panels?.filter((panel) => panel.CBD);

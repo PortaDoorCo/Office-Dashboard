@@ -6,8 +6,6 @@ function Door(wrap_width, face_width, thickness, panel_thickness) {
 
   var line = makerjs.paths.Line;
 
-  console.log({ panel_thickness });
-
   const drop_width = face_width + wrap_width;
 
   if (

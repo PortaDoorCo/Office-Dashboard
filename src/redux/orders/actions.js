@@ -339,8 +339,6 @@ export function searchOrders(cookie, user, search) {
     };
   } else {
     return async function (dispatch) {
-      console.log('firreeeeee');
-
       await dispatch({
         type: LOAD_ORDERS,
         data: [],

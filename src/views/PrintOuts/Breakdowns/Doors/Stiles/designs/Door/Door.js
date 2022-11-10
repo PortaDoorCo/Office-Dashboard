@@ -111,11 +111,6 @@ export default (info, part, breakdowns) => {
     }
   };
 
-  console.log({ midStileHeight });
-  console.log({ fullMidStileHeight });
-  console.log({ fullMidRailHeight });
-  console.log({ fullMidRailBottom });
-
   const fullMidRailTop = (i) =>
     numQty(info[`unevenSplitInput${i}`]) - topRail + inset + edge_factor;
 
@@ -123,8 +118,6 @@ export default (info, part, breakdowns) => {
     ...Array.from(Array(panelsH).keys())
       .slice(1)
       .map((i, v) => {
-        console.log({ i });
-        console.log({ v });
         if (v === 0) {
           return {
             door_qty: qty,
@@ -142,7 +135,6 @@ export default (info, part, breakdowns) => {
             count: qty,
           };
         } else {
-          console.log({ middleMidRail: middleMidRail(v) });
           return {
             door_qty: qty,
             qty: `(${qty})`,
@@ -169,17 +161,12 @@ export default (info, part, breakdowns) => {
       if (!res[key]) {
         res[key] = { ...obj, count: 0 };
       }
-      console.log({ key: res[key] });
       res[key].qty = `(${res[key].count + res[key].qty_2})`;
       res[key].qty_2 = res[key].count + res[key].qty_2;
       res[key].count += 1;
     });
     return Object.values(res);
   };
-
-  console.log({ unEven });
-
-  console.log({ info });
 
   if (eval(breakdowns.leftStile_width) === eval(breakdowns.rightStile_width)) {
     if ((panelsW > 1 && panelsH > 1) || (panelsW > 1 && panelsH === 1)) {

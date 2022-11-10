@@ -970,10 +970,6 @@ export const linePriceSelector = createSelector(
                 ((parseInt(i.panelsH) === 1 && numQty(i.height) >= 48) ||
                   (parseInt(i.panelsW) === 1 && numQty(i.width) >= 24))
               ) {
-                console.log({ order });
-
-                console.log({ moment: moment(order?.created_at) });
-
                 if (
                   !order?.oldPricing &&
                   moment(order?.created_at) > moment('11-08-2022')
@@ -1187,8 +1183,6 @@ export const flatStockPriceSelector = createSelector(
       let price = 0;
 
       const { width, length, woodtype, thickness, qty, extraCost } = i;
-
-      console.log({ width, length, woodtype, thickness });
 
       if (width && length && woodtype && thickness) {
         price =
