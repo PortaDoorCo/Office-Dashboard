@@ -1311,6 +1311,8 @@ export const taxSelector = createSelector(
       const sub = subTotal.reduce((acc, item) => acc + item, 0);
       const price = (sub - discount + nonDiscounted) * tax;
 
+      console.log({ sub, price });
+
       // const price = Math.round(
       //     (subTotal.reduce((acc, item) => acc + item, 0) -
       //       discount +
@@ -1321,7 +1323,13 @@ export const taxSelector = createSelector(
       return currency(price).value;
     } else {
       const sub = subTotal.reduce((acc, item) => acc + item, 0);
-      const price = (sub - discount + misc + nonDiscounted) * tax;
+      const sub2 = currency(sub)
+        .subtract(discount)
+        .add(misc)
+        .add(nonDiscounted).value;
+      const price = currency(sub2).multiply(tax).value;
+
+      console.log({ sub, sub2, price });
 
       // Math.round(
       //   (subTotal.reduce((acc, item) => acc + item, 0) -
