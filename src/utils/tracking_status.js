@@ -49,6 +49,10 @@ const status = [
     value: 'Complete',
   },
   {
+    label: 'Pending Shipment',
+    value: 'Pending Shipment',
+  },
+  {
     label: 'Shipped',
     value: 'Shipped',
   },

@@ -158,6 +158,8 @@ const OrderTable = (props) => {
             .valueOf()}&dueDate_lte=${moment(endDate)
             .endOf('day')
             .valueOf()}&_status_nin=Quote&_status_nin=Invoiced&_status_nin=Ordered&_status_nin=Complete&_status_nin=Shipped&Shipping_Scheduled_null=false&_limit=50000&_sort=id:DESC`;
+        } else if (statusDebounce === 'Pending Shipment') {
+          search = `?DateCompleted_null=false&DateShipped_null=true&_limit=50000&_sort=id:DESC`;
         } else {
           // moment(date) >= moment(startDate).startOf('day').valueOf() &&
           // moment(date) <= moment(endDate).endOf('day').valueOf() &&
@@ -211,6 +213,8 @@ const OrderTable = (props) => {
             .valueOf()}&_status_nin=Quote&_status_nin=Invoiced&_status_nin=Ordered&_status_nin=Complete&_status_nin=Shipped&Shipping_Scheduled_null=false&companyprofile.id=${
             customerDebounce?.id
           }&_limit=50000&_sort=id:DESC`;
+        } else if (statusDebounce === 'Pending Shipment') {
+          search = `?DateCompleted_null=false&DateShipped_null=true&companyprofile.id=${customerDebounce?.id}&_limit=50000&_sort=id:DESC`;
         } else {
           // moment(date) >= moment(startDate).startOf('day').valueOf() &&
           // moment(date) <= moment(endDate).endOf('day').valueOf() &&
@@ -242,6 +246,8 @@ const OrderTable = (props) => {
             .valueOf()}&_status_nin=Quote&_status_nin=Invoiced&_status_nin=Ordered&_status_nin=Complete&_status_nin=Shipped&Shipping_Scheduled_null=false&orderType_in=${orderTypeDebounce}&companyprofile.id=${
             customerDebounce?.id
           }&_limit=50000&_sort=id:DESC`;
+        } else if (statusDebounce === 'Pending Shipment') {
+          search = `?DateCompleted_null=false&DateShipped_null=true&orderType_in=${orderTypeDebounce}&companyprofile.id=${customerDebounce?.id}&_limit=50000&_sort=id:DESC`;
         } else {
           search = `?dueDate_gte=${moment(startDate)
             .startOf('day')
@@ -331,7 +337,6 @@ const OrderTable = (props) => {
               return (
                 moment(date) >= moment(startDate).startOf('day').valueOf() &&
                 moment(date) <= moment(endDate).endOf('day').valueOf() &&
-                moment(date) <= moment(endDate).endOf('day').valueOf() &&
                 !item.status.includes('Quote') &&
                 !item.status.includes('Invoiced') &&
                 !item.status.includes('Ordered') &&
@@ -355,6 +360,31 @@ const OrderTable = (props) => {
                 !item.status.includes('Ordered') &&
                 !item.status.includes('Complete') &&
                 !item.status.includes('Shipped') &&
+                item.Shipping_Scheduled
+              );
+            }
+          } else if (filterStatus === 'Pending Shipment') {
+            if (filterText?.length > 0) {
+              return (
+                moment(date) >= moment(startDate).startOf('day').valueOf() &&
+                moment(date) <= moment(endDate).endOf('day').valueOf() &&
+                item.DateCompleted &&
+                item.DateShipped === null &&
+                item.Shipping_Scheduled &&
+                ((item.id + 100)?.toString().includes(filterText) ||
+                  item.companyprofile.Company.toLowerCase().includes(
+                    filterText.toLowerCase()
+                  ) ||
+                  item.job_info.poNum
+                    .toLowerCase()
+                    .includes(filterText.toLowerCase()))
+              );
+            } else {
+              return (
+                moment(date) >= moment(startDate).startOf('day').valueOf() &&
+                moment(date) <= moment(endDate).endOf('day').valueOf() &&
+                item.DateCompleted &&
+                item.DateShipped === null &&
                 item.Shipping_Scheduled
               );
             }
@@ -469,6 +499,34 @@ const OrderTable = (props) => {
                 !item.status.includes('Ordered') &&
                 !item.status.includes('Complete') &&
                 !item.status.includes('Shipped') &&
+                item.Shipping_Scheduled
+              );
+            }
+          } else if (filterStatus === 'Pending Shipment') {
+            if (filterText?.length > 0) {
+              return (
+                item.orderType.includes(orderType) &&
+                moment(date) >= moment(startDate).startOf('day').valueOf() &&
+                moment(date) <= moment(endDate).endOf('day').valueOf() &&
+                moment(date) <= moment(endDate).endOf('day').valueOf() &&
+                item.DateCompleted &&
+                item.DateShipped === null &&
+                item.Shipping_Scheduled &&
+                ((item.id + 100)?.toString().includes(filterText) ||
+                  item.companyprofile.Company.toLowerCase().includes(
+                    filterText.toLowerCase()
+                  ) ||
+                  item.job_info.poNum
+                    .toLowerCase()
+                    .includes(filterText.toLowerCase()))
+              );
+            } else {
+              return (
+                item.orderType.includes(orderType) &&
+                moment(date) >= moment(startDate).startOf('day').valueOf() &&
+                moment(date) <= moment(endDate).endOf('day').valueOf() &&
+                item.DateCompleted &&
+                item.DateShipped === null &&
                 item.Shipping_Scheduled
               );
             }
@@ -594,6 +652,34 @@ const OrderTable = (props) => {
                 item.Shipping_Scheduled
               );
             }
+          } else if (filterStatus === 'Pending Shipment') {
+            if (filterText?.length > 0) {
+              return (
+                moment(date) >= moment(startDate).startOf('day').valueOf() &&
+                moment(date) <= moment(endDate).endOf('day').valueOf() &&
+                moment(date) <= moment(endDate).endOf('day').valueOf() &&
+                item.DateCompleted &&
+                item.DateShipped === null &&
+                item.Shipping_Scheduled &&
+                item.job_info?.customer?.Company === customer?.Company &&
+                ((item.id + 100)?.toString().includes(filterText) ||
+                  item.companyprofile.Company.toLowerCase().includes(
+                    filterText.toLowerCase()
+                  ) ||
+                  item.job_info.poNum
+                    .toLowerCase()
+                    .includes(filterText.toLowerCase()))
+              );
+            } else {
+              return (
+                moment(date) >= moment(startDate).startOf('day').valueOf() &&
+                moment(date) <= moment(endDate).endOf('day').valueOf() &&
+                item.DateCompleted &&
+                item.DateShipped === null &&
+                item.Shipping_Scheduled &&
+                item.job_info?.customer?.Company === customer?.Company
+              );
+            }
           } else {
             if (filterText?.length > 0) {
               return (
@@ -714,6 +800,36 @@ const OrderTable = (props) => {
                 !item.status.includes('Shipped') &&
                 item.job_info?.customer?.Company === customer?.Company &&
                 item.Shipping_Scheduled
+              );
+            }
+          } else if (filterStatus === 'Pending Shipment') {
+            if (filterText?.length > 0) {
+              return (
+                item.orderType.includes(orderType) &&
+                moment(date) >= moment(startDate).startOf('day').valueOf() &&
+                moment(date) <= moment(endDate).endOf('day').valueOf() &&
+                moment(date) <= moment(endDate).endOf('day').valueOf() &&
+                item.DateCompleted &&
+                item.DateShipped === null &&
+                item.Shipping_Scheduled &&
+                item.job_info?.customer?.Company === customer?.Company &&
+                ((item.id + 100)?.toString().includes(filterText) ||
+                  item.companyprofile.Company.toLowerCase().includes(
+                    filterText.toLowerCase()
+                  ) ||
+                  item.job_info.poNum
+                    .toLowerCase()
+                    .includes(filterText.toLowerCase()))
+              );
+            } else {
+              return (
+                item.orderType.includes(orderType) &&
+                moment(date) >= moment(startDate).startOf('day').valueOf() &&
+                moment(date) <= moment(endDate).endOf('day').valueOf() &&
+                item.DateCompleted &&
+                item.DateShipped === null &&
+                item.Shipping_Scheduled &&
+                item.job_info?.customer?.Company === customer?.Company
               );
             }
           } else {
