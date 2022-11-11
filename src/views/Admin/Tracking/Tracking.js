@@ -144,12 +144,11 @@ const OrderTable = (props) => {
     if (customerDebounce.Company === 'All') {
       if (orderTypeDebounce === 'All') {
         if (statusDebounce === 'In Production') {
-          alert('hi');
           search = `?dueDate_gte=${moment(startDate)
             .startOf('day')
             .valueOf()}&dueDate_lte=${moment(endDate)
             .endOf('day')
-            .valueOf()}&status_ne=Quote&status_ne=Invoiced&status_ne=Ordered&status_ne=Complete&status_ne=Shipped&_limit=50000&_sort=id:DESC`;
+            .valueOf()}&_status_nin=Quote&_status_nin=Invoiced&_status_nin=Ordered&_status_nin=Complete&_status_nin=Shipped&_limit=50000&_sort=id:DESC`;
         } else if (statusDebounce === 'Open Orders') {
           search =
             '?status_nin=Quote&status_nin=Invoiced&status_nin=Ordered&status_nin=Complete&status_nin=Shipped&_limit=50000&_sort=id:DESC';
