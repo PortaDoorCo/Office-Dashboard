@@ -1,6 +1,8 @@
 import numQty from 'numeric-quantity';
+import currency from 'currency.js';
+import moment from 'moment';
 
-const pricing = (parts, pricer, itemPrice) => {
+const pricing = (parts, pricer, itemPrice, order) => {
   const item = parts.map((part, index) => {
     const wood = part.woodtype ? part.woodtype.STANDARD_GRADE : 0;
     const finish = part.box_finish ? part.box_finish.UPCHARGE : 0;
@@ -16,19 +18,39 @@ const pricing = (parts, pricer, itemPrice) => {
         const extraCost = i.extraCost ? parseFloat(i.extraCost) : 0;
         const scoop = i.scoop.PRICE;
 
-        const price1 = eval(pricer.drawer_box_pricing) + extraCost;
+        if (
+          !order?.oldPricing &&
+          moment(order?.created_at) > moment('11-14-2022')
+        ) {
+          const price1 = eval(pricer.drawer_box_pricing) + extraCost;
 
-        const price =
-          itemPrice?.length > 0 && itemPrice[index]?.length > 0
-            ? itemPrice[index][p]
-            : Math.floor(price1 * 100) / 100;
+          const price =
+            itemPrice?.length > 0 && itemPrice[index]?.length > 0
+              ? itemPrice[index][p]
+              : currency(price1).multiply(1.035).value;
 
-        const addQty = Math.round(price * qty * 100) / 100;
+          const addQty = currency(price).multiply(qty).value;
 
-        if (height > -1) {
-          return addQty;
+          if (height > -1) {
+            return addQty;
+          } else {
+            return 0;
+          }
         } else {
-          return 0;
+          const price1 = eval(pricer.drawer_box_pricing) + extraCost;
+
+          const price =
+            itemPrice?.length > 0 && itemPrice[index]?.length > 0
+              ? itemPrice[index][p]
+              : Math.floor(price1 * 100) / 100;
+
+          const addQty = Math.round(price * qty * 100) / 100;
+
+          if (height > -1) {
+            return addQty;
+          } else {
+            return 0;
+          }
         }
       });
       return linePrice;

@@ -1,6 +1,8 @@
+import currency from 'currency.js';
 import numQty from 'numeric-quantity';
+import moment from 'moment';
 
-const pricing = (parts, pricer, itemPrice) => {
+const pricing = (parts, pricer, itemPrice, order) => {
   const item = parts.map((part, index) => {
     const design =
       (part.design && part.thickness.value === 1) ||
@@ -95,10 +97,23 @@ const pricing = (parts, pricer, itemPrice) => {
                 eval(pricer && pricer.face_frame_pricing + extraCost) * 100
               ) / 100;
 
-        if (height > -1) {
-          return Math.round(price * parseInt(i.qty) * 100) / 100;
+        if (
+          !order?.oldPricing &&
+          moment(order?.created_at) > moment('11-14-2022')
+        ) {
+          const withAdd = currency(price).multiply(1.035).value;
+
+          if (height > -1) {
+            return currency(withAdd).multiply(parseInt(i.qty)).value;
+          } else {
+            return 0;
+          }
         } else {
-          return 0;
+          if (height > -1) {
+            return currency(price).multiply(parseInt(i.qty)).value;
+          } else {
+            return 0;
+          }
         }
       });
 

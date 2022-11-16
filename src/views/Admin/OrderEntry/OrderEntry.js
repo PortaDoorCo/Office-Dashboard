@@ -55,6 +55,7 @@ import {
   linePriceSelector,
   itemPriceSelector,
   qtySelector,
+  cashTotalSelector,
 } from '../../../selectors/pricing';
 import currencyMask from '../../../utils/currencyMask';
 import CancelModal from '../../../utils/Modal';
@@ -487,7 +488,9 @@ class OrderEntry extends Component {
       role,
       prices,
       orders,
+      cashTotal,
     } = this.props;
+    console.log({ cashTotal });
 
     const customer = formState?.job_info?.customer;
     const status = formState?.job_info?.status?.value;
@@ -973,6 +976,7 @@ const mapStateToProps = (state, props) => ({
   miscTotalSelector: miscTotalSelector(state),
   balance: balanceSelector(state),
   balanceTotal: balanceTotalSelector(state),
+  cashTotal: cashTotalSelector(state),
 });
 
 const mapDispatchToProps = (dispatch) =>

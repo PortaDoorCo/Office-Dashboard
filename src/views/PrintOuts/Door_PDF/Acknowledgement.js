@@ -3,6 +3,7 @@ import Size from '../Breakdowns/Doors/Size';
 import Glass_Selection from '../Sorting/Glass_Selection';
 import _ from 'lodash';
 import currency from 'currency.js';
+import moment from 'moment';
 
 export default (data, pricing) => {
   const prices = pdfDoorPricing(
@@ -81,6 +82,10 @@ export default (data, pricing) => {
     : 0;
 
   const total = currency(order_sub_total).add(tax).value;
+  const subtractTotal = currency(total).multiply(0.035).value;
+  const cashTotal = currency(total).subtract(subtractTotal).value;
+
+  console.log({ subtractTotal, cashTotal, total });
 
   const balanceDue = currency(total)
     .subtract(depositPaid)
@@ -510,7 +515,7 @@ export default (data, pricing) => {
           columns: [
             { text: '', style: 'totals', width: 317, decoration: 'underline' },
             {
-              text: `${data.status === 'Quote' ? 'QUOTE ONLY' : 'TOTAL'}`,
+              text: `${data.status === 'Quote' ? 'QUOTE' : 'TOTAL'}`,
               style: 'totals',
               margin: [0, 0, 0, 0],
               alignment: 'right',
@@ -525,6 +530,34 @@ export default (data, pricing) => {
           ],
           margin: [0, 10, 0, 0],
         },
+        moment(data?.created_at) > moment('11-14-2022') && !data?.oldPricing
+          ? {
+              columns: [
+                {
+                  text: '',
+                  style: 'totals',
+                  width: 317,
+                  decoration: 'underline',
+                },
+                {
+                  text: `${
+                    data.status === 'Quote' ? 'Cash Discount' : 'CASH TOTAL'
+                  }`,
+                  style: 'totals',
+                  margin: [0, 0, 0, 0],
+                  alignment: 'right',
+                  width: 120,
+                },
+                {
+                  text: `${currency(cashTotal).format()}`,
+                  style: 'fonts',
+                  margin: [0, 0, 0, 0],
+                  alignment: 'right',
+                },
+              ],
+              margin: [0, 10, 0, 0],
+            }
+          : null,
         depositPaid !== 0
           ? {
               columns: [

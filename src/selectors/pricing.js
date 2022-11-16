@@ -970,17 +970,27 @@ export const linePriceSelector = createSelector(
                 ((parseInt(i.panelsH) === 1 && numQty(i.height) >= 48) ||
                   (parseInt(i.panelsW) === 1 && numQty(i.width) >= 24))
               ) {
-                if (
-                  !order?.oldPricing &&
-                  moment(order?.created_at) > moment('11-08-2022')
-                ) {
-                  console.log('less');
-                  const k = currency(item[index][p]).multiply(1.2).value;
-                  const base = currency(k).multiply(parseInt(i.qty)).value;
-                  const price = base;
-                  return currency(price).value;
+                if (moment(order?.created_at) > moment('11-08-2022')) {
+                  if (
+                    !order?.oldPricing &&
+                    moment(order?.created_at) > moment('11-14-2022')
+                  ) {
+                    console.log('less1');
+                    const l = currency(item[index][p]).multiply(1.035).value;
+                    const k = currency(l).multiply(1.2).value;
+                    const base = currency(k).multiply(parseInt(i.qty)).value;
+                    const price = base;
+                    return currency(price).value;
+                  } else {
+                    console.log('less');
+                    const k = currency(item[index][p]).multiply(1.2).value;
+                    const base = currency(k).multiply(parseInt(i.qty)).value;
+                    const price = base;
+                    return currency(price).value;
+                  }
                 } else {
-                  console.log('more');
+                  console.log('more1');
+                  console.log({ order });
                   const base =
                     Math.round(item[index][p] * parseInt(i.qty) * 100) / 100;
                   const add = base * 0.2;
@@ -989,12 +999,33 @@ export const linePriceSelector = createSelector(
                 }
               } else {
                 if (part?.orderType?.value === 'Face_Frame') {
-                  return currency(item[index][p])
-                    .add(finish[index][p])
-                    .multiply(parseInt(i.qty)).value;
+                  if (
+                    !order?.oldPricing &&
+                    moment(order?.created_at) > moment('11-14-2022')
+                  ) {
+                    const price = currency(item[index][p])
+                      .add(finish[index][p])
+                      .multiply(1.035).value;
+
+                    return currency(price).multiply(parseInt(i.qty)).value;
+                  } else {
+                    return currency(item[index][p])
+                      .add(finish[index][p])
+                      .multiply(parseInt(i.qty)).value;
+                  }
                 } else {
-                  return currency(item[index][p]).multiply(parseInt(i.qty))
-                    .value;
+                  if (
+                    !order?.oldPricing &&
+                    moment(order?.created_at) > moment('11-14-2022')
+                  ) {
+                    console.log('HAY');
+                    const a = currency(item[index][p]).multiply(1.035).value;
+                    return currency(a).multiply(parseInt(i.qty)).value;
+                  } else {
+                    console.log('NOT HAY');
+                    return currency(item[index][p]).multiply(parseInt(i.qty))
+                      .value;
+                  }
                 }
               }
             } else {
@@ -1370,6 +1401,12 @@ export const totalSelector = createSelector(
     }
   }
 );
+
+export const cashTotalSelector = createSelector([totalSelector], (total) => {
+  const preTotal = currency(total).multiply(0.035).value;
+  const postTotal = currency(total).subtract(preTotal).value;
+  return postTotal;
+});
 
 export const rushTotal = createSelector(
   [

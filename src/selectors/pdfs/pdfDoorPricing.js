@@ -284,15 +284,24 @@ const pricing = (parts, pricer, itemPrice, order) => {
         ((parseInt(i.panelsH) === 1 && numQty(i.height) >= 48) ||
           (parseInt(i.panelsW) === 1 && numQty(i.width) >= 24))
       ) {
-        if (
-          !order?.oldPricing &&
-          moment(order?.created_at) > moment('11-08-2022')
-        ) {
-          const k = currency(item[index][p]).multiply(1.2).value;
-          const base = currency(k)
-            .multiply(parseInt(i.qty))
-            .add(i.price_adjustment ? currency(i.price_adjustment) : 0).value;
-          return currency(base).value;
+        if (moment(order?.created_at) > moment('11-08-2022')) {
+          if (
+            !order?.oldPricing &&
+            moment(order?.created_at) > moment('11-14-2022')
+          ) {
+            const l = currency(item[index][p]).multiply(1.035).value;
+            const k = currency(l).multiply(1.2).value;
+            const base = currency(k)
+              .multiply(parseInt(i.qty))
+              .add(i.price_adjustment ? currency(i.price_adjustment) : 0).value;
+            return currency(base).value;
+          } else {
+            const k = currency(item[index][p]).multiply(1.2).value;
+            const base = currency(k)
+              .multiply(parseInt(i.qty))
+              .add(i.price_adjustment ? currency(i.price_adjustment) : 0).value;
+            return currency(base).value;
+          }
         } else {
           const base =
             Math.round(item[index][p] * parseInt(i.qty) * 100) / 100 +
@@ -305,10 +314,21 @@ const pricing = (parts, pricer, itemPrice, order) => {
 
         // return base + add;
       } else {
-        const base = currency(item[index][p])
-          .multiply(parseInt(i.qty))
-          .add(i.price_adjustment ? currency(i.price_adjustment) : 0).value;
-        return base;
+        if (
+          !order?.oldPricing &&
+          moment(order?.created_at) > moment('11-14-2022')
+        ) {
+          const l = currency(item[index][p]).multiply(1.035).value;
+          const base = currency(l)
+            .multiply(parseInt(i.qty))
+            .add(i.price_adjustment ? currency(i.price_adjustment) : 0).value;
+          return base;
+        } else {
+          const base = currency(item[index][p])
+            .multiply(parseInt(i.qty))
+            .add(i.price_adjustment ? currency(i.price_adjustment) : 0).value;
+          return base;
+        }
       }
     });
   });
