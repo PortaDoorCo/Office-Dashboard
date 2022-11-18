@@ -510,14 +510,14 @@ export default (data, pricing) => {
           columns: [
             { text: '', style: 'totals', width: 317, decoration: 'underline' },
             {
-              text: `${data.status === 'Quote' ? 'QUOTE ONLY' : 'TOTAL'}`,
+              text: `${data.status === 'Quote' ? 'Credit Card' : 'TOTAL'}`,
               style: 'totals',
               margin: [0, 0, 0, 0],
               alignment: 'right',
               width: 120,
             },
             {
-              text: `$${total.toFixed(2)}`,
+              text: `$${currency(total).multiply(1.035).value}`,
               style: 'fonts',
               margin: [0, 0, 0, 0],
               alignment: 'right',
@@ -525,6 +525,27 @@ export default (data, pricing) => {
           ],
           margin: [0, 10, 0, 0],
         },
+
+        {
+          columns: [
+            { text: '', style: 'totals', width: 317, decoration: 'underline' },
+            {
+              text: `${data.status === 'Quote' ? 'Cash/Check' : 'TOTAL'}`,
+              style: 'totals',
+              margin: [0, 0, 0, 0],
+              alignment: 'right',
+              width: 120,
+            },
+            {
+              text: `${currency(total).format()}`,
+              style: 'fonts',
+              margin: [0, 0, 0, 0],
+              alignment: 'right',
+            },
+          ],
+          margin: [0, 10, 0, 0],
+        },
+
         depositPaid !== 0
           ? {
               columns: [
