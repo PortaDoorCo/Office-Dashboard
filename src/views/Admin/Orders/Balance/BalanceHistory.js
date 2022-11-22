@@ -28,6 +28,7 @@ import { updateOrder } from '../../../../redux/orders/actions';
 import Cookies from 'js-cookie';
 // import 'react-widgets/dist/css/react-widgets.css';
 import currencyMask from '../../../../utils/currencyMask';
+import currency from 'currency.js';
 
 const cookie = Cookies.get('jwt');
 
@@ -188,6 +189,7 @@ class BalanceHistory extends Component {
     } = this.props;
 
     let updated_total = total;
+    let cc_updated_total = currency(total).multiply(1.035).value;
 
     const balance_history_paid =
       formState &&
@@ -201,17 +203,69 @@ class BalanceHistory extends Component {
 
     const balance_paid_history =
       formState && formState.balance_history
-        ? formState.balance_history?.map((i) => {
-            if (i.balance_paid) {
-              return i.balance_paid;
-            } else if (i.deposit_paid) {
-              return i.deposit_paid;
-            } else {
-              return 0;
-            }
-          })
+        ? formState.balance_history
+            ?.filter((i) => {
+              if (
+                i.payment_method?.NAME === 'CASH' ||
+                i.payment_method?.NAME === 'CHECK'
+              ) {
+                return i;
+              }
+            })
+            .map((i) => {
+              if (i.balance_paid) {
+                return i.balance_paid;
+              } else if (i.deposit_paid) {
+                return i.deposit_paid;
+              } else {
+                return 0;
+              }
+            })
         : [0];
+
     const balance_paid_total = balance_paid_history.reduce(
+      (acc, item) => acc + item,
+      0
+    );
+
+    const cc_balance_history_paid =
+      formState &&
+      formState.balance_history?.slice(0).filter((i, index) => {
+        if (
+          i.payment_method?.NAME !== 'CASH' ||
+          i.payment_method?.NAME !== 'CHECK'
+        ) {
+          cc_updated_total =
+            cc_updated_total -
+            parseFloat(i.balance_paid || 0) -
+            parseFloat(i.deposit_paid || 0);
+          return cc_updated_total;
+        }
+      });
+
+    const cc_balance_paid_history =
+      formState && formState.balance_history
+        ? formState.balance_history
+            ?.filter((i) => {
+              if (
+                i.payment_method?.NAME !== 'CASH' ||
+                i.payment_method?.NAME !== 'CHECK'
+              ) {
+                return i;
+              }
+            })
+            .map((i) => {
+              if (i.balance_paid) {
+                return i.balance_paid;
+              } else if (i.deposit_paid) {
+                return i.deposit_paid;
+              } else {
+                return 0;
+              }
+            })
+        : [0];
+
+    const cc_balance_paid_total = cc_balance_paid_history.reduce(
       (acc, item) => acc + item,
       0
     );
@@ -253,19 +307,30 @@ class BalanceHistory extends Component {
             />
 
             <Row className="mt-3">
+              <Col lg="4">
+                <h3>Cash / CHK Total:</h3>${total.toFixed(2)}
+              </Col>
               <Col>
-                <h3>Order Total:</h3>${total.toFixed(2)}
+                <h3>Card Total:</h3>${currency(total).multiply(1.035).value}
               </Col>
             </Row>
+
             <Row className="mt-3">
+              <Col lg="4">
+                <h3>Cash Paid:</h3>${balance_paid_total.toFixed(2)}
+              </Col>
               <Col>
-                <h3>Total Paid:</h3>${balance_paid_total.toFixed(2)}
+                <h3>Card Paid:</h3>${cc_balance_paid_total.toFixed(2)}
               </Col>
             </Row>
+
             <hr />
             <Row className="mt-3">
-              <Col>
+              <Col lg="4">
                 <h3>Balance Due:</h3>${updated_total.toFixed(2)}
+              </Col>
+              <Col>
+                <h3>Card Balance Due:</h3>${cc_updated_total.toFixed(2)}
               </Col>
             </Row>
           </form>

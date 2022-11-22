@@ -22,7 +22,7 @@ import {
   updateStatus,
 } from '../../../../redux/orders/actions';
 import DatePicker from 'react-widgets/DatePicker';
-// import 'react-widgets/dist/css/react-widgets.css';
+import currency from 'currency.js';
 
 const cookie = Cookies.get('jwt');
 
@@ -147,11 +147,27 @@ class Balance extends Component {
             <Row>
               <Col>
                 <FormGroup>
-                  <Label htmlFor="Total">Order Total</Label>
+                  <Label htmlFor="Total">Cash / CHK Total</Label>
                   <Input
                     disabled
                     placeholder={`$${
                       formState && formState.total && formState.total.toFixed(2)
+                    }`}
+                  />
+                </FormGroup>
+              </Col>
+            </Row>
+
+            <Row>
+              <Col>
+                <FormGroup>
+                  <Label htmlFor="Total">Card Total</Label>
+                  <Input
+                    disabled
+                    placeholder={`$${
+                      formState &&
+                      formState.total &&
+                      currency(formState.total).multiply(1.035).value
                     }`}
                   />
                 </FormGroup>
