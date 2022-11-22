@@ -225,6 +225,7 @@ class OrderEntry extends Component {
       qty,
       orders,
       fieldMeta,
+      ccTotal,
     } = this.props;
 
     // const orderType = orderType;
@@ -315,6 +316,7 @@ class OrderEntry extends Component {
         subTotals: subTotals,
         tax: tax,
         total: total,
+        ccTotal: ccTotal,
         balance_due: total,
         qty: qty,
         orderType: orderType,
@@ -360,6 +362,7 @@ class OrderEntry extends Component {
         qty: qty,
         tax: tax,
         total: total,
+        ccTotal: ccTotal,
         balance_due:
           total -
           values.balance_history
