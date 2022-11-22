@@ -1371,6 +1371,10 @@ export const totalSelector = createSelector(
   }
 );
 
+export const ccSelector = createSelector([totalSelector], (total) => {
+  return currency(total).multiply(1.035).value;
+});
+
 export const rushTotal = createSelector(
   [
     subTotalSelector,

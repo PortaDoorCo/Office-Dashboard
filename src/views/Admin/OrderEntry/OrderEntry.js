@@ -55,6 +55,7 @@ import {
   linePriceSelector,
   itemPriceSelector,
   qtySelector,
+  ccSelector,
 } from '../../../selectors/pricing';
 import currencyMask from '../../../utils/currencyMask';
 import CancelModal from '../../../utils/Modal';
@@ -487,6 +488,7 @@ class OrderEntry extends Component {
       role,
       prices,
       orders,
+      ccTotal,
     } = this.props;
 
     const customer = formState?.job_info?.customer;
@@ -702,14 +704,29 @@ class OrderEntry extends Component {
                           />
                         </InputGroup>
 
-                        <strong>Total: </strong>
-                        <InputGroup className="mb-3">
+                        <strong>Cash/CHK Total: </strong>
+                        <InputGroup>
                           <InputGroupAddon addonType="prepend">
                             <InputGroupText>$</InputGroupText>
                           </InputGroupAddon>
                           <NumberFormat
                             thousandSeparator={true}
                             value={total}
+                            disabled={true}
+                            customInput={Input}
+                            {...currencyMask}
+                            prefix={'$'}
+                          />
+                        </InputGroup>
+
+                        <strong>Card Total: </strong>
+                        <InputGroup className="mb-3">
+                          <InputGroupAddon addonType="prepend">
+                            <InputGroupText>$</InputGroupText>
+                          </InputGroupAddon>
+                          <NumberFormat
+                            thousandSeparator={true}
+                            value={ccTotal}
                             disabled={true}
                             customInput={Input}
                             {...currencyMask}
@@ -973,6 +990,7 @@ const mapStateToProps = (state, props) => ({
   miscTotalSelector: miscTotalSelector(state),
   balance: balanceSelector(state),
   balanceTotal: balanceTotalSelector(state),
+  ccTotal: ccSelector(state),
 });
 
 const mapDispatchToProps = (dispatch) =>

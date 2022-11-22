@@ -119,14 +119,29 @@ const CheckoutBox = (props) => {
                     />
                   </InputGroup>
 
-                  <strong>Total: </strong>
-                  <InputGroup className="mb-3">
+                  <strong>Cash/CHK Total: </strong>
+                  <InputGroup>
                     <InputGroupAddon addonType="prepend">
                       <InputGroupText>$</InputGroupText>
                     </InputGroupAddon>
                     <NumberFormat
                       thousandSeparator={true}
                       value={props.total}
+                      disabled={true}
+                      customInput={Input}
+                      {...currencyMask}
+                      prefix={'$'}
+                    />
+                  </InputGroup>
+
+                  <strong>Card Total: </strong>
+                  <InputGroup className="mb-3">
+                    <InputGroupAddon addonType="prepend">
+                      <InputGroupText>$</InputGroupText>
+                    </InputGroupAddon>
+                    <NumberFormat
+                      thousandSeparator={true}
+                      value={props.ccTotal}
                       disabled={true}
                       customInput={Input}
                       {...currencyMask}
