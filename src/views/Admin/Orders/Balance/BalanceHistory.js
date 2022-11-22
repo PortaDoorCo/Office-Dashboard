@@ -247,14 +247,14 @@ class BalanceHistory extends Component {
       formState && formState.balance_history
         ? formState.balance_history
             ?.filter((i) => {
-              if (
-                i.payment_method?.NAME !== 'CASH' ||
-                i.payment_method?.NAME !== 'CHECK'
-              ) {
-                return i;
-              }
+              console.log({ i });
+              return (
+                i?.payment_method?.NAME !== 'CASH' &&
+                i?.payment_method?.NAME !== 'CHECK'
+              );
             })
             .map((i) => {
+              console.log('balls', i);
               if (i.balance_paid) {
                 return i.balance_paid;
               } else if (i.deposit_paid) {
