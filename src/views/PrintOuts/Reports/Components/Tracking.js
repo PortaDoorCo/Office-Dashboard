@@ -102,7 +102,7 @@ export default (data, startDate, endDate, status) => {
       columns: [
         {
           stack: [
-            `LATE LIST - ${moment(startDate).format(
+            `${status} - ${moment(startDate).format(
               'MM/DD/YYYY'
             )} thru ${moment(endDate).format('MM/DD/YYYY')}`,
           ],

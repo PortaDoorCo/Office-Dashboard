@@ -214,6 +214,9 @@ class OrderPage extends Component {
       return null;
     });
 
+    newOrder['oldPricing'] =
+      moment(data?.created_at) < moment('11-08-2022') ? true : false;
+
     delete newOrder['id'];
     delete newOrder['_id'];
     delete newOrder['orderNum'];
