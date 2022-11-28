@@ -15,7 +15,6 @@ import {
   searchOrders,
 } from '../../../redux/orders/actions';
 import Cookies from 'js-cookie';
-// import momentLocaliser from 'react-widgets-moment';
 import { Row, Col, Button, FormGroup, Input } from 'reactstrap';
 import 'react-dates/initialize';
 import { SingleDatePicker } from 'react-dates';
@@ -29,8 +28,6 @@ import Tracking from '../../PrintOuts/Reports/Tracking';
 import OpenOrders from '../../PrintOuts/Reports/OpenOrders';
 import DropdownList from 'react-widgets/DropdownList';
 import { useDebounce } from 'use-debounce';
-
-// momentLocaliser(moment);
 
 const TextField = styled.input`
   height: 32px;
@@ -272,6 +269,7 @@ const OrderTable = (props) => {
   useEffect(() => {
     const filteredOrders = orders?.filter((item) => {
       let date = new Date(item.dueDate);
+      let Date_Complete = new Date(item.DateCompleted);
 
       const dateOrdered = item?.tracking?.filter((x) => {
         return x.status === 'Ordered';
@@ -366,8 +364,10 @@ const OrderTable = (props) => {
           } else if (filterStatus === 'Pending Shipment') {
             if (filterText?.length > 0) {
               return (
-                moment(date) >= moment(startDate).startOf('day').valueOf() &&
-                moment(date) <= moment(endDate).endOf('day').valueOf() &&
+                moment(Date_Complete) >=
+                  moment(startDate).startOf('day').valueOf() &&
+                moment(Date_Complete) <=
+                  moment(endDate).endOf('day').valueOf() &&
                 item.DateCompleted &&
                 item.DateShipped === null &&
                 item.Shipping_Scheduled &&
@@ -381,8 +381,10 @@ const OrderTable = (props) => {
               );
             } else {
               return (
-                moment(date) >= moment(startDate).startOf('day').valueOf() &&
-                moment(date) <= moment(endDate).endOf('day').valueOf() &&
+                moment(Date_Complete) >=
+                  moment(startDate).startOf('day').valueOf() &&
+                moment(Date_Complete) <=
+                  moment(endDate).endOf('day').valueOf() &&
                 item.DateCompleted &&
                 item.DateShipped === null &&
                 item.Shipping_Scheduled
@@ -506,9 +508,12 @@ const OrderTable = (props) => {
             if (filterText?.length > 0) {
               return (
                 item.orderType.includes(orderType) &&
-                moment(date) >= moment(startDate).startOf('day').valueOf() &&
-                moment(date) <= moment(endDate).endOf('day').valueOf() &&
-                moment(date) <= moment(endDate).endOf('day').valueOf() &&
+                moment(Date_Complete) >=
+                  moment(startDate).startOf('day').valueOf() &&
+                moment(Date_Complete) <=
+                  moment(endDate).endOf('day').valueOf() &&
+                moment(Date_Complete) <=
+                  moment(endDate).endOf('day').valueOf() &&
                 item.DateCompleted &&
                 item.DateShipped === null &&
                 item.Shipping_Scheduled &&
@@ -523,8 +528,10 @@ const OrderTable = (props) => {
             } else {
               return (
                 item.orderType.includes(orderType) &&
-                moment(date) >= moment(startDate).startOf('day').valueOf() &&
-                moment(date) <= moment(endDate).endOf('day').valueOf() &&
+                moment(Date_Complete) >=
+                  moment(startDate).startOf('day').valueOf() &&
+                moment(Date_Complete) <=
+                  moment(endDate).endOf('day').valueOf() &&
                 item.DateCompleted &&
                 item.DateShipped === null &&
                 item.Shipping_Scheduled
@@ -655,9 +662,12 @@ const OrderTable = (props) => {
           } else if (filterStatus === 'Pending Shipment') {
             if (filterText?.length > 0) {
               return (
-                moment(date) >= moment(startDate).startOf('day').valueOf() &&
-                moment(date) <= moment(endDate).endOf('day').valueOf() &&
-                moment(date) <= moment(endDate).endOf('day').valueOf() &&
+                moment(Date_Complete) >=
+                  moment(startDate).startOf('day').valueOf() &&
+                moment(Date_Complete) <=
+                  moment(endDate).endOf('day').valueOf() &&
+                moment(Date_Complete) <=
+                  moment(endDate).endOf('day').valueOf() &&
                 item.DateCompleted &&
                 item.DateShipped === null &&
                 item.Shipping_Scheduled &&
@@ -672,8 +682,10 @@ const OrderTable = (props) => {
               );
             } else {
               return (
-                moment(date) >= moment(startDate).startOf('day').valueOf() &&
-                moment(date) <= moment(endDate).endOf('day').valueOf() &&
+                moment(Date_Complete) >=
+                  moment(startDate).startOf('day').valueOf() &&
+                moment(Date_Complete) <=
+                  moment(endDate).endOf('day').valueOf() &&
                 item.DateCompleted &&
                 item.DateShipped === null &&
                 item.Shipping_Scheduled &&
@@ -806,9 +818,12 @@ const OrderTable = (props) => {
             if (filterText?.length > 0) {
               return (
                 item.orderType.includes(orderType) &&
-                moment(date) >= moment(startDate).startOf('day').valueOf() &&
-                moment(date) <= moment(endDate).endOf('day').valueOf() &&
-                moment(date) <= moment(endDate).endOf('day').valueOf() &&
+                moment(Date_Complete) >=
+                  moment(startDate).startOf('day').valueOf() &&
+                moment(Date_Complete) <=
+                  moment(endDate).endOf('day').valueOf() &&
+                moment(Date_Complete) <=
+                  moment(endDate).endOf('day').valueOf() &&
                 item.DateCompleted &&
                 item.DateShipped === null &&
                 item.Shipping_Scheduled &&
@@ -824,8 +839,10 @@ const OrderTable = (props) => {
             } else {
               return (
                 item.orderType.includes(orderType) &&
-                moment(date) >= moment(startDate).startOf('day').valueOf() &&
-                moment(date) <= moment(endDate).endOf('day').valueOf() &&
+                moment(Date_Complete) >=
+                  moment(startDate).startOf('day').valueOf() &&
+                moment(Date_Complete) <=
+                  moment(endDate).endOf('day').valueOf() &&
                 item.DateCompleted &&
                 item.DateShipped === null &&
                 item.Shipping_Scheduled &&
@@ -1116,11 +1133,19 @@ const OrderTable = (props) => {
 
         <Col lg="3">
           {filterStatus !== 'Open Orders' ? (
-            <Row>
-              <Col>
-                <h3>Filter Due Date</h3>
-              </Col>
-            </Row>
+            filterStatus === 'Pending Shipment' ? (
+              <Row>
+                <Col>
+                  <h3>Filter Completion Date</h3>
+                </Col>
+              </Row>
+            ) : (
+              <Row>
+                <Col>
+                  <h3>Filter Due Date</h3>
+                </Col>
+              </Row>
+            )
           ) : null}
 
           {filterStatus !== 'Open Orders' ? (
