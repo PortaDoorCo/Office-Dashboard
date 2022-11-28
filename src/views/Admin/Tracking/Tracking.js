@@ -1133,11 +1133,19 @@ const OrderTable = (props) => {
 
         <Col lg="3">
           {filterStatus !== 'Open Orders' ? (
-            <Row>
-              <Col>
-                <h3>Filter Due Date</h3>
-              </Col>
-            </Row>
+            filterStatus === 'Pending Shipment' ? (
+              <Row>
+                <Col>
+                  <h3>Filter Completion Date</h3>
+                </Col>
+              </Row>
+            ) : (
+              <Row>
+                <Col>
+                  <h3>Filter Due Date</h3>
+                </Col>
+              </Row>
+            )
           ) : null}
 
           {filterStatus !== 'Open Orders' ? (
