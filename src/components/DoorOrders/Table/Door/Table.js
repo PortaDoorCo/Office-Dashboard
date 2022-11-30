@@ -605,17 +605,49 @@ const DoorTable = ({
 
     if (value > 1) {
       if (part.construction?.value === 'Cope') {
-        dispatch(
-          change(
-            'Order',
-            `part_list[${i}].dimensions[${index}].verticalMidRailSize`,
-            fraction(
-              part.profile
-                ? part.profile?.PROFILE_WIDTH + part.edge?.LIP_FACTOR / 2
-                : 0
-            )
+        if (
+          part.dimensions[index].verticalMidRailSize !==
+          fraction(
+            part.profile
+              ? part.profile?.Mid_Rail_Width
+                ? part.profile?.Mid_Rail_Width
+                : part.profile?.PROFILE_WIDTH +
+                  (part.edge ? part.edge?.LIP_FACTOR / 2 : 0)
+              : 0
           )
-        );
+        ) {
+          if (parseFloat(part.dimensions[index]?.verticalMidRailSize) < 1) {
+            dispatch(
+              change(
+                'Order',
+                `part_list[${i}].dimensions[${index}].verticalMidRailSize`,
+                fraction(
+                  part.profile
+                    ? part.profile?.Mid_Rail_Width
+                      ? part.profile?.Mid_Rail_Width
+                      : part.profile?.PROFILE_WIDTH +
+                        (part.edge ? part.edge?.LIP_FACTOR / 2 : 0)
+                    : 0
+                )
+              )
+            );
+          }
+        } else {
+          dispatch(
+            change(
+              'Order',
+              `part_list[${i}].dimensions[${index}].verticalMidRailSize`,
+              fraction(
+                part.profile
+                  ? part.profile?.Mid_Rail_Width
+                    ? part.profile?.Mid_Rail_Width
+                    : part.profile?.PROFILE_WIDTH +
+                      (part.edge ? part.edge?.LIP_FACTOR / 2 : 0)
+                  : 0
+              )
+            )
+          );
+        }
       } else {
         dispatch(
           change(
