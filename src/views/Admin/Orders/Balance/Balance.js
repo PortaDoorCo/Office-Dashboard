@@ -22,7 +22,6 @@ import {
   updateStatus,
 } from '../../../../redux/orders/actions';
 import DatePicker from 'react-widgets/DatePicker';
-// import 'react-widgets/dist/css/react-widgets.css';
 
 const cookie = Cookies.get('jwt');
 
@@ -137,8 +136,15 @@ class Balance extends Component {
   };
 
   render() {
-    const { formState, handleSubmit, balanceTotal, role, paymentTypes, tax } =
-      this.props;
+    const {
+      formState,
+      handleSubmit,
+      balanceTotal,
+      role,
+      paymentTypes,
+      tax,
+      total,
+    } = this.props;
 
     if (formState) {
       return (
@@ -148,12 +154,7 @@ class Balance extends Component {
               <Col>
                 <FormGroup>
                   <Label htmlFor="Total">Order Total</Label>
-                  <Input
-                    disabled
-                    placeholder={`$${
-                      formState && formState.total && formState.total.toFixed(2)
-                    }`}
-                  />
+                  <Input disabled placeholder={`$${total?.toFixed(2)}`} />
                 </FormGroup>
               </Col>
             </Row>
@@ -162,12 +163,7 @@ class Balance extends Component {
               <Col>
                 <FormGroup>
                   <Label htmlFor="Total">Sales Tax</Label>
-                  <Input
-                    disabled
-                    placeholder={`$${
-                      formState && formState.tax && formState.tax.toFixed(2)
-                    }`}
-                  />
+                  <Input disabled placeholder={`$${tax?.toFixed(2)}`} />
                 </FormGroup>
               </Col>
             </Row>

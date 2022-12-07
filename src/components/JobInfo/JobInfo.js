@@ -65,6 +65,7 @@ class JobInfo extends Component {
       loaded: false,
       collapse: false,
       dynamicStatus: orderEntryStatus,
+      rush: false,
     };
   }
 
@@ -110,26 +111,6 @@ class JobInfo extends Component {
           );
         }
       }
-      // if (formState.job_info?.Rush !== prevProps.formState?.job_info?.Rush) {
-      //   if (formState.job_info.Sample) {
-      //     this.props.dispatch(change('Order', 'discount', 0));
-      //   } else {
-      //     await this.props.dispatch(change('Order', 'discount', 0));
-      //     await sleep(500);
-      //     await this.props.dispatch(
-      //       change('Order', 'misc_items', [
-      //         ...formState?.misc_items,
-      //         {
-      //           qty: 1,
-      //           item2: 'RUSH',
-      //           price: total / 2 > 150 ? total / 2 : 150,
-      //           category: 'custom',
-      //           pricePer: total / 2 > 150 ? total / 2 : 150,
-      //         },
-      //       ])
-      //     );
-      //   }
-      // }
       if (
         formState?.job_info?.customer?.id !==
         prevProps.formState?.job_info?.customer?.id
@@ -286,51 +267,52 @@ class JobInfo extends Component {
     }
   }
 
-  // saveEmails() {
-  //   const { formState, saveEmail, cookie } = this.props;
-
-  //   const jobInfo = formState?.job_info;
-  //   const customer = formState?.job_info?.customer;
-
-  //   console.log('EMMMMAIIILL');
-
-  //   const emails = {
-  //     EMAIL: jobInfo.EMAIL,
-  //     Email2: jobInfo.Email2,
-  //     Email3: jobInfo.Email3,
-  //     Email4: jobInfo.Email4,
-  //     Email5: jobInfo.Email5,
-  //     Email6: jobInfo.Email6,
-  //   };
-
-  //   saveEmail(customer?.id, emails, cookie);
-  // }
-
   rushOrder = async (e) => {
-    const { formState, total, totalDiscount } = this.props;
+    const { formState, total, edit } = this.props;
 
-    if (!formState?.job_info?.Rush) {
-      await this.props.dispatch(change('Order', 'discount', 0));
-      await this.props.dispatch(
-        change('Order', 'misc_items', [
-          ...formState?.misc_items,
-          {
-            qty: 1,
-            item2: 'RUSH',
-            price: total / 2 > 150 ? total / 2 : 150,
-            category: 'custom',
-            pricePer: total / 2 > 150 ? total / 2 : 150,
-          },
-        ])
-      );
-    } else {
-      await this.props.dispatch(
-        change(
-          'Order',
-          'discount',
-          formState?.job_info?.customer?.Discount || 0
-        )
-      );
+    if (edit) {
+      if (!formState?.job_info?.Rush) {
+        await this.props.dispatch(change('Order', 'discount', 0));
+        if (!this.state.rush) {
+          await this.props.dispatch(
+            change('Order', 'misc_items', [
+              ...formState?.misc_items,
+              {
+                qty: 1,
+                item2: 'RUSH',
+                price: total / 2 > 150 ? total / 2 : 150,
+                category: 'custom',
+                pricePer: total / 2 > 150 ? total / 2 : 150,
+              },
+            ])
+          );
+        }
+
+        this.setState({
+          rush: true,
+        });
+      } else {
+        await this.props.dispatch(
+          change(
+            'Order',
+            'discount',
+            formState?.job_info?.customer?.Discount || 0
+          )
+        );
+
+        if (this.state.rush) {
+          await this.props.dispatch(
+            change(
+              'Order',
+              'misc_items',
+              formState?.misc_items?.filter((x) => x.item2 !== 'RUSH')
+            )
+          );
+          this.setState({
+            rush: false,
+          });
+        }
+      }
     }
   };
 
@@ -392,28 +374,6 @@ class JobInfo extends Component {
           </Col>
         </Row>
 
-        {/* {formState?.Shipping_Scheduled &&
-        (role?.type === 'authenticated' ||
-          role?.type === 'owner' ||
-          role?.type === 'administrator' ||
-          role?.type === 'management' ||
-          role?.type === 'office') ? (
-            <Row>
-              <Col lg="9" />
-              <Col>
-                <FormGroup>
-                  <Label htmlFor="dueDate">Date Shipped</Label>
-                  <Field
-                    name="DateShipped"
-                    showTime={true}
-                    component={renderDateTimePicker}
-                    edit={edit}
-                  />
-                </FormGroup>
-              </Col>
-            </Row>
-          ) : null} */}
-
         <Row className="mb-3">
           <Col lg="3">
             <FormGroup>
@@ -427,24 +387,6 @@ class JobInfo extends Component {
               <p>{dateDifference} Business Day Lead Time</p>
             </FormGroup>
           </Col>
-
-          {/* {role?.type === 'authenticated' ||
-          role?.type === 'owner' ||
-          role?.type === 'administrator' ||
-          role?.type === 'management' ||
-          role?.type === 'office' ? 
-            <Col lg="3">
-              <FormGroup>
-                <Label htmlFor="dueDate">Date Ordered</Label>
-                <Field
-                  name="DateOrdered"
-                  showTime={true}
-                  component={renderDateTimePicker}
-                  edit={edit}
-                />
-              </FormGroup>
-            </Col> : null
-          }  */}
 
           <Col lg="6" />
 
@@ -995,51 +937,6 @@ class JobInfo extends Component {
               </FormGroup>
             </Col>
           </Row>
-
-          {/* <Row>
-                  <Col xs="12">
-                    <h6>Email</h6>
-                  </Col>
-                </Row>
-
-                <Row>
-                  <Col sm="4">
-                    <FormGroup>
-                      <Label htmlFor="phone">Email 1</Label>
-                      <Field
-                        name={'EMAIL'}
-                        type="text"
-                        component={renderField}
-                        label="company"
-                        edit={edit}
-                      />
-                    </FormGroup>
-                  </Col>
-                  <Col sm="4">
-                    <FormGroup>
-                      <Label htmlFor="phone">Email 2</Label>
-                      <Field
-                        name={'EMAIL2'}
-                        type="text"
-                        component={renderField}
-                        label="company"
-                        edit={edit}
-                      />
-                    </FormGroup>
-                  </Col>
-                  <Col sm="4">
-                    <FormGroup>
-                      <Label htmlFor="phone">Email 3</Label>
-                      <Field
-                        name={'EMAIL3'}
-                        type="text"
-                        component={renderField}
-                        label="company"
-                        edit={edit}
-                      />
-                    </FormGroup>
-                  </Col>
-                </Row> */}
         </Collapse>
 
         <hr />

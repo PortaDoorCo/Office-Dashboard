@@ -26,7 +26,6 @@ import {
 } from '../../../../components/RenderInputs/renderInputs';
 import { updateOrder } from '../../../../redux/orders/actions';
 import Cookies from 'js-cookie';
-// import 'react-widgets/dist/css/react-widgets.css';
 import currencyMask from '../../../../utils/currencyMask';
 
 const cookie = Cookies.get('jwt');
