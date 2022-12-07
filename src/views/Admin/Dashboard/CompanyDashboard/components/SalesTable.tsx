@@ -168,15 +168,6 @@ const OrderTable = (props: TablePropTypes) => {
     );
   }, [filterText, resetPaginationToggle]);
 
-  const handleStatusChange = async (e: any, row: { id: string }) => {
-    const { updateStatus, user } = props;
-    const status = {
-      status: e.target.value,
-    };
-
-    await updateStatus(row.id, row, status, user, cookie);
-  };
-
   const columns = [
     {
       name: 'Company',
