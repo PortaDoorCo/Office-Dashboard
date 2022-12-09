@@ -85,21 +85,21 @@ export default (data, breakdowns) => {
           stack: [
             index === 0 && data.job_info?.Shop_Notes
               ? {
-                columns: [
-                  { text: '' },
-                  {
-                    text: `${
+                  columns: [
+                    { text: '' },
+                    {
+                      text: `${
                         data.job_info?.Shop_Notes
                           ? data.job_info?.Shop_Notes?.toUpperCase()
                           : ''
-                    }`,
-                    alignment: 'center',
-                    style: 'fontsBold',
-                  },
-                  { text: '' },
-                ],
-                margin: [0, -26, 0, 0],
-              }
+                      }`,
+                      alignment: 'center',
+                      style: 'fontsBold',
+                    },
+                    { text: '' },
+                  ],
+                  margin: [0, -26, 0, 0],
+                }
               : null,
             {
               headlineLevel: 1,
@@ -109,9 +109,47 @@ export default (data, breakdowns) => {
                   stack: [{ text: `${i.woodtype.NAME}`, style: 'woodtype' }],
                 },
                 {
-                  text: `${i.notes ? i.notes.toUpperCase() : ''}`,
-                  style: 'fontsBold',
-                  alignment: 'center',
+                  stack: [
+                    {
+                      style: 'fontsBold',
+                      alignment: 'center',
+                      text: data.misc_items.map((i) => {
+                        if (i.category === 'preselect') {
+                          if (
+                            i?.item?.NAME?.toLowerCase()?.includes(
+                              'delivery'
+                            ) ||
+                            i?.item?.NAME?.toLowerCase()?.includes('price') ||
+                            i?.item?.NAME?.toLowerCase()?.includes(
+                              'discount'
+                            ) ||
+                            i?.item?.NAME?.toLowerCase()?.includes('rush') ||
+                            i?.item?.NAME?.toLowerCase()?.includes('credit')
+                          ) {
+                            return null;
+                          } else {
+                            return `${i.item?.NAME} \n`;
+                          }
+                        } else {
+                          if (
+                            i?.item2?.toLowerCase()?.includes('delivery') ||
+                            i?.item2?.toLowerCase()?.includes('price') ||
+                            i?.item2?.toLowerCase()?.includes('discount') ||
+                            i?.item2?.toLowerCase()?.includes('rush') ||
+                            i?.item2?.toLowerCase()?.includes('credit')
+                          ) {
+                          } else {
+                            return `${i.item2} \n`;
+                          }
+                        }
+                      }),
+                    },
+                    {
+                      text: `${i.notes ? i.notes.toUpperCase() : ''}`,
+                      style: 'fontsBold',
+                      alignmen: 'center',
+                    },
+                  ],
                 },
                 {
                   stack: [
