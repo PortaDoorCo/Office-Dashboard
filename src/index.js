@@ -46,16 +46,16 @@ const store = createStore(
   load({
     ignoreStates: ['form', 'sales', 'users', 'customers', 'Orders'],
   }),
-  composeWithDevTools(
-    applyMiddleware(
-      ...middleware,
-      loadingBarMiddleware(),
-      save({
-        ignoreStates: ['form', 'sales', 'users', 'customers', 'Orders'],
-      })
-    ),
-    sentryReduxEnhancer
+  // composeWithDevTools(
+  applyMiddleware(
+    ...middleware,
+    loadingBarMiddleware(),
+    save({
+      ignoreStates: ['form', 'sales', 'users', 'customers', 'Orders'],
+    })
   )
+  //   sentryReduxEnhancer
+  // )
 );
 
 ReactDOM.render(
