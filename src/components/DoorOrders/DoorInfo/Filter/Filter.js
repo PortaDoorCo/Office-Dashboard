@@ -88,7 +88,7 @@ class DoorFilter extends Component {
             autofill('Order', `part_list[${i}].design`, undefined)
           );
 
-          this.props.dispatch(untouch('Order', `part_list[${i}].cope_design`));
+          this.props.dispatch(untouch('Order', `part_list[${i}].design`));
         }
 
         if (index === i && part.woodtype !== undefined) {
@@ -115,7 +115,12 @@ class DoorFilter extends Component {
 
         if (index === i && part.profile !== undefined) {
           this.props.dispatch(
-            autofill('Order', `part_list[${i}].profile`, undefined)
+            autofill('Order', `part_list[${i}].profile`, {
+              id: 85,
+              NAME: 'None',
+              INSET: 0,
+              PROFILE_WIDTH: 0,
+            })
           );
           this.props.dispatch(untouch('Order', `part_list[${i}].profile`));
         }
@@ -169,6 +174,8 @@ class DoorFilter extends Component {
       edit,
       wrapthickness,
     } = this.props;
+
+    console.log({ props: this.props });
 
     if (formState && formState.part_list) {
       if (formState.part_list[index]?.orderType?.value === 'Face_Frame') {
