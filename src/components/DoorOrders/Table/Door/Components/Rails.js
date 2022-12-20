@@ -1,10 +1,11 @@
 import React from 'react';
 import { Row, Col, Table, Button } from 'reactstrap';
 import { renderNumber } from '../../../../../components/RenderInputs/renderInputs';
+import { Field } from 'redux-form';
 import {
-  Field,
-} from 'redux-form';
-import { renderDropdownList, renderTextField } from '../../../../../components/RenderInputs/renderInputs';
+  renderDropdownList,
+  renderTextField,
+} from '../../../../../components/RenderInputs/renderInputs';
 
 const required = (value) => (value ? undefined : 'Required');
 
@@ -12,27 +13,26 @@ const positions = [
   {
     NAME: 'Top',
     value: 'T',
-    razor_pattern: 'T'
+    razor_pattern: 'T',
   },
   {
     NAME: 'Bottom',
     value: 'B',
-    razor_pattern: 'B'
+    razor_pattern: 'B',
   },
   {
     NAME: 'T / B',
     value: 'TB',
-    razor_pattern: 'T / B'
+    razor_pattern: 'T / B',
   },
   {
     NAME: 'Mid Rail',
     value: 'HM',
-    razor_pattern: 'H Mull'
+    razor_pattern: 'H Mull',
   },
 ];
 
-const Rails = ({fields, edit }) => {
-
+const Rails = ({ fields, edit }) => {
   return (
     <div>
       {fields.map((table, index) => {
@@ -85,9 +85,7 @@ const Rails = ({fields, edit }) => {
 
                     <td>
                       <strong>
-                        <p>
-                          Position
-                        </p>
+                        <p>Position</p>
                       </strong>
 
                       <Field
@@ -99,7 +97,6 @@ const Rails = ({fields, edit }) => {
                         validate={required}
                         edit={edit}
                       />
-
                     </td>
 
                     <td>
@@ -110,7 +107,7 @@ const Rails = ({fields, edit }) => {
                           style={{ marginTop: '1.25rem' }}
                           onClick={() => fields.remove(index)}
                         >
-                              X
+                          X
                         </Button>
                       ) : (
                         <div />
@@ -137,18 +134,17 @@ const Rails = ({fields, edit }) => {
           </div>
         );
       })}
-      {!edit ? (
+      {edit ? (
         <Row>
           <Col>
             <Button color="primary" onClick={() => fields.push({ qty: 1 })}>
-                  Add Rails
+              Add Rails
             </Button>
           </Col>
         </Row>
       ) : null}
     </div>
   );
-      
 };
 
 export default Rails;
