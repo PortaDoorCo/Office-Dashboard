@@ -13,22 +13,22 @@ const positions = [
   {
     NAME: 'Left',
     value: 'L',
-    razor_pattern: 'L'
+    razor_pattern: 'L',
   },
   {
     NAME: 'Right',
     value: 'R',
-    razor_pattern: 'L'
+    razor_pattern: 'L',
   },
   {
     NAME: 'L / R',
     value: 'LR',
-    razor_pattern: 'L / R'
+    razor_pattern: 'L / R',
   },
   {
     NAME: 'Mid Rail',
     value: 'VM',
-    razor_pattern: 'V Mull'
+    razor_pattern: 'V Mull',
   },
 ];
 
@@ -135,7 +135,7 @@ const Stiles = ({ fields, edit }) => {
         );
       })}
 
-      {!edit ? (
+      {edit ? (
         <Row>
           <Col>
             <Button color="primary" onClick={() => fields.push({ qty: 1 })}>

@@ -1,14 +1,13 @@
 import React from 'react';
 import { Row, Col, Table, Button } from 'reactstrap';
-import { renderNumber, renderTextField } from '../../../../../components/RenderInputs/renderInputs';
 import {
-  Field,
-} from 'redux-form';
+  renderNumber,
+  renderTextField,
+} from '../../../../../components/RenderInputs/renderInputs';
+import { Field } from 'redux-form';
 const required = (value) => (value ? undefined : 'Required');
 
-
-const Panels = ({fields, edit }) => {
-
+const Panels = ({ fields, edit }) => {
   return (
     <div>
       {fields.map((table, index) => {
@@ -67,7 +66,7 @@ const Panels = ({fields, edit }) => {
                           style={{ marginTop: '1.25rem' }}
                           onClick={() => fields.remove(index)}
                         >
-                                  X
+                          X
                         </Button>
                       ) : (
                         <div />
@@ -94,18 +93,17 @@ const Panels = ({fields, edit }) => {
           </div>
         );
       })}
-      {!edit ? (
+      {edit ? (
         <Row>
           <Col>
             <Button color="primary" onClick={() => fields.push({ qty: 1 })}>
-                  Add Panel
+              Add Panel
             </Button>
           </Col>
         </Row>
       ) : null}
     </div>
   );
-      
 };
 
 export default Panels;
