@@ -101,7 +101,11 @@ class DoorFilter extends Component {
 
         if (index === i && part.edge !== undefined) {
           this.props.dispatch(
-            autofill('Order', `part_list[${i}].edge`, undefined)
+            autofill('Order', `part_list[${i}].edge`, {
+              id: 30,
+              NAME: 'None',
+              LIP_FACTOR: 0,
+            })
           );
           this.props.dispatch(untouch('Order', `part_list[${i}].edge`));
         }
