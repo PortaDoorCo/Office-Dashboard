@@ -43,18 +43,18 @@ const sentryReduxEnhancer = Sentry.createReduxEnhancer({
 
 const store = createStore(
   rootReducer,
-  load({
-    ignoreStates: ['form', 'sales', 'users', 'customers', 'Orders'],
-  }),
-  composeWithDevTools(
-    applyMiddleware(
-      ...middleware,
-      loadingBarMiddleware(),
-      save({
-        ignoreStates: ['form', 'sales', 'users', 'customers', 'Orders'],
-      })
-    )
+  // load({
+  //   ignoreStates: ['form', 'sales', 'users', 'customers', 'Orders'],
+  // }),
+  // composeWithDevTools(
+  applyMiddleware(
+    ...middleware,
+    loadingBarMiddleware()
+    // save({
+    //   ignoreStates: ['form', 'sales', 'users', 'customers', 'Orders'],
+    // })
   )
+  // )
 );
 
 ReactDOM.render(
