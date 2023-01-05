@@ -27,7 +27,13 @@ const changeProfile = (p, ind, props, change) => {
         change(
           'Order',
           `${p}.topRail`,
-          fraction(part.profile ? part.profile.DF_Reduction : 0)
+          fraction(
+            part.profile
+              ? part.profile.DF_Reduction
+                ? part.profile.DF_Reduction
+                : part.profile.PROFILE_WIDTH
+              : 0
+          )
         )
       );
 
@@ -35,7 +41,13 @@ const changeProfile = (p, ind, props, change) => {
         change(
           'Order',
           `${p}.bottomRail`,
-          fraction(part.profile ? part.profile.DF_Reduction : 0)
+          fraction(
+            part.profile
+              ? part.profile.DF_Reduction
+                ? part.profile.DF_Reduction
+                : part.profile.PROFILE_WIDTH
+              : 0
+          )
         )
       );
     }
