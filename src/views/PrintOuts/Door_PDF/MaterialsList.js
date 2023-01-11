@@ -58,12 +58,12 @@ export default (data, breakdowns) => {
           flattenDeep(
             data.part_list.map((i) =>
               i.dimensions.map((j) => [
-                j.topRail,
-                j.bottomRail,
-                j.leftStile,
-                j.rightStile,
-                j.horizontalMidRailSize,
-                j.verticalMidRailSize,
+                numQty(j.topRail),
+                numQty(j.bottomRail),
+                numQty(j.leftStile),
+                numQty(j.rightStile),
+                numQty(j.horizontalMidRailSize),
+                numQty(j.verticalMidRailSize),
               ])
             )
           )
@@ -71,6 +71,7 @@ export default (data, breakdowns) => {
       };
     });
   });
+
   const c = flattenDeep(b).map((j) => {
     return {
       parts: j.widths
@@ -88,12 +89,12 @@ export default (data, breakdowns) => {
                 part: f,
                 items: flatten(f.dimensions).filter((j) =>
                   [
-                    j.topRail,
-                    j.bottomRail,
-                    j.leftStile,
-                    j.rightStile,
-                    j.horizontalMidRailSize,
-                    j.verticalMidRailSize,
+                    numQty(j.topRail),
+                    numQty(j.bottomRail),
+                    numQty(j.leftStile),
+                    numQty(j.rightStile),
+                    numQty(j.horizontalMidRailSize),
+                    numQty(j.verticalMidRailSize),
                   ].includes(k)
                 ),
               };
