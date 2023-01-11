@@ -105,6 +105,7 @@ class DoorFilter extends Component {
               id: 30,
               NAME: 'None',
               LIP_FACTOR: 0,
+              UPCHARGE: 0,
             })
           );
           this.props.dispatch(untouch('Order', `part_list[${i}].edge`));
@@ -124,6 +125,7 @@ class DoorFilter extends Component {
               NAME: 'None',
               INSET: 0,
               PROFILE_WIDTH: 0,
+              Extra_Cost: 0,
             })
           );
           this.props.dispatch(untouch('Order', `part_list[${i}].profile`));
