@@ -1109,8 +1109,8 @@ const DoorTable = ({
                   <strong>
                     <p>Hori. Mid Rail</p>
                   </strong>
-                  {formState.part_list[i]?.dimensions[index]?.unequalMidRails &&
-                  formState.part_list[i]?.dimensions[index]?.unevenCheck ? (
+                  {formState.part_list[i]?.dimensions[index]
+                    ?.unequalMidRails ? (
                     Array.from(
                       Array(
                         parseInt(
