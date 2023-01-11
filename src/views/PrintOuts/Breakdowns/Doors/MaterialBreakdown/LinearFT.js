@@ -22,14 +22,20 @@ export default (parts, breakdowns, thickness) => {
 
       const stile_map = Object.keys(j).map((a) => {
         if (a === 'leftStile') {
-          return j[a] === thickness ? (stile[a] = j[a]) : (stile[a] = 0);
+          return numQty(j[a]) === thickness
+            ? (stile[a] = j[a])
+            : (stile[a] = 0);
         }
         if (a === 'rightStile') {
-          return j[a] === thickness ? (stile[a] = j[a]) : (stile[a] = 0);
+          return numQty(j[a]) === thickness
+            ? (stile[a] = j[a])
+            : (stile[a] = 0);
         }
 
         if (a === 'verticalMidRailSize') {
-          return j[a] === thickness ? (stile[a] = j[a]) : (stile[a] = 0);
+          return numQty(j[a]) === thickness
+            ? (stile[a] = j[a])
+            : (stile[a] = 0);
         } else {
           return (stile[a] = j[a]);
         }
@@ -37,14 +43,14 @@ export default (parts, breakdowns, thickness) => {
 
       const rail_map = Object.keys(j).map((a) => {
         if (a === 'topRail') {
-          return j[a] === thickness ? (rail[a] = j[a]) : (rail[a] = 0);
+          return numQty(j[a]) === thickness ? (rail[a] = j[a]) : (rail[a] = 0);
         }
         if (a === 'bottomRail') {
-          return j[a] === thickness ? (rail[a] = j[a]) : (rail[a] = 0);
+          return numQty(j[a]) === thickness ? (rail[a] = j[a]) : (rail[a] = 0);
         }
 
         if (a === 'horizontalMidRailSize') {
-          return j[a] === thickness ? (rail[a] = j[a]) : (rail[a] = 0);
+          return numQty(j[a]) === thickness ? (rail[a] = j[a]) : (rail[a] = 0);
         } else {
           return (rail[a] = j[a]);
         }
