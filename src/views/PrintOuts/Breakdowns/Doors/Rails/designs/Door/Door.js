@@ -49,6 +49,8 @@ export default (info, part, breakdowns) => {
     inset = info.design?.INSET;
   }
 
+  console.log({ inset });
+
   const unequalMidRails = info[`unequalMidRails`];
 
   const midStileWidth =
