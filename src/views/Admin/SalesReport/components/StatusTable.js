@@ -509,10 +509,7 @@ const StatusTable = (props) => {
                   </h3>
                 ) : null}
 
-                {role &&
-                (role.type === 'authenticated' ||
-                  role.type === 'owner' ||
-                  role.type === 'administrator') ? (
+                {role && role.type === 'owner' ? (
                   <h3>
                     Commission: $
                     {data
