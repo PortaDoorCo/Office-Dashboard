@@ -238,7 +238,7 @@ const StatusTable = (props) => {
     },
   ];
 
-  if (role?.type === 'administrator' || role?.owner === 'owner') {
+  if (role?.owner === 'owner') {
     columns = [
       {
         name: 'Order #',
