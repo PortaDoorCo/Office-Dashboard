@@ -8,7 +8,7 @@ import {
   CUSTOMER_UPDATED,
   CUSTOMER_DELETED,
   UPLOAD_FILE_TO_CUSTOMER,
-  SAVE_EMAIL
+  SAVE_EMAIL,
 } from './actions';
 
 const initialState = {
@@ -16,7 +16,7 @@ const initialState = {
   customer: [],
   customerDBLoaded: false,
   selectedCompanies: [],
-  dbLoadComplete: false
+  dbLoadComplete: false,
 };
 
 export default function (state = initialState, action) {
@@ -25,43 +25,40 @@ export default function (state = initialState, action) {
     case CUSTOMER_ADDED:
       return {
         ...state,
-        customerDB: [data, ...state.customerDB],
+        customerDB: [state.customerDB, ...data],
       };
     case CUSTOMER_UPDATED:
-      
       return {
         ...state,
-        orders: state.customerDB.map((i) =>
-          i.id === data.id ? data : i
-        ),
+        orders: state.customerDB.map((i) => (i.id === data.id ? data : i)),
       };
     case CUSTOMER_DELETED:
       return {
         ...state,
-        customerDB: state.customerDB.filter(item => item.id !== data.id),
+        customerDB: state.customerDB.filter((item) => item.id !== data.id),
       };
     case LOAD_CUSTOMERS:
       return {
         ...state,
         customerDB: data,
-        customerDBLoaded: true
+        customerDBLoaded: true,
       };
     case LOAD_ALL_CUSTOMERS:
       return {
         ...state,
         customerDB: data ? data : state.customerDB,
         customerDBLoaded: true,
-        dbLoadComplete: true
+        dbLoadComplete: true,
       };
     case SET_SELECTED_COMPANY:
       return {
         ...state,
-        selectedCompanies: data
+        selectedCompanies: data,
       };
     case DB_NOT_LOADED:
       return {
         ...state,
-        dbLoadComplete: false
+        dbLoadComplete: false,
       };
     case UPLOAD_FILE_TO_CUSTOMER:
       return {
@@ -85,9 +82,9 @@ export default function (state = initialState, action) {
 
           // Otherwise, this is the one we want - return an updated value
           return {
-            ...data
+            ...data,
           };
-        })
+        }),
       };
     case SAVE_EMAIL:
       return {
@@ -97,17 +94,16 @@ export default function (state = initialState, action) {
             // This isn't the item we care about - keep it as-is
             return item;
           }
-    
+
           // Otherwise, this is the one we want - return an updated value
           return {
-            ...data
+            ...data,
           };
-        })
+        }),
       };
     default:
       return {
         ...state,
-
       };
   }
 }
