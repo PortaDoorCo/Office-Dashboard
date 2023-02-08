@@ -185,7 +185,9 @@ class CustomerPage extends Component {
                       defaultCenter={defaultCenter}
                     />
 
-                    {user.role && user.role.type === 'administrator' ? (
+                    {(user.role && user.role.type === 'administrator') ||
+                    (user.role && user.role.type === 'office') ||
+                    (user.role && user.role.type === 'owner') ? (
                       <CompanyOrders
                         orders={orders}
                         company={selectedCompanies?.Company}
