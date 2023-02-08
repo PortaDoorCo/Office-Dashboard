@@ -28,6 +28,7 @@ import Cookies from 'js-cookie';
 import Delete from '@material-ui/icons/Delete';
 import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
+import SalesTable from './components/SalesTable';
 
 const cookie = Cookies.get('jwt');
 
@@ -183,10 +184,18 @@ class CustomerPage extends Component {
                       locations={locations}
                       defaultCenter={defaultCenter}
                     />
-                    <CompanyOrders
-                      orders={orders}
-                      company={selectedCompanies?.Company}
-                    />
+
+                    {user.role && user.role.type === 'administrator' ? (
+                      <CompanyOrders
+                        orders={orders}
+                        company={selectedCompanies?.Company}
+                      />
+                    ) : user.role && user.role.type === 'sales' ? (
+                      <SalesTable
+                        orders={orders}
+                        company={selectedCompanies?.Company}
+                      />
+                    ) : null}
                   </div>
                 </Card>
                 <Card>
