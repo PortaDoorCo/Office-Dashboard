@@ -263,7 +263,8 @@ const SalesReport = (props) => {
       ? new Date(orders[orders.length - 1].created_at)
       : new Date();
 
-  return role && role?.type === 'owner' ? (
+  return (role && role?.type === 'owner') ||
+    (role && role.type === 'administrator') ? (
     <div>
       <Row className="mb-3">
         <Col lg="10" />
@@ -429,8 +430,7 @@ const SalesReport = (props) => {
         </TabPane>
       </TabContent>
     </div>
-  ) : (role && role?.type === 'sales') ||
-    (role && role?.type === 'administrator') ? (
+  ) : role && role?.type === 'sales' ? (
     <div>
       <Row className="mb-3">
         <Col lg="10" />
@@ -484,117 +484,30 @@ const SalesReport = (props) => {
         </Col>
       </Row>
 
-      <Charts data={data} />
+      <Chart1
+        orders={data}
+        startDate={startDate}
+        endDate={endDate}
+        status={user?.sale?.fullName}
+      />
 
-      <Nav tabs>
-        <NavItem>
-          <NavLink
-            className={classnames({ active: activeTab === '1' })}
-            onClick={() => {
-              toggle('1');
-            }}
-          >
-            <strong>House</strong>
-          </NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink
-            className={classnames({ active: activeTab === '2' })}
-            onClick={() => {
-              toggle('2');
-            }}
-          >
-            <strong>Harold</strong>
-          </NavLink>
-        </NavItem>
-        {/* <NavItem>
-          <NavLink
-            className={classnames({ active: activeTab === '3' })}
-            onClick={() => {
-              toggle('3');
-            }}
-          >
-            <strong>Ned</strong>
-          </NavLink>
-        </NavItem> */}
-        <NavItem>
-          <NavLink
-            className={classnames({ active: activeTab === '4' })}
-            onClick={() => {
-              toggle('4');
-            }}
-          >
-            <strong>Peter</strong>
-          </NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink
-            className={classnames({ active: activeTab === '5' })}
-            onClick={() => {
-              toggle('5');
-            }}
-          >
-            <strong>Meg</strong>
-          </NavLink>
-        </NavItem>
-      </Nav>
-      <TabContent activeTab={activeTab}>
-        <TabPane tabId="1">
-          <Suspense fallback={loading()}>
-            <StatusTable
-              orders={data}
-              accountName="House Account"
-              startDate={startDate}
-              endDate={endDate}
-              filterStatus={filterStatus}
-            />
-          </Suspense>
-        </TabPane>
-        <TabPane tabId="2">
-          <Suspense fallback={loading()}>
-            <StatusTable
-              orders={data}
-              accountName="Harold"
-              startDate={startDate}
-              endDate={endDate}
-              filterStatus={filterStatus}
-            />
-          </Suspense>
-        </TabPane>
-        {/* <TabPane tabId="3">
-          <Suspense fallback={loading()}>
-            <StatusTable
-              orders={data}
-              accountName="Ned"
-              startDate={startDate}
-              endDate={endDate}
-              filterStatus={filterStatus}
-            />
-          </Suspense>
-        </TabPane> */}
-        <TabPane tabId="4">
-          <Suspense fallback={loading()}>
-            <StatusTable
-              orders={data}
-              accountName="Peter"
-              startDate={startDate}
-              endDate={endDate}
-              filterStatus={filterStatus}
-            />
-          </Suspense>
-        </TabPane>
-        <TabPane tabId="5">
-          <Suspense fallback={loading()}>
-            <StatusTable
-              orders={data}
-              accountName="Meg"
-              startDate={startDate}
-              endDate={endDate}
-              filterStatus={filterStatus}
-            />
-          </Suspense>
-        </TabPane>
-      </TabContent>
+      {/* <Maps 
+            orders={orders}
+            startDate={startDate}
+            endDate={endDate}
+            status={salesPerson && salesPerson[0] && salesPerson[0].fullName}
+          /> */}
+
+      <Suspense fallback={loading()}>
+        <StatusTable
+          orders={data}
+          accountName={user?.sale?.fullName}
+          salesRep={user?.sale}
+          startDate={startDate}
+          endDate={endDate}
+          filterStatus={filterStatus}
+        />
+      </Suspense>
     </div>
   ) : (
     <div>Restricted Access</div>
