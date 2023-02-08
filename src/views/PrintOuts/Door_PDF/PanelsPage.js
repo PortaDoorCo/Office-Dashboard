@@ -200,13 +200,13 @@ export default (data, breakdowns, type) => {
                 style: 'woodtype',
                 alignment: 'center',
               },
-              i.construction.value === 'Slab'
-                ? {
-                    text: `Edge: ${i.edge?.NAME}`,
-                    style: 'woodtype',
-                    alignment: 'center',
-                  }
-                : null,
+
+              {
+                text: `Edge: ${i.edge?.NAME}`,
+                style: 'woodtype',
+                alignment: 'center',
+              },
+
               {
                 text: `${
                   i.construction.value === 'Slab'
