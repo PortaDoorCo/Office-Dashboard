@@ -25,7 +25,7 @@ export default function (state = initialState, action) {
     case CUSTOMER_ADDED:
       return {
         ...state,
-        customerDB: [state.customerDB, ...data],
+        customerDB: [...state.customerDB, data],
       };
     case CUSTOMER_UPDATED:
       return {
