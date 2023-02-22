@@ -548,7 +548,7 @@ export const itemPriceSelector = createSelector(
                 }
               }
 
-              if (part.profile) {
+              if (part.profile && part.profile.PROFILE_WIDTH > 0) {
                 //leftStile
                 if (
                   (part.profile && part.profile.PROFILE_WIDTH) !==
