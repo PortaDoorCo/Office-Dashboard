@@ -72,6 +72,8 @@ const DoorTable = ({
   const [preventItem, setPreventItem] = useState(null);
   const toggle = () => setModal(!modal);
 
+  let design = formState?.part_list[i]?.design;
+
   const index = fields.length - 1;
 
   const defaultLeftStile = formState?.part_list[i]?.leftStile;
@@ -1056,7 +1058,9 @@ const DoorTable = ({
                     type="text"
                     component={renderNumber}
                     label="topRail"
-                    edit={construction === 'Miter' ? false : edit}
+                    edit={
+                      construction === 'Miter' && !design?.square ? false : edit
+                    }
                     validate={required}
                     onChange={(e) => registerChange(index, e)}
                   />
@@ -1070,7 +1074,9 @@ const DoorTable = ({
                     type="text"
                     component={renderNumber}
                     label="bottomRail"
-                    edit={construction === 'Miter' ? false : edit}
+                    edit={
+                      construction === 'Miter' && !design?.square ? false : edit
+                    }
                     validate={required}
                     onChange={(e) => registerChange(index, e)}
                   />
@@ -1085,7 +1091,9 @@ const DoorTable = ({
                     type="text"
                     component={renderNumber}
                     label="leftStile"
-                    edit={construction === 'Miter' ? false : edit}
+                    edit={
+                      construction === 'Miter' && !design?.square ? false : edit
+                    }
                     validate={required}
                     onChange={(e) => registerChange(index, e)}
                   />
@@ -1099,7 +1107,9 @@ const DoorTable = ({
                     type="text"
                     component={renderNumber}
                     label="rightStile"
-                    edit={construction === 'Miter' ? false : edit}
+                    edit={
+                      construction === 'Miter' && !design?.square ? false : edit
+                    }
                     validate={required}
                     onChange={(e) => registerChange(index, e)}
                   />
