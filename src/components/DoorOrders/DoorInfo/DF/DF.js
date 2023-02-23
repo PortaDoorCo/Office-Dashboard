@@ -342,9 +342,11 @@ class CopeDF extends Component {
                 type="text"
                 component={renderNumber}
                 label="topRail"
-                edit={construction === 'Miter' ? false : edit}
                 validate={required}
                 onChange={(e) => this.onChange(e)}
+                edit={
+                  construction === 'Miter' && !design?.square ? false : edit
+                }
               />
             </FormGroup>
           </Col>
@@ -356,9 +358,11 @@ class CopeDF extends Component {
                 type="text"
                 component={renderNumber}
                 label="bottomRail"
-                edit={construction === 'Miter' ? false : edit}
                 validate={required}
                 onChange={(e) => this.onChange(e)}
+                edit={
+                  construction === 'Miter' && !design?.square ? false : edit
+                }
               />
             </FormGroup>
           </Col>
@@ -370,9 +374,11 @@ class CopeDF extends Component {
                 type="text"
                 component={renderNumber}
                 label="leftStile"
-                edit={construction === 'Miter' ? false : edit}
                 validate={required}
                 onChange={(e) => this.onChange(e)}
+                edit={
+                  construction === 'Miter' && !design?.square ? false : edit
+                }
               />
             </FormGroup>
           </Col>
@@ -384,9 +390,11 @@ class CopeDF extends Component {
                 type="text"
                 component={renderNumber}
                 label="rightStile"
-                edit={construction === 'Miter' ? false : edit}
                 validate={required}
                 onChange={(e) => this.onChange(e)}
+                edit={
+                  construction === 'Miter' && !design?.square ? false : edit
+                }
               />
             </FormGroup>
           </Col>
