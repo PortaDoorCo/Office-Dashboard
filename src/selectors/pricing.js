@@ -293,21 +293,15 @@ export const itemPriceSelector = createSelector(
             ? part.design.UPCHARGE_THICK
             : 0;
 
-        console.log({ formState });
-
         const date = new Date(formState?.values?.created_at);
 
         const update_date = new Date('2023-02-24T05:00:00.000Z');
-
-        console.log({ design });
 
         if (date < update_date) {
           design = design - 1.5;
         } else {
           console.log('The created_at field is on or after today.');
         }
-
-        console.log({ design });
 
         let wood;
 
