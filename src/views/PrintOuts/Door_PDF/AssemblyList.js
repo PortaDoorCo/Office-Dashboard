@@ -64,9 +64,9 @@ export default (data, breakdowns) => {
           style: 'fonts',
         },
         {
-          text: (Rails(item, i, breakdowns) || []).map((rail) => {
+          text: (Rails(item, i, breakdowns) || []).map((rail, idx) => {
             return `${rail.qty} ${rail.measurement} - ${rail.pattern} \n ${
-              item.full_frame ? '** Full Frame DF **' : ''
+              item.full_frame && idx === 0 ? '** Full Frame DF ** \n' : ''
             }`;
           }),
           style: 'fonts',

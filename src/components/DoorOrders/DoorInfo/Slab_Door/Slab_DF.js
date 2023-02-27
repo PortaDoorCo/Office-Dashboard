@@ -10,6 +10,7 @@ import {
 import {
   renderDropdownListFilter,
   renderTextField,
+  renderCheckboxToggle,
 } from '../../../RenderInputs/renderInputs';
 import Slab_Door_Table from '../../Table/Slab/Slab_Door_Table';
 import thickness from '../thickness';
@@ -103,6 +104,27 @@ class SlabDoor extends Component {
                 validate={required}
                 edit={edit}
               />
+            </FormGroup>
+          </Col>
+        </Row>
+
+        <Row>
+          <Col xs="12" sm="4" md="4" lg="4">
+            <FormGroup>
+              <Label htmlFor="arches">
+                <strong>Grain Direction</strong>
+              </Label>
+              <Row>
+                <Col>Horiz</Col>
+                <Col>
+                  <Field
+                    name={`${part}.VERTICAL_GRAIN`}
+                    component={renderCheckboxToggle}
+                    edit={edit}
+                  />
+                </Col>
+                <Col>Vertical</Col>
+              </Row>
             </FormGroup>
           </Col>
         </Row>

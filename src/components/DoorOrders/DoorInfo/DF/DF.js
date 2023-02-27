@@ -15,7 +15,7 @@ import {
   renderNumber,
   renderTextField,
 } from '../../../RenderInputs/renderInputs';
-import Table from '../../Table/DF/Table';
+import Table from '../../Table/Door/Table';
 import changeDesign from '../Functions/changeDesign';
 import changeProfile from '../Functions/changeProfile';
 

@@ -92,6 +92,211 @@ const DoorTable = ({
     setChangeValue(null);
   }, [updateSubmit]);
 
+  const part = formState?.part_list[i];
+  const leftStile = part?.dimensions[index]?.leftStile;
+  const rightStile = part?.dimensions[index]?.rightStile;
+
+  console.log({ part });
+
+  const updateFullFrame = (e, index) => {
+    const part = formState.part_list[i];
+
+    let profile_width;
+    let df_reduction;
+
+    if (part.construction.value === 'Cope') {
+      profile_width = part.profile.PROFILE_WIDTH;
+      df_reduction = part.profile.DF_Reduction;
+    }
+
+    if (part.construction.value === 'MT') {
+      profile_width = part.design.PROFILE_WIDTH;
+      df_reduction = part.design.DF_REDUCTION;
+    }
+
+    if (part.construction.value === 'Miter') {
+      profile_width = part.design.DF_FULL_FRAME;
+      df_reduction = part.design.PROFILE_WIDTH;
+    }
+
+    if (e) {
+      if (leftStile) {
+        dispatch(
+          change(
+            'Order',
+            `part_list[${i}].dimensions[${index}].notes`,
+            'Full Frame'
+          )
+        );
+
+        if (part.construction.value === 'Miter') {
+          dispatch(
+            change(
+              'Order',
+              `part_list[${i}].dimensions[${index}].topRail`,
+              fraction(numQty(profile_width))
+            )
+          );
+
+          dispatch(
+            change(
+              'Order',
+              `part_list[${i}].dimensions[${index}].bottomRail`,
+              fraction(numQty(profile_width))
+            )
+          );
+
+          dispatch(
+            change(
+              'Order',
+              `part_list[${i}].dimensions[${index}].leftStile`,
+              fraction(numQty(profile_width))
+            )
+          );
+          dispatch(
+            change(
+              'Order',
+              `part_list[${i}].dimensions[${index}].rightStile`,
+              fraction(numQty(profile_width))
+            )
+          );
+        } else {
+          dispatch(
+            change(
+              'Order',
+              `part_list[${i}].dimensions[${index}].topRail`,
+              fraction(numQty(leftStile))
+            )
+          );
+
+          dispatch(
+            change(
+              'Order',
+              `part_list[${i}].dimensions[${index}].bottomRail`,
+              fraction(numQty(leftStile))
+            )
+          );
+        }
+      } else {
+        if (part.construction.value === 'Miter') {
+          dispatch(
+            change(
+              'Order',
+              `part_list[${i}].dimensions[${index}].notes`,
+              'Full Frame'
+            )
+          );
+
+          dispatch(
+            change(
+              'Order',
+              `part_list[${i}].dimensions[${index}].leftStile`,
+              fraction(profile_width)
+            )
+          );
+
+          dispatch(
+            change(
+              'Order',
+              `part_list[${i}].dimensions[${index}].rightStile`,
+              fraction(profile_width)
+            )
+          );
+
+          dispatch(
+            change(
+              'Order',
+              `part_list[${i}].dimensions[${index}].topRail`,
+              fraction(profile_width)
+            )
+          );
+
+          dispatch(
+            change(
+              'Order',
+              `part_list[${i}].dimensions[${index}].bottomRail`,
+              fraction(profile_width)
+            )
+          );
+        } else {
+          dispatch(
+            change(
+              'Order',
+              `part_list[${i}].dimensions[${index}].notes`,
+              'Full Frame'
+            )
+          );
+
+          dispatch(
+            change(
+              'Order',
+              `part_list[${i}].dimensions[${index}].topRail`,
+              fraction(profile_width)
+            )
+          );
+
+          dispatch(
+            change(
+              'Order',
+              `part_list[${i}].dimensions[${index}].bottomRail`,
+              fraction(profile_width)
+            )
+          );
+        }
+      }
+    } else {
+      dispatch(
+        change('Order', `part_list[${i}].dimensions[${index}].notes`, '')
+      );
+
+      if (part.construction.value === 'Miter') {
+        dispatch(
+          change(
+            'Order',
+            `part_list[${i}].dimensions[${index}].leftStile`,
+            fraction(df_reduction)
+          )
+        );
+        dispatch(
+          change(
+            'Order',
+            `part_list[${i}].dimensions[${index}].rightStile`,
+            fraction(df_reduction)
+          )
+        );
+        dispatch(
+          change(
+            'Order',
+            `part_list[${i}].dimensions[${index}].topRail`,
+            fraction(df_reduction)
+          )
+        );
+        dispatch(
+          change(
+            'Order',
+            `part_list[${i}].dimensions[${index}].bottomRail`,
+            fraction(df_reduction)
+          )
+        );
+      } else {
+        dispatch(
+          change(
+            'Order',
+            `part_list[${i}].dimensions[${index}].topRail`,
+            fraction(df_reduction)
+          )
+        );
+        dispatch(
+          change(
+            'Order',
+            `part_list[${i}].dimensions[${index}].bottomRail`,
+            fraction(df_reduction)
+          )
+        );
+      }
+    }
+  };
+
   const w = (e, v, index) => {
     e.preventDefault();
     const part = formState.part_list[i];
@@ -1240,6 +1445,20 @@ const DoorTable = ({
                 />
               </FormGroup>
             </Col>
+
+            {part?.orderType?.value === 'DF' ? (
+              <Col xl="1" lg="3" md="3" sm="3">
+                <FormGroup>
+                  <strong>Full Frame</strong>
+                  <Field
+                    name={`${table}.full_frame`}
+                    component={renderCheckboxToggle}
+                    onChange={(e) => updateFullFrame(e, index)}
+                    edit={edit}
+                  />
+                </FormGroup>
+              </Col>
+            ) : null}
 
             {parseInt(formState.part_list[i]?.dimensions[index]?.panelsH) >
             1 ? (
