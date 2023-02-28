@@ -307,7 +307,7 @@ const DoorTable = ({
       newWidth = [...newWidth, v];
     }
 
-    if (numQty(v) >= 24) {
+    if (numQty(v) >= 24 && part?.orderType?.value === 'Door') {
       setWarningType({
         value: v,
         index: index,
@@ -337,7 +337,7 @@ const DoorTable = ({
       newHeight = [...newHeight, v];
     }
 
-    if (numQty(v) >= 48) {
+    if (numQty(v) >= 48 && part?.orderType?.value === 'Door') {
       setWarningType({
         value: v,
         index: index,
