@@ -1,5 +1,5 @@
 import Ratio from 'lb-ratio';
-import { flatten, flattenDeep, groupBy, uniq } from 'lodash';
+import { flatten, flattenDeep, groupBy, uniq, uniqBy } from 'lodash';
 import moment from 'moment';
 import numQty from 'numeric-quantity';
 import LinearFT from '../Breakdowns/Doors/MaterialBreakdown/LinearFT';
@@ -143,7 +143,9 @@ export default (data, breakdowns) => {
 
   const flattenD7 = flattenD6.sort((a, b) => (a.waste > b.waste ? -1 : 1));
 
-  const LinearFTDisplay = flattenD7.map((i, index) => {
+  const d8 = uniqBy(flattenD7, 'width');
+
+  const LinearFTDisplay = d8.map((i, index) => {
     return [
       {
         columns: [
