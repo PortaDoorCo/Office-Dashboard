@@ -1460,8 +1460,11 @@ const DoorTable = ({
               </Col>
             ) : null}
 
-            {parseInt(formState.part_list[i]?.dimensions[index]?.panelsH) >
-            1 ? (
+            {(parseInt(formState.part_list[i]?.dimensions[index]?.panelsH) >
+              1 &&
+              formState?.part_list[i].orderType?.value === 'Door') ||
+            (parseInt(formState.part_list[i]?.dimensions[index]?.panelsW) > 1 &&
+              formState?.part_list[i].orderType?.value === 'DF') ? (
               <Col xl="1" lg="3" md="3" sm="3">
                 <FormGroup>
                   <strong>Uneven Split</strong>
@@ -1531,15 +1534,25 @@ const DoorTable = ({
               <Row>
                 {Array.from(
                   Array(
-                    parseInt(formState.part_list[i]?.dimensions[index]?.panelsH)
+                    formState?.part_list[i].orderType?.value === 'Door' &&
+                      parseInt(
+                        formState.part_list[i]?.dimensions[index]?.panelsH
+                      )
                       ? parseInt(
                           formState.part_list[i]?.dimensions[index]?.panelsH
+                        )
+                      : formState?.part_list[i].orderType?.value === 'DF' &&
+                        parseInt(
+                          formState.part_list[i]?.dimensions[index]?.panelsW
+                        )
+                      ? parseInt(
+                          formState.part_list[i]?.dimensions[index]?.panelsW
                         )
                       : 0
                   ).keys()
                 )
                   .slice(1)
-                  .map((i, index) => {
+                  .map((_, index) => {
                     return (
                       <div>
                         <Col />
@@ -1549,7 +1562,12 @@ const DoorTable = ({
                           >
                             <strong>Panel Opening {index + 1}</strong>
                             {index === 0 ? (
-                              <p>From Top of Door to Top of Mullion</p>
+                              <p>
+                                {formState?.part_list[i].orderType?.value ===
+                                'Door'
+                                  ? 'From Top of Door to Top of Mullion'
+                                  : 'From Left of DF to Top of Mullion'}
+                              </p>
                             ) : (
                               <p>
                                 From Top of Door <br /> to Top of{' '}

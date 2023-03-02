@@ -113,6 +113,151 @@ export default (info, part, breakdowns) => {
     multiplier: qty,
   };
 
+  const unevenSplitDF = () => {
+    const panelWidth =
+      (width - leftStile - rightStile - vertMull * (panelsW - 1)) / panelsW;
+
+    const panelHeight = (v) => {
+      if (v < 3) {
+        return (
+          width -
+          leftStile -
+          numQty(info[`unevenSplitInput${0}`]) -
+          vertMull +
+          panel_factor +
+          lip_factor / 2
+        );
+      } else {
+        if (info[`unequalMidRails`]) {
+          return (
+            width -
+            leftStile -
+            numQty(info[`unevenSplitInput${v - 2}`]) -
+            numQty(info[`verticalMidRailSize${v - 2}`]) +
+            panel_factor +
+            lip_factor / 2
+          );
+        } else {
+          return (
+            width -
+            leftStile -
+            numQty(info[`unevenSplitInput${v - 2}`]) -
+            vertMull +
+            panel_factor +
+            lip_factor / 2
+          );
+        }
+      }
+    };
+
+    let panelTotal = 0;
+
+    const unevenSplitInput = (v) => {
+      let arr = new Array(v).fill('').map((_, i) => i + 1);
+
+      let mullions = [];
+
+      const a = arr.map((i, index) => {
+        if (!info[`unequalMidRails`]) {
+          mullions.push(vertMull);
+        } else {
+          if (index === 0) {
+            mullions.push(vertMull);
+          }
+
+          if (
+            index === v - 1 &&
+            !isNaN(numQty(info[`verticalMidRailSize${v - 1}`]))
+          ) {
+            return mullions.push(numQty(info[`verticalMidRailSize${v - 1}`]));
+          } else {
+            return 0;
+          }
+        }
+      });
+
+      const mullionTotal = mullions?.reduce((acc, item) => acc + item, 0);
+
+      const panel =
+        numQty(info[`unevenSplitInput${v}`]) -
+        leftStile -
+        panelTotal -
+        mullionTotal +
+        panel_factor * (v + 1) +
+        lip_factor / 2;
+
+      panelTotal += panel;
+
+      return panel;
+    };
+
+    const glassCheck = (v) => info[`glass_check_${v}`];
+
+    const unEven = [
+      ...Array.from(Array(panelsW).keys())
+        .slice(1)
+        .map((i, v) => {
+          if (glassCheck(v)) {
+            return glassDoor(v);
+          } else {
+            const panelHeight = unevenSplitInput(v);
+            return {
+              qty: `(${qty * panelsH})`,
+              qty2: qty * panelsH,
+              measurement: `${fraction(panelHeight)} x ${fraction(
+                Math.round(eval(breakdowns.panel_height) * 16) / 16
+              )}`,
+              pattern: panelFlat ? 'PF' : 'PR',
+              height: Math.round(eval(breakdowns.panel_height) * 16) / 16,
+              width: panelHeight,
+              panel: panelName,
+              multiplier: panelsH,
+              count: qty * panelsH,
+            };
+          }
+        }),
+    ];
+
+    const bottom = {
+      qty: `(${qty * panelsH})`,
+      qty2: qty * panelsH,
+      measurement: `${fraction(panelHeight(parseInt(panelsH)))} x ${fraction(
+        Math.round(eval(breakdowns.panel_height) * 16) / 16
+      )}`,
+      pattern: panelFlat ? 'PF' : 'PR',
+      height: Math.round(eval(breakdowns.panel_height) * 16) / 16,
+      width: panelHeight(parseInt(panelsH)),
+      panel: panelName,
+      multiplier: qty * panelsH,
+      count: qty * panelsH,
+    };
+
+    const unevenDoor = [...unEven, bottom];
+
+    const convert = (arr) => {
+      const res = {};
+      arr.forEach((obj) => {
+        const key = `${obj.measurement}${obj.height}${obj.multiplier}${obj.panel}${obj.pattern}${obj.qty}${obj.qty2}${obj.width}`;
+        if (!res[key]) {
+          res[key] = { ...obj, count: 0 };
+        }
+        res[key].qty = `(${res[key].count + res[key].qty2})`;
+        res[key].qty2 = res[key].count + res[key].qty2;
+        res[key].count += 1;
+      });
+      return Object.values(res);
+    };
+
+    if (glassCheck(panelsH - 1)) {
+      return [
+        ...unEven,
+        glassDoor(panelsH - 1), // <-------Needs Testing
+      ];
+    } else {
+      return convert(unevenDoor);
+    }
+  };
+
   const unevenSplit = () => {
     const panelWidth =
       (width - leftStile - rightStile - vertMull * (panelsW - 1)) / panelsW;
@@ -299,19 +444,25 @@ export default (info, part, breakdowns) => {
         },
       ];
     } else {
-      door = [
-        {
-          qty: `(${panelsH * panelsW * qty})`,
-          measurement: `${fraction(
-            Math.round(eval(breakdowns.panel_height) * 16) / 16
-          )} x ${fraction(Math.round(eval(breakdowns.panel_width) * 16) / 16)}`,
-          pattern: panelFlat ? 'PF' : 'PR',
-          width: Math.round(eval(breakdowns.panel_width) * 16) / 16,
-          height: Math.round(eval(breakdowns.panel_height) * 16) / 16,
-          count: panelsH * panelsW * qty,
-          panel: panelName,
-        },
-      ];
+      if (info.unevenCheck) {
+        door = unevenSplitDF();
+      } else {
+        door = [
+          {
+            qty: `(${panelsH * panelsW * qty})`,
+            measurement: `${fraction(
+              Math.round(eval(breakdowns.panel_height) * 16) / 16
+            )} x ${fraction(
+              Math.round(eval(breakdowns.panel_width) * 16) / 16
+            )}`,
+            pattern: panelFlat ? 'PF' : 'PR',
+            width: Math.round(eval(breakdowns.panel_width) * 16) / 16,
+            height: Math.round(eval(breakdowns.panel_height) * 16) / 16,
+            count: panelsH * panelsW * qty,
+            panel: panelName,
+          },
+        ];
+      }
     }
   }
 
