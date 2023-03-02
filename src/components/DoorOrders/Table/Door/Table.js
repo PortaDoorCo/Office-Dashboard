@@ -35,6 +35,7 @@ import numQty from 'numeric-quantity';
 import WarningModal from '../Warnings/Modal';
 import currencyMask from '../../../../utils/currencyMask';
 import ordinal from 'ordinal';
+import FullFrameModal from '../../../../utils/Modal';
 
 const required = (value) => (value ? undefined : 'Required');
 const panelsCount = (value) => {
@@ -70,6 +71,7 @@ const DoorTable = ({
   const [modal, setModal] = useState(false);
   const [warningType, setWarningType] = useState(null);
   const [preventItem, setPreventItem] = useState(null);
+  const [fullFrameNote, setFullFrameNote] = useState(false);
   const toggle = () => setModal(!modal);
 
   let design = formState?.part_list[i]?.design;
@@ -97,6 +99,8 @@ const DoorTable = ({
   const rightStile = part?.dimensions[index]?.rightStile;
 
   console.log({ part });
+
+  const toggleFullFrameNote = () => setFullFrameNote(!fullFrameNote);
 
   const updateFullFrame = (e, index) => {
     const part = formState.part_list[i];
@@ -297,6 +301,14 @@ const DoorTable = ({
     }
   };
 
+  const addFullFrameNote = (e) => {
+    updateFullFrame(e, index);
+    toggleFullFrameNote();
+    dispatch(
+      change('Order', `part_list[${i}].dimensions[${index}].full_frame`, true)
+    );
+  };
+
   const w = (e, v, index) => {
     e.preventDefault();
     const part = formState.part_list[i];
@@ -353,6 +365,15 @@ const DoorTable = ({
       });
       toggle();
     }
+
+    if (part?.orderType?.value === 'DF') {
+      const limit = numQty(leftStile) + numQty(rightStile);
+      const heightLimit = numQty(v) * (2 / 3);
+      if (heightLimit > limit) {
+        toggleFullFrameNote();
+      }
+    }
+
     setHeight(newHeight);
   };
 
@@ -1119,6 +1140,18 @@ const DoorTable = ({
           prices={prices}
         />
       ) : null}
+      <FullFrameModal
+        toggle={toggleFullFrameNote}
+        modal={fullFrameNote}
+        message={
+          'Based On Your Sizes, We Suggest Making The Framing Full Frame'
+        }
+        title={'Do you want a full frame?'}
+        actionButton={'Update to Full Frame'}
+        action={(e) => {
+          addFullFrameNote(e);
+        }}
+      />
       {fields.map((table, index) => (
         <Fragment key={index}>
           <hr />

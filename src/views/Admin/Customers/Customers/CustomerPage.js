@@ -187,17 +187,18 @@ class CustomerPage extends Component {
 
                     {(user.role && user.role.type === 'administrator') ||
                     (user.role && user.role.type === 'office') ||
+                    (user.role && user.role.type === 'management') ||
                     (user.role && user.role.type === 'owner') ? (
                       <CompanyOrders
                         orders={orders}
                         company={selectedCompanies?.Company}
                       />
-                    ) : user.role && user.role.type === 'sales' ? (
+                    ) : (
                       <SalesTable
                         orders={orders}
                         company={selectedCompanies?.Company}
                       />
-                    ) : null}
+                    )}
                   </div>
                 </Card>
                 <Card>
