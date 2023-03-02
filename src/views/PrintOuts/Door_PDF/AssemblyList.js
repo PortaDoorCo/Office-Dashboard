@@ -114,7 +114,7 @@ export default (data, breakdowns) => {
                           }
                         : null,
                       {
-                        text: data.misc_items.map((i) => {
+                        text: data?.misc_items?.map((i) => {
                           if (i.category === 'preselect') {
                             if (
                               i?.item?.NAME?.toLowerCase()?.includes(
