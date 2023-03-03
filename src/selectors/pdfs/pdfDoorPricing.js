@@ -4,7 +4,7 @@ import moment from 'moment';
 
 const pricing = (parts, pricer, itemPrice, order) => {
   const item = parts.map((part, index) => {
-    const design =
+    let design =
       (part.design && part.thickness.value === 1) ||
       (part.design && part.thickness.value === 2)
         ? part.design.UPCHARGE
@@ -14,6 +14,19 @@ const pricing = (parts, pricer, itemPrice, order) => {
           (part.design && part.thickness.value === 6)
         ? part.design.UPCHARGE_THICK
         : 0;
+
+    const date = new Date(order?.created_at || Date.now());
+
+    const update_date = new Date('2023-02-24T05:00:00.000Z');
+    const update_date_2 = new Date('2023-03-03T05:00:00.000Z');
+
+    if (date < update_date) {
+      design = design - 2.5;
+    } else if (date > update_date && date < update_date_2) {
+      design = design - 1;
+    } else {
+      design = design;
+    }
 
     let wood;
 
