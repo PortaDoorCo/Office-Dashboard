@@ -298,8 +298,6 @@ export const itemPriceSelector = createSelector(
         const update_date = new Date('2023-02-24T05:00:00.000Z');
         const update_date_2 = new Date('2023-03-03T05:00:00.000Z');
 
-        console.log({ date, update_date, update_date_2 });
-
         if (date < update_date) {
           design = design - 2.5;
         } else if (date > update_date && date < update_date_2) {
@@ -307,8 +305,6 @@ export const itemPriceSelector = createSelector(
         } else {
           design = design;
         }
-
-        console.log({ design });
 
         let wood;
 
