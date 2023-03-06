@@ -367,9 +367,9 @@ const DoorTable = ({
     }
 
     if (part?.orderType?.value === 'DF') {
-      const limit = numQty(leftStile) + numQty(rightStile);
-      const heightLimit = numQty(v) * (2 / 3);
-      if (heightLimit > limit) {
+      const limit = 7;
+      const heightLimit = numQty(v);
+      if (heightLimit >= limit) {
         toggleFullFrameNote();
       }
     }
