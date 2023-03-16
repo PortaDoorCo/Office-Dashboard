@@ -122,15 +122,33 @@ export default (data, breakdowns) => {
                           width: 200,
                           stack: [
                             {
-                              text: `${
-                                i.thickness?.grade_name
-                                  ? i.thickness?.grade_name
-                                  : ''
-                              }${i.woodtype.NAME} - ${
-                                i.thickness.thickness_1
-                              } - ${i.thickness.thickness_2}"`,
-                              style: 'woodtype',
-                              width: 300,
+                              stack: [
+                                {
+                                  text: `${
+                                    i.thickness?.grade_name
+                                      ? i.thickness?.grade_name
+                                      : ''
+                                  }${i.woodtype.NAME} - ${
+                                    i.thickness.thickness_1
+                                  } - ${
+                                    !i.thickness?.oversize
+                                      ? i.thickness.thickness_2 + '"'
+                                      : ''
+                                  }`,
+                                  style: 'woodtype',
+                                  alignment: 'left',
+                                  width: 150,
+                                },
+
+                                i.thickness?.oversize
+                                  ? {
+                                      text: `${i.thickness.thickness_2}" - ${i.thickness.thickness_3}"`,
+                                      style: 'woodtype',
+                                      alignment: 'left',
+                                      width: 150,
+                                    }
+                                  : null,
+                              ],
                             },
                             {
                               text: `${
@@ -176,7 +194,7 @@ export default (data, breakdowns) => {
                                   : 'Glass'
                               } ${i.lite ? '- ' + i.lite.NAME : ''}`,
                               style: 'fonts',
-                              alignment: 'right',
+                              // alignment: 'right',
                             },
                           ],
                         },
@@ -198,7 +216,7 @@ export default (data, breakdowns) => {
                                   : 'None'
                               }`,
                               style: 'fonts',
-                              alignment: 'right',
+                              // alignment: 'right',
                             },
                           ],
                         },
@@ -208,9 +226,13 @@ export default (data, breakdowns) => {
                             {
                               text: `Thickness:  ${
                                 i.thickness ? i.thickness.thickness_2 : ''
-                              }"`,
+                              }" ${
+                                i.thickness?.thickness_3
+                                  ? '- ' + i.thickness?.thickness_3 + '"'
+                                  : ''
+                              }`,
                               style: 'fonts',
-                              alignment: 'right',
+                              // alignment: 'right',
                             },
                           ],
                         },

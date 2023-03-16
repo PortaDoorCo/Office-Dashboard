@@ -51,6 +51,13 @@ const pricing = (parts, pricer, itemPrice, order) => {
         // code block
         wood = part?.woodtype?.SIX_QUARTER_THICK;
         break;
+      case 7:
+        // code block
+        wood = part?.woodtype?.EIGHT_QUARTER;
+        break;
+      case 8:
+        // code block
+        wood = part?.woodtype?.EIGHT_QUARTER_THICK;
       default:
         // code block
         wood = part?.woodtype?.STANDARD_GRADE;
