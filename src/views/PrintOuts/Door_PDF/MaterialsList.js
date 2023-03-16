@@ -191,7 +191,9 @@ export default (data, breakdowns) => {
                 ? '4/4'
                 : i.thickness.includes('5/4')
                 ? '5/4'
-                : '6/4'
+                : i.thickness.includes('6/4')
+                ? '6/4'
+                : '8/4'
             }" Thickness - Stile/Rail/Mullion Material Needed: ${i.BoardFT.toFixed(
               2
             )}`,
@@ -306,7 +308,9 @@ export default (data, breakdowns) => {
                   ? '4/4'
                   : i.thickness.includes('5/4')
                   ? '5/4'
-                  : '6/4'
+                  : i.thickness.includes('6/4')
+                  ? '6/4'
+                  : '8/4'
               }" Thickness ${i.panel.NAME} Material Needed: ${i.BoardFT.toFixed(
                 2
               )}`,

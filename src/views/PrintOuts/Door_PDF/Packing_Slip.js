@@ -199,6 +199,10 @@ export default (data, breakdowns) => {
                             ? '4/4'
                             : i.thickness.value === 3 || i.thickness.value === 4
                             ? '5/4'
+                            : i.thickness.value === 5 || i.thickness.value === 6
+                            ? '6/4'
+                            : i.thickness.value === 7 || i.thickness.value === 8
+                            ? '8/4'
                             : ''
                         }`,
                         style: 'woodtype',

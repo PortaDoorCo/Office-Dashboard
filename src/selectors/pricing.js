@@ -329,6 +329,14 @@ export const itemPriceSelector = createSelector(
             // code block
             wood = part?.woodtype?.SIX_QUARTER_THICK;
             break;
+          case 7:
+            // code block
+            wood = part?.woodtype?.EIGHT_QUARTER;
+            break;
+          case 8:
+            // code block
+            wood = part?.woodtype?.EIGHT_QUARTER_THICK;
+            break;
           default:
             // code block
             wood = part?.woodtype?.STANDARD_GRADE;

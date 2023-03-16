@@ -44,6 +44,8 @@ const Woodtype = (props) => {
     SELECT_GRADE_THICK: '',
     SIX_QUARTER: '',
     SIX_QUARTER_THICK: '',
+    EIGHT_QUARTER: '',
+    EIGHT_QUARTER_THICK: '',
     VERTICAL_GRAIN: false,
   });
   const [newProduct, setNewProduct] = useState(false);
@@ -76,6 +78,8 @@ const Woodtype = (props) => {
       SELECT_GRADE_THICK: '',
       SIX_QUARTER: '',
       SIX_QUARTER_THICK: '',
+      EIGHT_QUARTER: '',
+      EIGHT_QUARTER_THICK: '',
       VERTICAL_GRAIN: false,
     };
     setNewProduct(true);
@@ -129,6 +133,8 @@ const Woodtype = (props) => {
       SELECT_GRADE_THICK: product.SELECT_GRADE_THICK,
       SIX_QUARTER: product.SIX_QUARTER,
       SIX_QUARTER_THICK: product.SIX_QUARTER_THICK,
+      EIGHT_QUARTER: product.EIGHT_QUARTER,
+      EIGHT_QUARTER_THICK: product.EIGHT_QUARTER_THICK,
       VERTICAL_GRAIN: product.VERTICAL_GRAIN,
       photo: product.photo ? product.photo.id : '',
       Item: item,
@@ -196,6 +202,13 @@ const Woodtype = (props) => {
             </CardTitle>
             <CardTitle>
               <strong>6/4 Select Grade Price:</strong> ${card.SIX_QUARTER_THICK}
+            </CardTitle>
+            <CardTitle>
+              <strong>8/4 Standard Grade Price:</strong> ${card.EIGHT_QUARTER}
+            </CardTitle>
+            <CardTitle>
+              <strong>8/4 Select Grade Price:</strong> $
+              {card.EIGHT_QUARTER_THICK}
             </CardTitle>
             <CardTitle>
               <strong>DF Grain Direction:</strong>{' '}
@@ -340,6 +353,26 @@ const Woodtype = (props) => {
                     type="number"
                     value={product.SIX_QUARTER_THICK}
                     name="SIX_QUARTER_THICK"
+                    onChange={(e) => change(e)}
+                  ></Input>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <Label for="4/4_Price">8/4 Standard Grade Price</Label>
+                  <Input
+                    type="number"
+                    value={product.EIGHT_QUARTER}
+                    name="EIGHT_QUARTER"
+                    onChange={(e) => change(e)}
+                  ></Input>
+                </Col>
+                <Col>
+                  <Label for="5/4_Price">8/4 Select Grade Price</Label>
+                  <Input
+                    type="number"
+                    value={product.EIGHT_QUARTER_THICK}
+                    name="EIGHT_QUARTER_THICK"
                     onChange={(e) => change(e)}
                   ></Input>
                 </Col>
@@ -545,6 +578,28 @@ const Woodtype = (props) => {
                     value={product.SIX_QUARTER_THICK}
                     disabled
                     name="SIX_QUARTER_THICK"
+                    onChange={(e) => change(e)}
+                  ></Input>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <Label for="4/4_Price">8/4 Standard Grade Price</Label>
+                  <Input
+                    type="number"
+                    value={product.EIGHT_QUARTER}
+                    disabled
+                    name="EIGHT_QUARTER"
+                    onChange={(e) => change(e)}
+                  ></Input>
+                </Col>
+                <Col>
+                  <Label for="5/4_Price">8/4 Select Grade Price</Label>
+                  <Input
+                    type="number"
+                    value={product.EIGHT_QUARTER_THICK}
+                    disabled
+                    name="EIGHT_QUARTER_THICK"
                     onChange={(e) => change(e)}
                   ></Input>
                 </Col>

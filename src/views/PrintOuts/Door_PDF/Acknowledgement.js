@@ -156,7 +156,11 @@ export default (data, pricing) => {
                         : ''
                     }${part.woodtype.NAME} - ${part.thickness?.thickness_1} - ${
                       part.thickness?.thickness_2
-                    }"`,
+                    }" ${
+                      part.thickness?.thickness_3
+                        ? '- ' + part?.thickness?.thickness_3 + '"'
+                        : ''
+                    }`,
                     style: 'fonts',
                   },
 

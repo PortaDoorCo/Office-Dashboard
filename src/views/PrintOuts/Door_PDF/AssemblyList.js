@@ -195,10 +195,26 @@ export default (data, breakdowns) => {
                         text: `${
                           i.thickness?.grade_name ? i.thickness?.grade_name : ''
                         }${i.woodtype.NAME} - ${i.thickness.thickness_1} - ${
-                          i.thickness.thickness_2
-                        }"`,
+                          !i.thickness?.oversize
+                            ? i.thickness.thickness_2 + '"'
+                            : ''
+                        }`,
                         style: 'woodtype',
                       },
+                      i.thickness?.oversize
+                        ? {
+                            text: `${
+                              i.thickness?.thickness_2
+                                ? i.thickness?.thickness_2
+                                : ''
+                            }" ${
+                              i.thickness?.thickness_3
+                                ? '- ' + i.thickness?.thickness_3
+                                : ''
+                            }"`,
+                            style: 'woodtype',
+                          }
+                        : null,
                     ],
                   },
                   {
@@ -224,6 +240,10 @@ export default (data, breakdowns) => {
                       {
                         text: `Thickness:  ${
                           i.thickness ? i.thickness.thickness_2 : ''
+                        }" ${
+                          i.thickness?.thickness_3
+                            ? '- ' + i.thickness?.thickness_3
+                            : ''
                         }"`,
                         style: 'fonts',
                       },
