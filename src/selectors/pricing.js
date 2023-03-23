@@ -293,14 +293,17 @@ export const itemPriceSelector = createSelector(
             ? part.design.UPCHARGE_THICK
             : 0;
 
-        const date = new Date(formState?.values?.created_at);
+        const date = new Date(formState?.values?.created_at || Date.now());
 
         const update_date = new Date('2023-02-24T05:00:00.000Z');
+        const update_date_2 = new Date('2023-03-03T05:00:00.000Z');
 
         if (date < update_date) {
-          design = design - 1.5;
+          design = design - 2.5;
+        } else if (date > update_date && date < update_date_2) {
+          design = design - 1;
         } else {
-          console.log('The created_at field is on or after today.');
+          design = design;
         }
 
         let wood;
@@ -325,6 +328,14 @@ export const itemPriceSelector = createSelector(
           case 6:
             // code block
             wood = part?.woodtype?.SIX_QUARTER_THICK;
+            break;
+          case 7:
+            // code block
+            wood = part?.woodtype?.EIGHT_QUARTER;
+            break;
+          case 8:
+            // code block
+            wood = part?.woodtype?.EIGHT_QUARTER_THICK;
             break;
           default:
             // code block

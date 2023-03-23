@@ -1,7 +1,4 @@
-
-
 export default (data, breakdowns) => {
-
   const tableBody = [
     [
       { text: 'Linear Ft', style: 'fonts' },
@@ -13,37 +10,75 @@ export default (data, breakdowns) => {
     ],
   ];
 
-  const t = data.mouldings?.forEach(i => {
+  const t = data.mouldings?.forEach((i) => {
     tableBody.push([
       { text: i.linearFT, style: 'fonts' },
       { text: i.style?.name, style: 'fonts' },
       { text: i.grade?.name, style: 'fonts' },
       { text: i.woodtype?.NAME, style: 'fonts' },
-      { text: i.style?.value === 'custom' ? `Width: ${i.width}" \n Thickness: ${i.thickness}"` : i.item?.NAME, style: 'fonts' },
+      {
+        text:
+          i.style?.value === 'custom'
+            ? `Width: ${i.width}" \n Thickness: ${i.thickness}"`
+            : i.item?.NAME,
+        style: 'fonts',
+      },
       { text: i.notes ? i.notes : '', style: 'fontsBold' },
     ]);
   });
 
-
-
   return [
-    data.job_info?.Shop_Notes
-      ? {
-        columns: [
-          { text: '' },
-          {
-            text: `${
-          data.job_info?.Shop_Notes
-            ? data.job_info?.Shop_Notes?.toUpperCase()
-            : ''
-            }`,
-            alignment: 'center',
-            style: 'fontsBold',
-          },
-          { text: '' },
-        ],
-        margin: [0, -26, 0, 10],
-      } : null,
+    {
+      columns: [
+        { text: '' },
+        {
+          alignment: 'center',
+          style: 'fontsBold',
+          stack: [
+            data.job_info?.Shop_Notes
+              ? {
+                  text: `${
+                    data.job_info?.Shop_Notes
+                      ? data.job_info?.Shop_Notes?.toUpperCase()
+                      : ''
+                  }`,
+                }
+              : null,
+            {
+              text: data?.misc_items?.map((i) => {
+                if (i.category === 'preselect') {
+                  if (
+                    i?.item?.NAME?.toLowerCase()?.includes('delivery') ||
+                    i?.item?.NAME?.toLowerCase()?.includes('price') ||
+                    i?.item?.NAME?.toLowerCase()?.includes('discount') ||
+                    i?.item?.NAME?.toLowerCase()?.includes('rush') ||
+                    i?.item?.NAME?.toLowerCase()?.includes('credit')
+                  ) {
+                    return null;
+                  } else {
+                    return `${i.item?.NAME} \n`;
+                  }
+                } else {
+                  if (
+                    i?.item2?.toLowerCase()?.includes('delivery') ||
+                    i?.item2?.toLowerCase()?.includes('price') ||
+                    i?.item2?.toLowerCase()?.includes('discount') ||
+                    i?.item2?.toLowerCase()?.includes('rush') ||
+                    i?.item2?.toLowerCase()?.includes('credit')
+                  ) {
+                  } else {
+                    return `${i.item2} \n`;
+                  }
+                }
+              }),
+            },
+          ],
+        },
+        { text: '' },
+      ],
+      margin: [0, -26, 0, 10],
+    },
+
     {
       table: {
         headerRows: 1,

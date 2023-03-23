@@ -163,13 +163,29 @@ export default (data, breakdowns) => {
               {
                 columns: [
                   {
-                    text: `${
-                      i.thickness?.grade_name ? i.thickness?.grade_name : ''
-                    }${i.woodtype.NAME} - ${i.thickness.thickness_1} - ${
-                      i.thickness.thickness_2
-                    }"`,
-                    style: 'woodtype',
-                    width: 200,
+                    stack: [
+                      {
+                        text: `${
+                          i.thickness?.grade_name ? i.thickness?.grade_name : ''
+                        }${i.woodtype.NAME} - ${i.thickness.thickness_1} - ${
+                          !i.thickness?.oversize
+                            ? i.thickness.thickness_2 + '"'
+                            : ''
+                        }`,
+                        style: 'woodtype',
+                        alignment: 'left',
+                        width: 150,
+                      },
+
+                      i.thickness?.oversize
+                        ? {
+                            text: `${i.thickness.thickness_2}" - ${i.thickness.thickness_3}"`,
+                            style: 'woodtype',
+                            alignment: 'left',
+                            width: 150,
+                          }
+                        : null,
+                    ],
                   },
                   {
                     text: `IP:  ${

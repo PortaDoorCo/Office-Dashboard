@@ -172,7 +172,9 @@ class Door extends Component {
         design.ORDERTYPE === 'Door' &&
         (thickness_1 === '4/4'
           ? design.UPCHARGE > 0
-          : thickness_1 === '5/4' || thickness_1 === '6/4'
+          : thickness_1 === '5/4' ||
+            thickness_1 === '6/4' ||
+            thickness_1 === '8/4'
           ? design.UPCHARGE_THICK > 0
           : null)
     );
