@@ -57,11 +57,11 @@ export default (info, part, breakdowns) => {
   }
 
   if (info.orderType?.value === 'One_Piece') {
-    return One_Piece_Door(info, part, breakdowns[0]);
+    return Door(info, part, breakdowns[0]);
   }
 
   if (info.orderType?.value === 'One_Piece_DF') {
-    return One_Piece_Door(info, part, breakdowns[0]);
+    return Door(info, part, breakdowns[4]);
   }
 
   if (info.orderType?.value === 'Two_Piece') {
