@@ -21,6 +21,16 @@ export default (info, part, breakdowns) => {
       ? info?.edge?.LIP_FACTOR
       : 0;
 
+  if (
+    info.orderType?.value === 'One_Piece' ||
+    info.orderType?.value === 'One_Piece_DF' ||
+    info.orderType?.value === 'Two_Piece' ||
+    info.orderType?.value === 'Two_Piece_DF'
+  ) {
+    edge_factor = 0;
+    lip_factor = 0;
+  }
+
   const topRail = info.topRail
     ? Math.round(numQty(info.topRail) * 16) / 16 + lip_factor / 2
     : 0;
