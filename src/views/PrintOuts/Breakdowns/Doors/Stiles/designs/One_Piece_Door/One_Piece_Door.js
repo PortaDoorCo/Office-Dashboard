@@ -1,6 +1,5 @@
-
-
 export default (info, part, breakdowns) => {
+  console.log({ info, part, breakdowns });
 
   const door = [
     {
@@ -9,11 +8,9 @@ export default (info, part, breakdowns) => {
       pattern: '',
       width: 0,
       height: 0,
-      panel: ''
+      panel: '',
     },
   ];
-
-
 
   return door;
 };
