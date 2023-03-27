@@ -171,6 +171,7 @@ export function loadOrders(cookie, user) {
         type: LOAD_ORDERS,
         data: data,
         ordersDBLoaded: true,
+        search: false,
       });
     };
   } else if (user?.role?.type === 'quality_control') {
@@ -188,6 +189,7 @@ export function loadOrders(cookie, user) {
         type: LOAD_ORDERS,
         data: data,
         ordersDBLoaded: true,
+        search: false,
       });
     };
   } else if (user?.role?.type === 'sales') {
@@ -205,6 +207,7 @@ export function loadOrders(cookie, user) {
         type: LOAD_ORDERS,
         data: data,
         ordersDBLoaded: true,
+        search: false,
       });
     };
   } else {
@@ -219,6 +222,7 @@ export function loadOrders(cookie, user) {
         type: LOAD_ORDERS,
         data: data,
         ordersDBLoaded: true,
+        search: false,
       });
     };
   }
@@ -280,6 +284,7 @@ export function searchOrders(cookie, user, search) {
         type: LOAD_ORDERS,
         data: [],
         ordersDBLoaded: false,
+        search: true,
       });
 
       const res = await fetch(
@@ -295,6 +300,7 @@ export function searchOrders(cookie, user, search) {
         type: LOAD_ORDERS,
         data: data,
         ordersDBLoaded: true,
+        search: true,
       });
     };
   } else if (user?.role?.type === 'quality_control') {
@@ -303,6 +309,7 @@ export function searchOrders(cookie, user, search) {
         type: LOAD_ORDERS,
         data: [],
         ordersDBLoaded: false,
+        search: true,
       });
 
       const res = await fetch(`${db_url}/orders${search}`, {
@@ -315,6 +322,7 @@ export function searchOrders(cookie, user, search) {
         type: LOAD_ORDERS,
         data: data,
         ordersDBLoaded: true,
+        search: true,
       });
     };
   } else if (user?.role?.type === 'sales') {
@@ -323,6 +331,7 @@ export function searchOrders(cookie, user, search) {
         type: LOAD_ORDERS,
         data: [],
         ordersDBLoaded: false,
+        search: true,
       });
 
       const res = await fetch(`${db_url}/orders${search}`, {
@@ -335,6 +344,7 @@ export function searchOrders(cookie, user, search) {
         type: LOAD_ORDERS,
         data: data,
         ordersDBLoaded: true,
+        search: true,
       });
     };
   } else {
@@ -343,6 +353,7 @@ export function searchOrders(cookie, user, search) {
         type: LOAD_ORDERS,
         data: [],
         ordersDBLoaded: false,
+        search: true,
       });
 
       const res = await fetch(`${db_url}/orders${search}`, {
@@ -355,6 +366,7 @@ export function searchOrders(cookie, user, search) {
         type: LOAD_ORDERS,
         data: data,
         ordersDBLoaded: true,
+        search: true,
       });
     };
   }
