@@ -50,20 +50,24 @@ export default function (state = initialState, action) {
           ...state,
           orders: [data, ...state.orders],
         };
+      } else {
+        return {
+          ...state,
+        };
       }
-      return {
-        ...state,
-      };
+
     case ORDER_UPDATED:
       if (!state.search) {
         return {
           ...state,
           orders: state.orders.map((i) => (i.id === data.id ? data : i)),
         };
+      } else {
+        return {
+          ...state,
+        };
       }
-      return {
-        ...state,
-      };
+
     case ORDER_DELETED:
       return {
         ...state,
@@ -73,10 +77,12 @@ export default function (state = initialState, action) {
       return {
         ...state,
         selectedOrder: data,
+        search: false,
       };
     case UPDATE_ORDER:
       return {
         ...state,
+        search: false,
         orders: state.orders.map((item, index) => {
           if (item.id !== data.data.id) {
             return item;
