@@ -73,10 +73,12 @@ export default function (state = initialState, action) {
       return {
         ...state,
         selectedOrder: data,
+        search: false,
       };
     case UPDATE_ORDER:
       return {
         ...state,
+        search: false,
         orders: state.orders.map((item, index) => {
           if (item.id !== data.data.id) {
             return item;
