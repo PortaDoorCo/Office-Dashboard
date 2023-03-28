@@ -50,20 +50,24 @@ export default function (state = initialState, action) {
           ...state,
           orders: [data, ...state.orders],
         };
+      } else {
+        return {
+          ...state,
+        };
       }
-      return {
-        ...state,
-      };
+
     case ORDER_UPDATED:
       if (!state.search) {
         return {
           ...state,
           orders: state.orders.map((i) => (i.id === data.id ? data : i)),
         };
+      } else {
+        return {
+          ...state,
+        };
       }
-      return {
-        ...state,
-      };
+
     case ORDER_DELETED:
       return {
         ...state,
