@@ -319,7 +319,7 @@ const DoorTable = ({
       newWidth = [...newWidth, v];
     }
 
-    if (numQty(v) >= 24 && part?.orderType?.value === 'Door') {
+    if (numQty(v) >= 24) {
       setWarningType({
         value: v,
         index: index,
@@ -349,7 +349,7 @@ const DoorTable = ({
       newHeight = [...newHeight, v];
     }
 
-    if (numQty(v) >= 48 && part?.orderType?.value === 'Door') {
+    if (numQty(v) >= 48) {
       setWarningType({
         value: v,
         index: index,
@@ -366,7 +366,11 @@ const DoorTable = ({
       toggle();
     }
 
-    if (part?.orderType?.value === 'DF') {
+    if (
+      part?.orderType?.value === 'DF' ||
+      part?.orderType?.value === 'One_Piece_DF' ||
+      part?.orderType?.value === 'Two_Piece_DF'
+    ) {
       const limit = 7;
       const heightLimit = numQty(v);
       if (heightLimit >= limit) {
