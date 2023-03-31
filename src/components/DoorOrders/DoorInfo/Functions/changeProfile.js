@@ -5,7 +5,11 @@ const changeProfile = (p, ind, props, change) => {
 
   const part = formState.part_list[ind];
 
-  if (part?.orderType?.value === 'DF') {
+  if (
+    part?.orderType?.value === 'DF' ||
+    part?.orderType?.value === 'One_Piece_DF' ||
+    part?.orderType?.value === 'Two_Piece_DF'
+  ) {
     const topRail = part.profile
       ? part.profile.DF_Reduction
         ? part.profile.DF_Reduction
