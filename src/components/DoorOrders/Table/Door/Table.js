@@ -72,6 +72,7 @@ const DoorTable = ({
   const [warningType, setWarningType] = useState(null);
   const [preventItem, setPreventItem] = useState(null);
   const [fullFrameNote, setFullFrameNote] = useState(false);
+  const [fullFrameIndex, setFullFrameIndex] = useState(null);
   const toggle = () => setModal(!modal);
 
   let design = formState?.part_list[i]?.design;
@@ -102,29 +103,37 @@ const DoorTable = ({
 
   const toggleFullFrameNote = () => setFullFrameNote(!fullFrameNote);
 
-  const updateFullFrame = (e, index) => {
+  const updateFullFrame = (e) => {
     const part = formState.part_list[i];
+
+    const index = fullFrameIndex;
 
     let profile_width;
     let df_reduction;
 
     if (part.construction.value === 'Cope') {
-      profile_width = part.profile.PROFILE_WIDTH;
-      df_reduction = part.profile.DF_Reduction;
+      profile_width = part?.profile?.PROFILE_WIDTH;
+      df_reduction = part?.profile?.DF_Reduction;
     }
 
     if (part.construction.value === 'MT') {
-      profile_width = part.design.PROFILE_WIDTH;
-      df_reduction = part.design.DF_REDUCTION;
+      profile_width = part?.design?.PROFILE_WIDTH;
+      df_reduction = part?.design?.DF_REDUCTION;
     }
 
     if (part.construction.value === 'Miter') {
-      profile_width = part.design.DF_FULL_FRAME;
-      df_reduction = part.design.PROFILE_WIDTH;
+      profile_width = part?.design?.DF_FULL_FRAME;
+      df_reduction = part?.design?.PROFILE_WIDTH;
     }
 
+    console.log('HERE');
+    console.log({ profile_width, leftStile });
+    console.log({ e });
+
     if (e) {
+      console.log('here -1 ');
       if (leftStile) {
+        console.log('here-2');
         dispatch(
           change(
             'Order',
@@ -165,6 +174,11 @@ const DoorTable = ({
             )
           );
         } else {
+          console.log('here-3');
+          console.log({ test: fraction(numQty(leftStile)) });
+
+          console.log({ i, index });
+
           dispatch(
             change(
               'Order',
@@ -374,6 +388,7 @@ const DoorTable = ({
       const limit = 7;
       const heightLimit = numQty(v);
       if (heightLimit >= limit) {
+        setFullFrameIndex(index);
         toggleFullFrameNote();
       }
     }
