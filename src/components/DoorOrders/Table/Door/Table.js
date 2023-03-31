@@ -99,8 +99,6 @@ const DoorTable = ({
   const leftStile = part?.dimensions[index]?.leftStile;
   const rightStile = part?.dimensions[index]?.rightStile;
 
-  console.log({ part });
-
   const toggleFullFrameNote = () => setFullFrameNote(!fullFrameNote);
 
   const updateFullFrame = (e) => {
@@ -126,14 +124,8 @@ const DoorTable = ({
       df_reduction = part?.design?.PROFILE_WIDTH;
     }
 
-    console.log('HERE');
-    console.log({ profile_width, leftStile });
-    console.log({ e });
-
     if (e) {
-      console.log('here -1 ');
       if (leftStile) {
-        console.log('here-2');
         dispatch(
           change(
             'Order',
@@ -174,11 +166,6 @@ const DoorTable = ({
             )
           );
         } else {
-          console.log('here-3');
-          console.log({ test: fraction(numQty(leftStile)) });
-
-          console.log({ i, index });
-
           dispatch(
             change(
               'Order',
