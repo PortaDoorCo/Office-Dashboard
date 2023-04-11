@@ -634,19 +634,31 @@ export const itemPriceSelector = createSelector(
                 (part?.construction?.value === 'Slab' ||
                   part?.construction?.value === 'Wrapped')
               ) {
+                let d = 6.5;
+
+                if (part?.construction?.value === 'Wrapped') {
+                  d = 18.25;
+                }
+
                 price =
                   (width * height) / 144 > 2
-                    ? ((width * height) / 144) * wood + (6.5 + edge) + extraCost
-                    : 2 * wood + (6.5 + edge) + extraCost;
+                    ? ((width * height) / 144) * wood + (d + edge) + extraCost
+                    : 2 * wood + (d + edge) + extraCost;
               } else if (
                 part?.orderType?.value === 'DF' &&
                 (part?.construction?.value === 'Slab' ||
                   part?.construction?.value === 'Wrapped')
               ) {
+                let d = 6.5;
+
+                if (part?.construction?.value === 'Wrapped') {
+                  d = 18.25;
+                }
+
                 price =
                   (width * height) / 144 > 1
-                    ? ((width * height) / 144) * wood + (6.5 + edge) + extraCost
-                    : 1 * wood + (6.5 + edge) + extraCost;
+                    ? ((width * height) / 144) * wood + (d + edge) + extraCost
+                    : 1 * wood + (d + edge) + extraCost;
               } else if (part?.orderType?.value === 'DF') {
                 price =
                   eval(pricer.df_pricing) +
