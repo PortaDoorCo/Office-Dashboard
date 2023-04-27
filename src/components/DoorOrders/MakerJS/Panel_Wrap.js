@@ -1,5 +1,5 @@
-var makerjs = require('makerjs');
-var _ = require('lodash');
+import makerjs from 'makerjs';
+import _ from 'lodash';
 
 function Door(wrap_width, face_width, thickness, panel_thickness) {
   var mm = makerjs.models;

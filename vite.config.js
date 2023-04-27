@@ -3,6 +3,14 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import * as esbuild from 'esbuild';
 import path from 'node:path';
+import legacy from '@vitejs/plugin-legacy';
+import { esbuildCommonjs } from '@originjs/vite-plugin-commonjs';
+import requireTransform from 'vite-plugin-require-transform';
+
+import { nodeModulesPolyfillPlugin } from 'esbuild-plugins-node-modules-polyfill';
+import externals from 'rollup-plugin-node-externals';
+
+import { nodePolyfills } from 'vite-plugin-node-polyfills';
 
 const sourceJSPattern = /\/src\/.*\.js$/;
 const rollupPlugin = (matchers) => ({
@@ -14,6 +22,31 @@ const rollupPlugin = (matchers) => ({
     }
   },
 });
+
+function esbuildMakerJsPlugin() {
+  return {
+    name: 'esbuild-makerjs',
+    setup(build) {
+      build.onLoad({ filter: /makerjs$/ }, async (args) => {
+        const contents = await fs.promises.readFile(args.path, 'utf8');
+        const replacedContents = contents.replace(
+          "var clone = require('clone');",
+          "import clone from 'clone';"
+        );
+        const transformed = await esbuild.transform(replacedContents, {
+          loader: 'js',
+          format: 'esm',
+          target: 'esnext',
+        });
+
+        return {
+          contents: transformed.code,
+          loader: 'js',
+        };
+      });
+    },
+  };
+}
 
 function fixReactCsvPlugin(command) {
   const esbuildPlugin = {
@@ -60,7 +93,21 @@ function fixReactCsvPlugin(command) {
 
 export default defineConfig(({ command }) => {
   return {
-    plugins: [react(), fixReactCsvPlugin(command)],
+    plugins: [
+      react(),
+      fixReactCsvPlugin(command),
+      esbuildMakerJsPlugin(),
+
+      requireTransform({}),
+      legacy({
+        targets: ['defaults', 'not IE 11'],
+      }),
+      nodeModulesPolyfillPlugin(),
+      nodePolyfills({
+        protocolImports: true,
+      }),
+      esbuildCommonjs(),
+    ],
     build: {
       rollupOptions: {
         plugins: [rollupPlugin([sourceJSPattern])],
@@ -74,8 +121,9 @@ export default defineConfig(({ command }) => {
         loader: {
           '.js': 'jsx',
         },
+        plugins: [esbuildCommonjs(['makerjs'])],
       },
-      include: ['pdfmake/build/pdfmake', 'pdfmake/build/vfs_fonts'],
+      include: ['pdfmake/build/pdfmake', 'pdfmake/build/vfs_fonts', 'makerjs'],
     },
     esbuild: {
       loader: 'jsx',
@@ -83,7 +131,7 @@ export default defineConfig(({ command }) => {
       exclude: [],
     },
     server: {
-      open: true, // This will open the app in a new browser tab
+      open: false, // This will open the app in a new browser tab
       base: '/public/',
     },
   };

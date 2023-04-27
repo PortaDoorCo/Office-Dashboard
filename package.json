@@ -25,9 +25,11 @@
     "@date-io/moment": "^1.3.13",
     "@material-ui/core": "^4.6.0",
     "@material-ui/icons": "^4.5.1",
+    "@originjs/vite-plugin-commonjs": "^1.0.3",
     "@sentry/react": "^6.2.0",
     "@sentry/tracing": "^6.2.0",
     "@types/react": "^16.14.0",
+    "@vitejs/plugin-legacy": "^4.0.3",
     "antd": "^4.16.13",
     "availity-reactstrap-validation": "^2.7.0",
     "axios": ">=0.21.1",
@@ -39,6 +41,7 @@
     "core-js": "^3.1.4",
     "currency.js": "^2.0.4",
     "enzyme": "^3.10.0",
+    "esbuild-plugins-node-modules-polyfill": "^1.0.13",
     "filepond": "^4.19.2",
     "font-awesome": "^4.7.0",
     "js-cookie": "^2.2.0",
@@ -94,6 +97,8 @@
     "redux-localstorage-simple": "^2.4.0",
     "redux-thunk": "^2.3.0",
     "reselect": "^4.0.0",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-node-externals": "^5.1.2",
     "sass": "^1.62.1",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^1.2.0",
@@ -103,7 +108,9 @@
     "styled-components": "^5.1.1",
     "svg-blueprint": "^1.0.1",
     "typescript": "^4.2.4",
-    "use-debounce": "^8.0.3"
+    "use-debounce": "^8.0.3",
+    "vite-plugin-commonjs": "^0.6.2",
+    "vite-plugin-legacy": "^2.1.0"
   },
   "resolutions": {
     "terser": "^5.0.0"
@@ -172,6 +179,8 @@
     "@vitejs/plugin-react": "^4.0.0",
     "eslint-plugin-react": "^7.17.0",
     "npm-dts": "^1.3.9",
-    "vite": "^4.3.3"
+    "vite": "^4.3.3",
+    "vite-plugin-node-polyfills": "^0.8.2",
+    "vite-plugin-require-transform": "^1.0.12"
   }
 }

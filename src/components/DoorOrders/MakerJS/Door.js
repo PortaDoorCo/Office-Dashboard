@@ -1,5 +1,5 @@
-var makerjs = require('makerjs');
-var _ = require('lodash');
+import * as makerjs from '../../../../node_modules/makerjs';
+import _ from 'lodash';
 
 var DoorInner = (function () {
   function DoorInner(
