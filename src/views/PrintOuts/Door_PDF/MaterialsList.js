@@ -251,7 +251,7 @@ export default (data, breakdowns) => {
       i.orderType.value === 'Slab_Door' ||
       i.orderType.value === 'Slab_DF' ||
       i.construction.value === 'Slab' ||
-      i.panel.name === 'Glass'
+      i.panel.glass
     ) {
       return {
         orderType: i.orderType.value,
@@ -279,7 +279,7 @@ export default (data, breakdowns) => {
     let panel;
 
     v.map((j, k) => {
-      if (!j.panel || j.panel?.NAME === 'Glass') {
+      if (!j.panel || j.panel?.glass) {
         return null;
       } else {
         totalBoardFt += j.BoardFT;

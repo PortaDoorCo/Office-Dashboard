@@ -575,7 +575,7 @@ const DoorTable = ({
         //   );
         // }
 
-        if (part.panel?.NAME === 'Glass') {
+        if (part.panel?.glass) {
           for (let j = 0; j < value; j++) {
             dispatch(
               change(
@@ -657,7 +657,7 @@ const DoorTable = ({
           );
         }
 
-        if (part.panel?.NAME === 'Glass') {
+        if (part.panel?.glass) {
           for (let j = 0; j < value; j++) {
             dispatch(
               change(
@@ -1078,8 +1078,7 @@ const DoorTable = ({
       unevenCheck: false,
       unevenSplit: false,
       notes: '',
-      glass_check_0:
-        formState.part_list[i]?.panel?.NAME === 'Glass' ? true : false,
+      glass_check_0: formState.part_list[i]?.panel?.glass ? true : false,
     });
   };
 

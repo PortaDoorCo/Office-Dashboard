@@ -257,8 +257,7 @@ const Cope_Table = ({
       unevenSplitInput: '0',
       showBuilder: false,
       full_frame: false,
-      glass_check_0:
-        formState.part_list[i]?.panel?.NAME === 'Glass' ? true : false,
+      glass_check_0: formState.part_list[i]?.panel?.glass ? true : false,
     });
   };
 
