@@ -52,7 +52,7 @@ const { Option } = Select;
 
 const conditionalRowStyles = [
   {
-    when: (row: { late: any }) => row.late === true,
+    when: (row) => row.late === true,
     style: {
       backgroundColor: '#FEEBEB',
       '&:hover': {
@@ -77,16 +77,7 @@ const FilterComponent = ({ filterText, onFilter, onClear }) => (
   </>
 );
 
-type TablePropTypes = {
-  setSelectedOrder: (date: any) => null;
-  setOrderType: (type: any) => null;
-  orders: Array<any>;
-  updateStatus: any;
-  ordersDBLoaded: boolean;
-  user: any;
-};
-
-const OrderTable = (props: TablePropTypes) => {
+const OrderTable = (props) => {
   const { orders } = props;
   const [modal, setModal] = useState(false);
   const [edit, setEdit] = useState(false);
@@ -133,7 +124,7 @@ const OrderTable = (props: TablePropTypes) => {
     );
   }, [filterText, resetPaginationToggle]);
 
-  const handleStatusChange = async (e: any, row: { id: string }) => {
+  const handleStatusChange = async (e, row) => {
     const { updateStatus, user } = props;
     const status = {
       status: e,
@@ -277,7 +268,7 @@ const OrderTable = (props: TablePropTypes) => {
     },
   ];
 
-  const toggle = (row: { orderType: any }) => {
+  const toggle = (row) => {
     const { setSelectedOrder, setOrderType } = props;
 
     setEdit(false);
@@ -322,13 +313,13 @@ const OrderTable = (props: TablePropTypes) => {
   );
 };
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state) => ({
   orderNum: state.Orders.orderNum,
   ordersDBLoaded: state.Orders.ordersDBLoaded,
   user: state.users.user,
 });
 
-const mapDispatchToProps = (dispatch: any) =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       updateStatus,

@@ -1,4 +1,4 @@
-import moment from 'moment-business-days';
+import moment from 'moment';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import DatePicker from 'react-widgets/DatePicker';
@@ -31,6 +31,35 @@ import {
   totalSelector,
   rushTotal,
 } from '../../selectors/pricing';
+
+function addBusinessDays(date, days) {
+  let current = moment(date);
+  let businessDays = 0;
+
+  while (businessDays < days) {
+    current = current.add(1, 'days');
+    if (current.day() !== 0 && current.day() !== 6) {
+      businessDays++;
+    }
+  }
+
+  return current;
+}
+
+function businessDaysDifference(startDate, endDate) {
+  let current = moment(startDate);
+  let endDateMoment = moment(endDate);
+  let businessDays = 0;
+
+  while (current.isBefore(endDateMoment)) {
+    if (current.day() !== 0 && current.day() !== 6) {
+      businessDays++;
+    }
+    current = current.add(1, 'days');
+  }
+
+  return businessDays;
+}
 
 // momentLocaliser(moment);
 
@@ -80,12 +109,13 @@ class JobInfo extends Component {
       if (formState?.job_info?.Shipping_Scheduled) {
         return;
       } else {
-        let dueDate = moment(new Date()).businessAdd(21)._d;
+        let dueDate = addBusinessDays(new Date(), 21).toDate();
 
         if (formState?.DateOrdered || dateOrdered.length > 0) {
-          dueDate = moment(
-            new Date(formState?.DateOrdered || dateOrdered[0]?.date)
-          ).businessAdd(21)._d;
+          dueDate = addBusinessDays(
+            new Date(formState?.DateOrdered || dateOrdered[0]?.date),
+            21
+          ).toDate();
         }
 
         this.props.dispatch(change('Order', 'job_info.DueDate', dueDate));
@@ -329,8 +359,9 @@ class JobInfo extends Component {
       orders,
     } = this.props;
 
-    const dateDifference = moment(new Date()).businessDiff(
-      moment(formState && formState.job_info && formState.job_info.DueDate)
+    const dateDifference = businessDaysDifference(
+      new Date(),
+      formState && formState.job_info && formState.job_info.DueDate
     );
 
     const salesCompanies = customers?.filter(

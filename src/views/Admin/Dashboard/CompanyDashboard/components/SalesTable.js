@@ -54,12 +54,7 @@ const cookie = Cookies.get('jwt');
 
 const conditionalRowStyles = [
   {
-    when: (row: {
-      late: any;
-      Shipping_Scheduled: any;
-      status: String;
-      dueDate: any;
-    }) => {
+    when: (row) => {
       return (
         moment(row.dueDate).startOf('day').valueOf() <
           moment(new Date()).startOf('day').valueOf() &&
@@ -110,18 +105,7 @@ const FilterComponent = ({ filterText, onFilter, onClear }) => (
   </>
 );
 
-type TablePropTypes = {
-  setSelectedOrder: (date: any) => null;
-  setOrderType: (date: any) => null;
-  loadOrders: (date: any, user: any) => null;
-  searchOrders: (date: any, user: any, search: any) => null;
-  orders: Array<any>;
-  updateStatus: any;
-  ordersDBLoaded: boolean;
-  user: any;
-};
-
-const OrderTable = (props: TablePropTypes) => {
+const OrderTable = (props) => {
   const { orders, user } = props;
   const [modal, setModal] = useState(false);
   const [edit, setEdit] = useState(false);
@@ -379,7 +363,7 @@ const OrderTable = (props: TablePropTypes) => {
     },
   ];
 
-  const toggle = (row: { orderType: any }) => {
+  const toggle = (row) => {
     const { setSelectedOrder, setOrderType } = props;
 
     setEdit(false);
@@ -455,13 +439,13 @@ const OrderTable = (props: TablePropTypes) => {
   );
 };
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state) => ({
   orderNum: state.Orders.orderNum,
   ordersDBLoaded: state.Orders.ordersDBLoaded,
   user: state.users.user,
 });
 
-const mapDispatchToProps = (dispatch: any) =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       updateStatus,

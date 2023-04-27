@@ -1,6 +1,6 @@
 import moment from 'moment';
 import pdfMake from 'pdfmake-lite/build/pdfmake';
-import vfsFonts from 'pdfmake-lite/build/vfs_fonts';
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import TotalPieces from '../../Breakdowns/Doors/MaterialBreakdown/TotalPieces';
 import Acknowledgement from '../../Drawer_PDF/Acknowledgement';
 import AssemblyList from '../../Drawer_PDF/AssemblyList';
@@ -9,6 +9,8 @@ import Box_Labels from '../../Drawer_PDF/Box_Labels';
 import Invoice from '../../Drawer_PDF/Invoice';
 import Packing_Slip from '../../Drawer_PDF/Packing_Slip';
 import Sides from '../../Drawer_PDF/Sides';
+
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 export default (data, breakdowns, p, pricing) => {
   const { vfs } = vfsFonts.pdfMake;

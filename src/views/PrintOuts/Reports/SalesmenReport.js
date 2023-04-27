@@ -1,6 +1,8 @@
 import pdfMake from 'pdfmake-lite/build/pdfmake';
-import vfsFonts from 'pdfmake-lite/build/vfs_fonts';
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import Salesmen from './Components/Salesmen';
+
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 export default (data, startDate, endDate, account, role, status) => {
   const { vfs } = vfsFonts.pdfMake;

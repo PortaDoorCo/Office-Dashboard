@@ -67,11 +67,11 @@ const loading = () => (
 );
 
 // Containers
-const DefaultLayout = React.lazy(
-  () => import('./containers/DefaultLayout/DefaultLayout')
+const DefaultLayout = React.lazy(() =>
+  import('./containers/DefaultLayout/DefaultLayout')
 );
 
-const PrivateRoute = ({ component: Component, ...rest }, islogged: boolean) => (
+const PrivateRoute = ({ component: Component, ...rest }, islogged) => (
   <Route
     {...rest}
     render={(props) => {
@@ -84,59 +84,8 @@ const PrivateRoute = ({ component: Component, ...rest }, islogged: boolean) => (
   />
 );
 
-type PropTypes = {
-  productAdded: (res: {}, entity: {}) => null;
-  productDeleted: (res: {}) => null;
-  productUpdated: (res: {}, entity: {}) => null;
-  orderAdded: (res: {}) => null;
-  orderUpdated: (res: {}) => null;
-  orderDeleted: (res: {}) => null;
-  miscItemAdded: (res: {}, entity: {}) => null;
-  miscItemDeleted: (res: {}) => null;
-  miscItemUpdated: (res: {}) => null;
-  customerAdded: (res: {}) => null;
-  customerUpdated: (res: {}) => null;
-  customerDeleted: (res: {}) => null;
-  printerOptionAdded: (res: {}, data: {}) => null;
-  printerOptionUpdated: (res: {}, data: {}) => null;
-  setLogin: () => null;
-  getDeliveries: (cookie: {}) => null;
-  getBreakdowns: (data: {}) => null;
-  getBoxBreakdowns: (data: {}) => null;
-  loadShippingMethod: (data: {}) => null;
-  loadPaymentTypes: (data: {}) => null;
-  loadPaymentTerms: (data: {}) => null;
-  loadAllCustomers: (data: {}, user: {}) => null;
-  loadAllOrders: (data: {}, user: {}) => null;
-  searchOrders: (data: {}, user: {}, search: {}) => null;
-  loadCategories: (data: {}) => null;
-  loadPrinterOptions: (data: {}) => null;
-  getAllProducts: (data: {}) => null;
-  getPricing: (data: {}) => null;
-  login: (data: {}) => null;
-  getUsers: (data: {}) => null;
-  loadOrders: (data: {}, user: {}) => null;
-  loadCustomers: (data: {}, user: {}) => null;
-  loadSales: (data: {}) => null;
-  loadMiscItems: (data: {}) => null;
-  currentVersion: () => null;
-  loggedIn: boolean;
-  user: any;
-  current_version: boolean;
-  users: {
-    loggedIn: boolean;
-    user: any;
-    current_version: boolean;
-  };
-};
-
-type StateTypes = {
-  isAuth: boolean;
-  cookie: any;
-};
-
-class App extends Component<PropTypes, StateTypes> {
-  constructor(props: any) {
+class App extends Component {
+  constructor(props) {
     super(props);
     this.state = {
       isAuth: false,
@@ -144,7 +93,7 @@ class App extends Component<PropTypes, StateTypes> {
     };
   }
 
-  cookies = (cb: any) => {
+  cookies = (cb) => {
     const getCookie = Cookies.get('jwt');
     if (getCookie) {
       this.setState(
@@ -182,7 +131,7 @@ class App extends Component<PropTypes, StateTypes> {
 
     socket.on(
       'order_submitted',
-      (res: any) => (
+      (res) => (
         NotificationManager.success(
           `Order #${res.id + 100} added`,
           'New Order',
@@ -193,7 +142,7 @@ class App extends Component<PropTypes, StateTypes> {
     );
     socket.on(
       'order_updated',
-      (res: { id: number }) => (
+      (res) => (
         NotificationManager.success(
           `Order #${res.id + 100} updated`,
           'Order Updated',
@@ -204,7 +153,7 @@ class App extends Component<PropTypes, StateTypes> {
     );
     socket.on(
       'status_updated',
-      (res: { id: number }) => (
+      (res) => (
         NotificationManager.success(
           `Order #${res.id + 100} has been updated`,
           'An order has been updated',
@@ -216,22 +165,22 @@ class App extends Component<PropTypes, StateTypes> {
 
     socket.on(
       'order_deleted',
-      (res: {}) => (
+      (res) => (
         NotificationManager.success('Order Deleted', 'Order Deleted', 2000),
         orderDeleted(res)
       )
     );
 
     socket.on('delivery_added', () => this.props.getDeliveries(cookie));
-    socket.on('customer_added', (res: {}) => {
+    socket.on('customer_added', (res) => {
       return customerAdded(res);
     });
-    socket.on('customer_updated', (res: {}) => customerUpdated(res));
+    socket.on('customer_updated', (res) => customerUpdated(res));
     // socket.on('customer_deleted', (res: {}) => customerDeleted(res));
 
     socket.on(
       'customer_deleted',
-      (res: {}) => (
+      (res) => (
         NotificationManager.success(
           'Customer Deleted',
           'Customer Deleted',
@@ -243,35 +192,35 @@ class App extends Component<PropTypes, StateTypes> {
 
     socket.on(
       'product_updated',
-      (res: {}, entity: {}) => (
+      (res, entity) => (
         NotificationManager.success('Product Updated', 'Product Updated', 2000),
         productUpdated(res, entity)
       )
     );
     socket.on(
       'product_added',
-      (res: {}, entity: {}) => (
+      (res, entity) => (
         NotificationManager.success('Product Added', 'Product Added', 2000),
         productAdded(res, entity)
       )
     );
     socket.on(
       'product_deleted',
-      (res: {}) => (
+      (res) => (
         NotificationManager.success('Product Deleted', 'Product Deleted', 2000),
         productDeleted(res)
       )
     );
     socket.on(
       'misc_item_added',
-      (res: {}, entity: {}) => (
+      (res, entity) => (
         NotificationManager.success('Misc Item Added', 'Misc Item Added', 2000),
         miscItemAdded(res, entity)
       )
     );
     socket.on(
       'misc_item_updated',
-      (res: {}) => (
+      (res) => (
         NotificationManager.success(
           'Misc Item Updated',
           'Misc Item Updated',
@@ -282,7 +231,7 @@ class App extends Component<PropTypes, StateTypes> {
     );
     socket.on(
       'misc_item_deleted',
-      (res: {}) => (
+      (res) => (
         NotificationManager.success(
           'Misc Item Deleted',
           'Misc Item Deleted',
@@ -291,15 +240,15 @@ class App extends Component<PropTypes, StateTypes> {
         miscItemDeleted(res)
       )
     );
-    socket.on('printer_option_added', (res: {}, data: {}) =>
+    socket.on('printer_option_added', (res, data) =>
       printerOptionAdded(res, data)
     );
 
-    socket.on('printer_option_updated', (res: {}, data: {}) =>
+    socket.on('printer_option_updated', (res, data) =>
       printerOptionUpdated(res, data)
     );
 
-    socket.on('message', (res: { message: string }) =>
+    socket.on('message', (res) =>
       NotificationManager.warning(
         res && res.message,
         'Message from Admin',
@@ -307,12 +256,12 @@ class App extends Component<PropTypes, StateTypes> {
       )
     );
 
-    const timeout = parseFloat(process.env.REACT_APP_NEW_DEPLOYMENT_TIMEOUT);
+    const timeout = parseFloat(import.meta.env.VITE_NEW_DEPLOYMENT_TIMEOUT);
 
     socket.on('new_release', (res) => currentVersion());
   };
 
-  componentDidUpdate = async (prevProps: any) => {
+  componentDidUpdate = async (prevProps) => {
     const {
       getAllProducts,
       getPricing,
@@ -400,13 +349,13 @@ class App extends Component<PropTypes, StateTypes> {
   }
 }
 
-const mapStateToProps = (state: PropTypes) => ({
+const mapStateToProps = (state) => ({
   loggedIn: state.users.loggedIn,
   user: state.users.user,
   current_version: state.users.current_version,
 });
 
-const mapDispatchToProps = (dispatch: any) =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       loadOrders,
@@ -449,7 +398,4 @@ const mapDispatchToProps = (dispatch: any) =>
     dispatch
   );
 
-export default connect<{ loggedIn: boolean }>(
-  mapStateToProps,
-  mapDispatchToProps
-)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

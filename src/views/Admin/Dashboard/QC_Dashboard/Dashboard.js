@@ -1,9 +1,5 @@
 import React, { Component, Suspense } from 'react';
-import {
-  Row,
-  Col,
-  Collapse,
-} from 'reactstrap';
+import { Row, Col, Collapse } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { login } from '../../../../redux/users/actions';
@@ -11,30 +7,13 @@ import { loadOrders } from '../../../../redux/orders/actions';
 import MessageModal from '../MessageModal';
 const OrderTable = React.lazy(() => import('./components/OrderTable'));
 
+const loading = () => (
+  <div className="animated fadeIn pt-1 text-center">
+    <div className="sk-spinner sk-spinner-pulse"></div>
+  </div>
+);
 
-const loading  = () => <div className="animated fadeIn pt-1 text-center"><div className="sk-spinner sk-spinner-pulse"></div></div>;
-
-type PropTypes = {
-  role: {
-    type: string
-  },
-  orders: any,
-  user: any
-}
-
-type StateTypes = {
-  maps: any,
-  dropdownOpen: boolean,
-  radioSelected: number,
-  orders: Array<any>,
-  modal: boolean,
-  selectedOrder: {},
-  orderEdit: boolean,
-  charts: boolean,
-  viewPopup: boolean
-}
-
-class Dashboard extends Component<PropTypes, StateTypes> {
+class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -46,7 +25,7 @@ class Dashboard extends Component<PropTypes, StateTypes> {
       orderEdit: false,
       maps: false,
       charts: false,
-      viewPopup: false
+      viewPopup: false,
     };
   }
 
@@ -64,36 +43,33 @@ class Dashboard extends Component<PropTypes, StateTypes> {
 
   toggleMessageModal = () => {
     this.setState({
-      viewPopup: !this.state.viewPopup
+      viewPopup: !this.state.viewPopup,
     });
-  }
+  };
 
   toggleMap = () => {
     this.setState({
-      maps: !this.state.maps
+      maps: !this.state.maps,
     });
-  }
+  };
 
   toggleCharts = () => {
     this.setState({
-      charts: !this.state.charts
+      charts: !this.state.charts,
     });
-  }
+  };
 
   render() {
     const { role, orders, user } = this.props;
 
-
-
     return (
       <div className="animated fadeIn">
-
         <MessageModal
           toggle={this.toggleMessageModal}
           modal={this.state.viewPopup}
         />
-        
-        {role && (role.type === 'quality_control') ?
+
+        {role && role.type === 'quality_control' ? (
           <div>
             <Row className="mt-3">
               <Col>
@@ -102,18 +78,20 @@ class Dashboard extends Component<PropTypes, StateTypes> {
                 </Suspense>
               </Col>
             </Row>
-          </div> : role && (role.type === 'sales') ?
-            <div>
-              <Row className="mt-3">
-                <Col>
-                  <Suspense fallback={loading()}>
-                    <OrderTable {...this.props} />
-                  </Suspense>
-                </Col>
-              </Row>
-            </div>
-            : loading()
-        }
+          </div>
+        ) : role && role.type === 'sales' ? (
+          <div>
+            <Row className="mt-3">
+              <Col>
+                <Suspense fallback={loading()}>
+                  <OrderTable {...this.props} />
+                </Suspense>
+              </Col>
+            </Row>
+          </div>
+        ) : (
+          loading()
+        )}
       </div>
     );
   }
@@ -125,19 +103,16 @@ const mapStateToProps = (state, prop) => ({
   customerDBLoaded: state.customers.customerDBLoaded,
   ordersDBLoaded: state.Orders.ordersDBLoaded,
   role: state.users.user.role,
-  user: state.users.user
+  user: state.users.user,
 });
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       login,
-      loadOrders
+      loadOrders,
     },
     dispatch
   );
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Dashboard);
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

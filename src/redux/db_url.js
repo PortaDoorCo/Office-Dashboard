@@ -1,2 +1,2 @@
-const db_url = process.env.REACT_APP_DB_URL;
+const db_url = import.meta.env.VITE_DB_URL;
 export default db_url;

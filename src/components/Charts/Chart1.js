@@ -17,15 +17,9 @@ import { bindActionCreators } from 'redux';
 import moment from 'moment';
 import { selectDateRange } from '../../redux/misc_items/actions';
 
-type PropTypes = {
-  selectedDateRange: {};
-  selectDateRange: (date: string) => void;
-  orders: Array<any>;
-};
-
 const brandInfo = '#63c2de';
 
-function convertHex(hex: string, opacity: number) {
+function convertHex(hex, opacity) {
   hex = hex.replace('#', '');
   var r = parseInt(hex.substring(0, 2), 16);
   var g = parseInt(hex.substring(2, 4), 16);
@@ -35,8 +29,8 @@ function convertHex(hex: string, opacity: number) {
   return result;
 }
 
-class Chart1 extends Component<PropTypes> {
-  constructor(props: any) {
+class Chart1 extends Component {
+  constructor(props) {
     super(props);
 
     this.onRadioBtnClick = this.onRadioBtnClick.bind(this);
@@ -49,7 +43,7 @@ class Chart1 extends Component<PropTypes> {
 
   componentDidMount() {
     Chart.pluginService.register({
-      beforeDraw: function (chart: any) {
+      beforeDraw: function (chart) {
         if (chart.chart.config.data.labels.length === 0) {
           var width = chart.chart.width,
             height = chart.chart.height,
@@ -69,7 +63,7 @@ class Chart1 extends Component<PropTypes> {
     });
   }
 
-  onRadioBtnClick(radioSelected: number) {
+  onRadioBtnClick(radioSelected) {
     this.setState({
       radioSelected: radioSelected,
     });
@@ -117,10 +111,10 @@ class Chart1 extends Component<PropTypes> {
       (key) => (groups[key] = groups[key].map((item) => item.total))
     );
 
-    let prices: Array<any> = [];
-    let dates: Array<any> = [];
+    let prices = [];
+    let dates = [];
 
-    function avg(list: Array<any>) {
+    function avg(list) {
       return list.reduce((sum, value) => sum + value) / list.length;
     }
     Object.keys(groups).forEach((key) => {
@@ -227,13 +221,13 @@ class Chart1 extends Component<PropTypes> {
   }
 }
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state) => ({
   orders: state.Orders.orders,
   customerDB: state.customers.customerDB,
   selectedDateRange: state.misc_items.selectedDateRange,
 });
 
-const mapDispatchToProps = (dispatch: any) =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       selectDateRange,

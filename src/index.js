@@ -20,6 +20,7 @@ import rootReducer from './rootReducer';
 import * as serviceWorker from './serviceWorker';
 import 'prismjs';
 const cookie = Cookies.get('jwt');
+import './App.scss?import';
 
 const middleware = [thunk];
 
@@ -27,7 +28,7 @@ if (!cookie) {
   localStorage.removeItem('redux_localstorage_simple');
 }
 
-const dsn = process.env.SENTRY_DSN;
+const dsn = import.meta.env.SENTRY_DSN;
 
 Sentry.init({
   dsn: dsn,

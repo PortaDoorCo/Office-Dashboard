@@ -1,8 +1,10 @@
 import moment from 'moment';
 import pdfMake from 'pdfmake-lite/build/pdfmake';
-import vfsFonts from 'pdfmake-lite/build/vfs_fonts';
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import TotalPieces from '../../Breakdowns/Doors/MaterialBreakdown/TotalPieces';
 import Acknowledgement from '../../Drawer_PDF/Acknowledgement';
+
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 const DrawerPDF = async (data, breakdowns, p, pricing) => {
   return new Promise((resolve, reject) => {

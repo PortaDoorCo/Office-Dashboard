@@ -9,7 +9,7 @@ import {
   Button,
   Input,
   InputGroup,
-  Form
+  Form,
 } from 'reactstrap';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -20,7 +20,10 @@ import Cookies from 'js-cookie';
 import { loadOrders } from '../../../redux/orders/actions';
 import { loadCustomers } from '../../../redux/customers/actions';
 import PropTypes from 'prop-types';
-import { NotificationContainer, NotificationManager } from 'react-notifications';
+import {
+  NotificationContainer,
+  NotificationManager,
+} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 import db_url from '../../../redux/db_url';
 import Background from '../../../assets/img/login-background.jpg';
@@ -28,7 +31,7 @@ import Logo from '../../../assets/img/photos/logo.png';
 
 class Login extends Component {
   static propTypes = {
-    login: PropTypes.func
+    login: PropTypes.func,
   };
 
   constructor(props) {
@@ -37,17 +40,17 @@ class Login extends Component {
     this.state = {
       email: [],
       password: [],
-      loading: false
+      loading: false,
     };
   }
 
-  handleChange = e => {
+  handleChange = (e) => {
     this.setState({
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
-  handleSubmit = e => {
+  handleSubmit = (e) => {
     e.preventDefault();
 
     const { email, password } = this.state;
@@ -55,10 +58,10 @@ class Login extends Component {
     axios
       .post(`${db_url}/auth/local`, {
         identifier: email,
-        password: password
+        password: password,
       })
-      .then(response => {
-        if (!process.browser) {
+      .then((response) => {
+        if (typeof window === 'undefined') {
           return;
         }
         Cookies.set('username', response.data.user);
@@ -68,20 +71,28 @@ class Login extends Component {
         });
       })
       .catch((error) => {
-        console.log({error});
+        console.log({ error });
         NotificationManager.error('Login Credentials Incorrect', 'Error', 2000);
       });
   };
 
   render() {
-    const {loading} = this.state;
-    const {loggedIn} = this.props;
+    const { loading } = this.state;
+    const { loggedIn } = this.props;
     let loadingActive;
     if (loading) {
       loadingActive = <div />;
     } else {
       loadingActive = (
-        <div className="app flex-row align-items-center" style={{ backgroundImage: `url(${Background})`, backgroundPosition: 'center', backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }}>
+        <div
+          className="app flex-row align-items-center"
+          style={{
+            backgroundImage: `url(${Background})`,
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: 'cover',
+          }}
+        >
           <Container>
             <Row className="justify-content-center">
               <NotificationContainer />
@@ -90,7 +101,11 @@ class Login extends Component {
                   <Card className="p-4">
                     <Form onSubmit={this.handleSubmit}>
                       <CardBody>
-                        <img style={{float: 'right', height:40, width:40 }} alt="" src={Logo} />
+                        <img
+                          style={{ float: 'right', height: 40, width: 40 }}
+                          alt=""
+                          src={Logo}
+                        />
                         <h1>Login</h1>
                         <p className="text-muted">Sign In to your account</p>
                         <InputGroup className="mb-3">
@@ -134,7 +149,7 @@ class Login extends Component {
                       </CardBody>
                     </Form>
                   </Card>
-                  
+
                   {/* <Card
                     className="text-white bg-primary py-5 d-md-down-none"
                     style={{ width: 44 + '%' }}
@@ -165,19 +180,21 @@ class Login extends Component {
       );
     }
 
-    return <div>
-      {loggedIn && <Redirect to="/" />}
-      {loadingActive}
-    </div>;
+    return (
+      <div>
+        {loggedIn && <Redirect to="/" />}
+        {loadingActive}
+      </div>
+    );
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   loggedIn: state.users.loggedIn,
-  customerDBLoaded: state.customers.customerDBLoaded
+  customerDBLoaded: state.customers.customerDBLoaded,
 });
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       login,
@@ -194,7 +211,4 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

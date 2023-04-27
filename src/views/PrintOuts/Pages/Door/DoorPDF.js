@@ -1,6 +1,6 @@
 import moment from 'moment';
 import pdfMake from 'pdfmake-lite/build/pdfmake';
-import vfsFonts from 'pdfmake-lite/build/vfs_fonts';
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import TotalPieces from '../../Breakdowns/Doors/MaterialBreakdown/TotalPieces';
 import TotalSolidDFs from '../../Breakdowns/Doors/MaterialBreakdown/TotalSolidDFs';
 import Acknowledgement from '../../Door_PDF/Acknowledgement';
@@ -16,6 +16,8 @@ import RailsPage from '../../Door_PDF/RailsPage';
 import StilesPage from '../../Door_PDF/StilesPage';
 import Glass_Selection from '../../Sorting/Glass_Selection';
 import Slab_Selection from '../../Sorting/Slab_Selection';
+
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 const DoorPDF = async (
   data,

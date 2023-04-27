@@ -1,11 +1,13 @@
 import moment from 'moment';
 import pdfMake from 'pdfmake-lite/build/pdfmake';
-import vfsFonts from 'pdfmake-lite/build/vfs_fonts';
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import Acknowledgement from '../../Flat_Stock_PDF/Acknowledgement';
 import AssemblyList from '../../Flat_Stock_PDF/AssemblyList';
 import Invoice from '../../Flat_Stock_PDF/Invoice';
 import PackingSlip from '../../Flat_Stock_PDF/PackingSlip';
 import QC from '../../Flat_Stock_PDF/QC';
+
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 const MouldingPDF = (data, breakdowns, p, pricing) => {
   return new Promise((resolve, reject) => {

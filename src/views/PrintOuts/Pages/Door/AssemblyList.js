@@ -1,10 +1,13 @@
 import moment from 'moment';
 import pdfMake from 'pdfmake-lite/build/pdfmake';
-import vfsFonts from 'pdfmake-lite/build/vfs_fonts';
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+
 import TotalPieces from '../../Breakdowns/Doors/MaterialBreakdown/TotalPieces';
 import TotalSolidDFs from '../../Breakdowns/Doors/MaterialBreakdown/TotalSolidDFs';
 import AssemblyList from '../../Door_PDF/AssemblyList';
 import Glass_Selection from '../../Sorting/Glass_Selection';
+
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 const DoorPDF = async (
   data,

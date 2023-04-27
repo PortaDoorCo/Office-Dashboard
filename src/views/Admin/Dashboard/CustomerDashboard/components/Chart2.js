@@ -7,12 +7,7 @@ import moment from 'moment';
 import { bindActionCreators } from 'redux';
 import 'chartjs-plugin-colorschemes';
 
-type PropTypes = {
-  orders: Array<any>;
-  selectedDateRange: string;
-};
-
-class Chart2 extends Component<PropTypes> {
+class Chart2 extends Component {
   render() {
     const { orders, selectedDateRange } = this.props;
     const filteredOrders =
@@ -29,39 +24,19 @@ class Chart2 extends Component<PropTypes> {
           })
         : [];
 
-    const groups: Array<any> = [];
+    const groups = [];
     filteredOrders.forEach((item) => {
       item.part_list.forEach((part) => {
         if (item && item.orderType === 'Door Order') {
-          let total = 0;
           switch (part && part.construction && part.construction.value) {
             case 'Cope':
-              part.dimensions?.map((i) => {
-                return (total = total += parseInt(i.qty));
-              });
-
-              for (let i = 0; i < total; i++) {
-                groups.push({ NAME: 'Cope' });
-              }
-
+              groups.push(part.cope_design);
               break;
             case 'MT':
-              part.dimensions?.map((i) => {
-                return (total = total += parseInt(i.qty));
-              });
-
-              for (let i = 0; i < total; i++) {
-                groups.push({ NAME: 'MT' });
-              }
+              groups.push(part.mt_design);
               break;
-            case 'Miter':
-              part.dimensions?.map((i) => {
-                return (total = total += parseInt(i.qty));
-              });
-
-              for (let i = 0; i < total; i++) {
-                groups.push({ NAME: 'Miter' });
-              }
+            case 'M':
+              groups.push(part.miter_design);
               break;
             default:
               return;
@@ -73,7 +48,7 @@ class Chart2 extends Component<PropTypes> {
 
     groupbyName = Object.entries(groupbyName)
       .map(([k, v]) => ({ key: k, value: v }))
-      .sort((a: any, b: any) => b.value.length - a.value.length);
+      .sort((a, b) => b.value.length - a.value.length);
 
     const pie = {
       labels: groupbyName.map((i) => i.key),
@@ -103,15 +78,6 @@ class Chart2 extends Component<PropTypes> {
             <div className="chart-wrapper">
               <Pie data={pie} options={options} />
             </div>
-            <ul>
-              {groupbyName.map((i) => {
-                return (
-                  <li>
-                    {i.key}: {i.value?.length}
-                  </li>
-                );
-              })}
-            </ul>
           </CardBody>
         </Card>
       </div>
@@ -119,11 +85,11 @@ class Chart2 extends Component<PropTypes> {
   }
 }
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state) => ({
   orders: state.Orders.orders,
   selectedDateRange: state.misc_items.selectedDateRange,
 });
 
-const mapDispatchToProps = (dispatch: any) => bindActionCreators({}, dispatch);
+const mapDispatchToProps = (dispatch) => bindActionCreators({}, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Chart2);

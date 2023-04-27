@@ -1,5 +1,5 @@
 import Cookies from 'js-cookie';
-import moment from 'moment-business-days';
+import moment from 'moment';
 import React, { Component, Suspense } from 'react';
 import { NotificationManager } from 'react-notifications';
 // import DoorInfo from './components/DoorInfo/DoorInfo';
@@ -67,6 +67,35 @@ import PriceChangeModal from '../../../utils/Modal';
 import io from 'socket.io-client';
 import db_url from '../../../redux/db_url';
 
+function addBusinessDays(startDate, businessDaysToAdd) {
+  let current = moment(startDate);
+  let businessDaysAdded = 0;
+
+  while (businessDaysAdded < businessDaysToAdd) {
+    current = current.add(1, 'days');
+    if (current.day() !== 0 && current.day() !== 6) {
+      businessDaysAdded++;
+    }
+  }
+
+  return current.toDate();
+}
+
+function businessDaysDifference(startDate, endDate) {
+  let current = moment(startDate);
+  let endDateMoment = moment(endDate);
+  let businessDays = 0;
+
+  while (current.isBefore(endDateMoment)) {
+    if (current.day() !== 0 && current.day() !== 6) {
+      businessDays++;
+    }
+    current = current.add(1, 'days');
+  }
+
+  return businessDays;
+}
+
 const socket = io(db_url);
 
 const DoorInfo = React.lazy(() =>
@@ -102,7 +131,7 @@ const cookie = Cookies.get('jwt');
 const maxValue = (max) => (value) =>
   value && value > max ? `Cannot be greater than ${max}%` : undefined;
 
-const dueDate = moment(new Date()).businessAdd(21)._d;
+const dueDate = addBusinessDays(new Date(), 21);
 
 class OrderEntry extends Component {
   constructor(props) {

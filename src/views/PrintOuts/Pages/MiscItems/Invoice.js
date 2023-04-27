@@ -1,8 +1,10 @@
 import moment from 'moment';
 import pdfMake from 'pdfmake-lite/build/pdfmake';
-import vfsFonts from 'pdfmake-lite/build/vfs_fonts';
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import TotalMisc from '../../Breakdowns/Doors/MaterialBreakdown/TotalMisc';
 import Invoice from '../../Misc_Items_PDF/Invoice';
+
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 const MiscItemPDF = (data, breakdowns, p, pricing) => {
   return new Promise((resolve, reject) => {

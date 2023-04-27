@@ -1,9 +1,11 @@
 import moment from 'moment';
-import pdfMake from 'pdfmake-lite/build/pdfmake';
-import vfsFonts from 'pdfmake-lite/build/vfs_fonts';
+import pdfMake from 'pdfmake/build/pdfmake';
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import TotalPieces from '../../Breakdowns/Doors/MaterialBreakdown/TotalPieces';
 import TotalSolidDFs from '../../Breakdowns/Doors/MaterialBreakdown/TotalSolidDFs';
 import Acknowledgement from '../../Door_PDF/Acknowledgement';
+
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 const DoorPDF = async (
   data,
