@@ -118,11 +118,13 @@ export default (info, part, breakdowns) => {
       (width - leftStile - rightStile - vertMull * (panelsW - 1)) / panelsW;
 
     const panelHeight = (v) => {
+      console.log({ v });
+
       if (v < 3) {
         return (
           width -
-          leftStile -
-          numQty(info[`unevenSplitInput${0}`]) -
+          rightStile -
+          numQty(info[`unevenSplitInput${v}`]) -
           vertMull +
           panel_factor +
           lip_factor / 2
@@ -131,7 +133,7 @@ export default (info, part, breakdowns) => {
         if (info[`unequalMidRails`]) {
           return (
             width -
-            leftStile -
+            rightStile -
             numQty(info[`unevenSplitInput${v - 2}`]) -
             numQty(info[`verticalMidRailSize${v - 2}`]) +
             panel_factor +
@@ -140,7 +142,7 @@ export default (info, part, breakdowns) => {
         } else {
           return (
             width -
-            leftStile -
+            rightStile -
             numQty(info[`unevenSplitInput${v - 2}`]) -
             vertMull +
             panel_factor +
@@ -193,6 +195,8 @@ export default (info, part, breakdowns) => {
 
     const glassCheck = (v) => info[`glass_check_${v}`];
 
+    console.log({ VERTICAL_GRAIN });
+
     const unEven = [
       ...Array.from(Array(panelsW).keys())
         .slice(1)
@@ -201,36 +205,68 @@ export default (info, part, breakdowns) => {
             return glassDoor(v);
           } else {
             const panelHeight = unevenSplitInput(v);
-            return {
-              qty: `(${qty * panelsH})`,
-              qty2: qty * panelsH,
-              measurement: `${fraction(panelHeight)} x ${fraction(
-                Math.round(eval(breakdowns.panel_height) * 16) / 16
-              )}`,
-              pattern: panelFlat ? 'PF' : 'PR',
-              height: Math.round(eval(breakdowns.panel_height) * 16) / 16,
-              width: panelHeight,
-              panel: panelName,
-              multiplier: panelsH,
-              count: qty * panelsH,
-            };
+            if (VERTICAL_GRAIN || orderType === 'Door') {
+              return {
+                qty: `(${qty * panelsH})`,
+                qty2: qty * panelsH,
+                measurement: `${fraction(panelHeight)} x ${fraction(
+                  Math.round(eval(breakdowns.panel_height) * 16) / 16
+                )}`,
+                pattern: panelFlat ? 'PF' : 'PR',
+                height: Math.round(eval(breakdowns.panel_height) * 16) / 16,
+                width: panelHeight,
+                panel: panelName,
+                multiplier: panelsH,
+                count: qty * panelsH,
+              };
+            } else {
+              return {
+                qty: `(${qty * panelsH})`,
+                qty2: qty * panelsH,
+                measurement: `${fraction(
+                  Math.round(eval(breakdowns.panel_height) * 16) / 16
+                )} x ${fraction(panelHeight)}`,
+                pattern: panelFlat ? 'PF' : 'PR',
+                height: panelHeight,
+                width: Math.round(eval(breakdowns.panel_height) * 16) / 16,
+                panel: panelName,
+                multiplier: panelsH,
+                count: qty * panelsH,
+              };
+            }
           }
         }),
     ];
 
-    const bottom = {
+    let bottom = {
       qty: `(${qty * panelsH})`,
       qty2: qty * panelsH,
-      measurement: `${fraction(panelHeight(parseInt(panelsH)))} x ${fraction(
+      measurement: `${fraction(
         Math.round(eval(breakdowns.panel_height) * 16) / 16
-      )}`,
+      )} x ${fraction(panelHeight(parseInt(panelsH)))}`,
       pattern: panelFlat ? 'PF' : 'PR',
-      height: Math.round(eval(breakdowns.panel_height) * 16) / 16,
-      width: panelHeight(parseInt(panelsH)),
+      height: panelHeight(parseInt(panelsH)),
+      width: Math.round(eval(breakdowns.panel_height) * 16) / 16,
       panel: panelName,
       multiplier: qty * panelsH,
       count: qty * panelsH,
     };
+
+    if (VERTICAL_GRAIN || orderType === 'Door') {
+      bottom = {
+        qty: `(${qty * panelsH})`,
+        qty2: qty * panelsH,
+        measurement: `${fraction(panelHeight(parseInt(panelsH)))} x ${fraction(
+          Math.round(eval(breakdowns.panel_height) * 16) / 16
+        )}`,
+        pattern: panelFlat ? 'PF' : 'PR',
+        height: Math.round(eval(breakdowns.panel_height) * 16) / 16,
+        width: panelHeight(parseInt(panelsH)),
+        panel: panelName,
+        multiplier: qty * panelsH,
+        count: qty * panelsH,
+      };
+    }
 
     const unevenDoor = [...unEven, bottom];
 
@@ -263,6 +299,8 @@ export default (info, part, breakdowns) => {
       (width - leftStile - rightStile - vertMull * (panelsW - 1)) / panelsW;
 
     const panelHeight = (v) => {
+      console.log({ v });
+
       if (v < 3) {
         return (
           height -
@@ -407,7 +445,11 @@ export default (info, part, breakdowns) => {
 
   if (orderType === 'Door') {
     if (info.unevenCheck) {
-      door = unevenSplit();
+      if (panelsH > panelsW) {
+        door = unevenSplit();
+      } else {
+        door = unevenSplitDF();
+      }
     } else {
       door = [
         {

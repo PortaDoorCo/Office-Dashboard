@@ -129,11 +129,7 @@ export default (info, part, breakdowns) => {
   const unEven = [
     ...Array.from(
       Array(
-        info.orderType?.value === 'Door'
-          ? panelsH
-          : info?.orderType?.value === 'DF'
-          ? panelsW
-          : panelsH
+        panelsH > panelsW ? panelsH : panelsW > panelsH ? panelsW : panelsH
       ).keys()
     )
       .slice(1)
@@ -190,7 +186,7 @@ export default (info, part, breakdowns) => {
 
   if (eval(breakdowns.leftStile_width) === eval(breakdowns.rightStile_width)) {
     if ((panelsW > 1 && panelsH > 1) || (panelsW > 1 && panelsH === 1)) {
-      if (info.unevenCheck && info.orderType?.value === 'Door') {
+      if (info.unevenChecked) {
         if (info.fullMidStile) {
           return [
             {

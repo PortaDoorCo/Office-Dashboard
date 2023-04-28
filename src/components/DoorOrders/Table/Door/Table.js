@@ -1500,9 +1500,11 @@ const DoorTable = ({
 
             {(parseInt(formState.part_list[i]?.dimensions[index]?.panelsH) >
               1 &&
-              formState?.part_list[i].orderType?.value === 'Door') ||
+              parseInt(formState.part_list[i]?.dimensions[index]?.panelsW) ===
+                1) ||
             (parseInt(formState.part_list[i]?.dimensions[index]?.panelsW) > 1 &&
-              formState?.part_list[i].orderType?.value === 'DF') ? (
+              parseInt(formState.part_list[i]?.dimensions[index]?.panelsH) ===
+                1) ? (
               <Col xl="1" lg="3" md="3" sm="3">
                 <FormGroup>
                   <strong>Uneven Split</strong>
@@ -1572,17 +1574,21 @@ const DoorTable = ({
               <Row>
                 {Array.from(
                   Array(
-                    formState?.part_list[i].orderType?.value === 'Door' &&
+                    parseInt(
+                      formState.part_list[i]?.dimensions[index]?.panelsH
+                    ) > 1 &&
                       parseInt(
-                        formState.part_list[i]?.dimensions[index]?.panelsH
-                      )
+                        formState.part_list[i]?.dimensions[index]?.panelsW
+                      ) === 1
                       ? parseInt(
                           formState.part_list[i]?.dimensions[index]?.panelsH
                         )
-                      : formState?.part_list[i].orderType?.value === 'DF' &&
-                        parseInt(
+                      : parseInt(
                           formState.part_list[i]?.dimensions[index]?.panelsW
-                        )
+                        ) > 1 &&
+                        parseInt(
+                          formState.part_list[i]?.dimensions[index]?.panelsH
+                        ) === 1
                       ? parseInt(
                           formState.part_list[i]?.dimensions[index]?.panelsW
                         )
@@ -1590,7 +1596,7 @@ const DoorTable = ({
                   ).keys()
                 )
                   .slice(1)
-                  .map((_, index) => {
+                  .map((_, p) => {
                     return (
                       <div>
                         <Col />
@@ -1598,24 +1604,62 @@ const DoorTable = ({
                           <div
                             style={{ textAlign: 'center', marginTop: '10px' }}
                           >
-                            <strong>Panel Opening {index + 1}</strong>
-                            {index === 0 ? (
+                            <strong>Panel Opening {p + 1}</strong>
+                            {p === 0 ? (
                               <p>
-                                {formState?.part_list[i].orderType?.value ===
-                                'Door'
+                                {parseInt(
+                                  formState.part_list[i]?.dimensions[index]
+                                    ?.panelsH
+                                ) > 1 &&
+                                parseInt(
+                                  formState.part_list[i]?.dimensions[index]
+                                    ?.panelsW
+                                ) === 1
                                   ? 'From Top of Door to Top of Mullion'
-                                  : 'From Left of DF to Top of Mullion'}
+                                  : parseInt(
+                                      formState.part_list[i]?.dimensions[index]
+                                        ?.panelsW
+                                    ) > 1 &&
+                                    parseInt(
+                                      formState.part_list[i]?.dimensions[index]
+                                        ?.panelsH
+                                    ) === 1
+                                  ? 'From Left of Door to Top of Mullion'
+                                  : null}
                               </p>
                             ) : (
                               <p>
-                                From Top of Door <br /> to Top of{' '}
-                                {ordinal(index + 1)} Mid Rail
+                                {parseInt(
+                                  formState.part_list[i]?.dimensions[index]
+                                    ?.panelsH
+                                ) >
+                                parseInt(
+                                  formState.part_list[i]?.dimensions[index]
+                                    ?.panelsW
+                                ) ? (
+                                  <p>
+                                    From Top of Door <br /> to Top of{' '}
+                                    {ordinal(p + 1)} Mid Rail
+                                  </p>
+                                ) : parseInt(
+                                    formState.part_list[i]?.dimensions[index]
+                                      ?.panelsH
+                                  ) <
+                                  parseInt(
+                                    formState.part_list[i]?.dimensions[index]
+                                      ?.panelsW
+                                  ) ? (
+                                  <p>
+                                    From Left of Door <br /> to Top of{' '}
+                                    {ordinal(p + 1)} Mid Rail
+                                  </p>
+                                ) : null}
                               </p>
                             )}
                           </div>
 
                           <Field
-                            name={`${table}.unevenSplitInput${index}`}
+                            name={`${table}.unevenSplitInput${p}`}
                             component={renderNumber}
                             edit={edit}
                             validate={required}

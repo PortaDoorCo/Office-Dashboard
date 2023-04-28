@@ -59,7 +59,6 @@ import ErrorBoundary from '../../ErrorBoundry';
 import _qcNav from '../../_qcNav';
 import _salesNav from '../../_sales_nav';
 
-
 const socket = io(db_url);
 
 const cookie = Cookies.get('jwt');
@@ -69,24 +68,21 @@ const DefaultFooter = React.lazy(() => import('./DefaultFooter'));
 const DefaultHeader = React.lazy(() => import('./DefaultHeader'));
 
 let DefaultLayout = (props, context) => {
-
   let loading = () => (
     <div className="animated fadeIn pt-1 text-center">
       <div className="sk-spinner sk-spinner-pulse"></div>
     </div>
   );
 
-
   useEffect(() => {
-    if(!props.currentVersion){
+    if (!props.currentVersion) {
       NotificationManager.info(
         'A new version of the app is now available!  Click the icon above to refresh the app',
         'A New Version is Available',
         5000
       );
     }
-  },[props.currentVersion]);
-
+  }, [props.currentVersion]);
 
   let history = useHistory();
 
@@ -205,11 +201,16 @@ let DefaultLayout = (props, context) => {
 
   const [isTourOpen, setIsTourOpen] = useState(true);
 
-  const { customerDBLoaded, app_tour, userId, currentVersion, updateAppTour, role } = props;
+  const {
+    customerDBLoaded,
+    app_tour,
+    userId,
+    currentVersion,
+    updateAppTour,
+    role,
+  } = props;
 
-  
-
-  // 
+  //
 
   if (!customerDBLoaded) {
     return (
@@ -221,7 +222,6 @@ let DefaultLayout = (props, context) => {
     return (
       <ErrorBoundary>
         <div className="app">
-
           <Tour
             steps={steps}
             isOpen={app_tour}
@@ -243,7 +243,18 @@ let DefaultLayout = (props, context) => {
               <AppSidebarHeader />
               <AppSidebarForm />
               <Suspense fallback={loading()}>
-                <AppSidebarNav navConfig={role.type === 'customer' ? customerNav : role.type === 'quality_control' ? _qcNav : role.type === 'sales' ? _salesNav : navigation} {...props} />
+                <AppSidebarNav
+                  navConfig={
+                    role.type === 'customer'
+                      ? customerNav
+                      : role.type === 'quality_control'
+                      ? _qcNav
+                      : role.type === 'sales'
+                      ? _salesNav
+                      : navigation
+                  }
+                  location={props.location}
+                />
               </Suspense>
               <AppSidebarFooter />
               <AppSidebarMinimizer />
@@ -254,7 +265,6 @@ let DefaultLayout = (props, context) => {
                 <Suspense fallback={loading()}>
                   <Switch>
                     {routes.map((route, idx) => {
-               
                       return route.component ? (
                         <Route
                           key={idx}
@@ -262,11 +272,7 @@ let DefaultLayout = (props, context) => {
                           exact={route.exact}
                           name={route.name}
                           render={(props) => {
-                
-                            return(
-                              <route.component {...props} route={route} />
-                            );
-                          
+                            return <route.component {...props} route={route} />;
                           }}
                         />
                       ) : null;
@@ -312,7 +318,7 @@ const mapStateToProps = (state, prop) => ({
   customerDB: state.customers.customerDB,
   loadedMiscItems: state.misc_items.loadedMiscItems,
   loadedProducts: state.part_list.loadedProducts,
-  currentVersion: state.users.current_version
+  currentVersion: state.users.current_version,
 });
 
 const mapDispatchToProps = (dispatch) =>
