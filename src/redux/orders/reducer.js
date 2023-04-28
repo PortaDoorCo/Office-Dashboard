@@ -22,16 +22,18 @@ const initialState = {
   sortedDestinations: [],
   selectedOrder: null,
   orderType: null,
+  search: false,
 };
 
 export default function (state = initialState, action) {
-  const { type, data, ordersDBLoaded } = action;
+  const { type, data, ordersDBLoaded, search } = action;
   switch (type) {
     case LOAD_ORDERS:
       return {
         ...state,
         orders: data,
         ordersDBLoaded: ordersDBLoaded,
+        search: search,
       };
     case SET_ORDER_TYPE:
       return {
@@ -43,15 +45,29 @@ export default function (state = initialState, action) {
         ...state,
       };
     case ORDER_ADDED:
-      return {
-        ...state,
-        orders: [data, ...state.orders],
-      };
+      if (!state.search) {
+        return {
+          ...state,
+          orders: [data, ...state.orders],
+        };
+      } else {
+        return {
+          ...state,
+        };
+      }
+
     case ORDER_UPDATED:
-      return {
-        ...state,
-        orders: state.orders.map((i) => (i.id === data.id ? data : i)),
-      };
+      if (!state.search) {
+        return {
+          ...state,
+          orders: state.orders.map((i) => (i.id === data.id ? data : i)),
+        };
+      } else {
+        return {
+          ...state,
+        };
+      }
+
     case ORDER_DELETED:
       return {
         ...state,
@@ -61,10 +77,12 @@ export default function (state = initialState, action) {
       return {
         ...state,
         selectedOrder: data,
+        search: false,
       };
     case UPDATE_ORDER:
       return {
         ...state,
+        search: false,
         orders: state.orders.map((item, index) => {
           if (item.id !== data.data.id) {
             return item;

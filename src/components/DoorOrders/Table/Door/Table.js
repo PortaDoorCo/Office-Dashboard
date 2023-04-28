@@ -72,6 +72,7 @@ const DoorTable = ({
   const [warningType, setWarningType] = useState(null);
   const [preventItem, setPreventItem] = useState(null);
   const [fullFrameNote, setFullFrameNote] = useState(false);
+  const [fullFrameIndex, setFullFrameIndex] = useState(null);
   const toggle = () => setModal(!modal);
 
   let design = formState?.part_list[i]?.design;
@@ -98,29 +99,29 @@ const DoorTable = ({
   const leftStile = part?.dimensions[index]?.leftStile;
   const rightStile = part?.dimensions[index]?.rightStile;
 
-  console.log({ part });
-
   const toggleFullFrameNote = () => setFullFrameNote(!fullFrameNote);
 
-  const updateFullFrame = (e, index) => {
+  const updateFullFrame = (e) => {
     const part = formState.part_list[i];
+
+    const index = fullFrameIndex;
 
     let profile_width;
     let df_reduction;
 
     if (part.construction.value === 'Cope') {
-      profile_width = part.profile.PROFILE_WIDTH;
-      df_reduction = part.profile.DF_Reduction;
+      profile_width = part?.profile?.PROFILE_WIDTH;
+      df_reduction = part?.profile?.DF_Reduction;
     }
 
     if (part.construction.value === 'MT') {
-      profile_width = part.design.PROFILE_WIDTH;
-      df_reduction = part.design.DF_REDUCTION;
+      profile_width = part?.design?.PROFILE_WIDTH;
+      df_reduction = part?.design?.DF_REDUCTION;
     }
 
     if (part.construction.value === 'Miter') {
-      profile_width = part.design.DF_FULL_FRAME;
-      df_reduction = part.design.PROFILE_WIDTH;
+      profile_width = part?.design?.DF_FULL_FRAME;
+      df_reduction = part?.design?.PROFILE_WIDTH;
     }
 
     if (e) {
@@ -319,7 +320,7 @@ const DoorTable = ({
       newWidth = [...newWidth, v];
     }
 
-    if (numQty(v) >= 24 && part?.orderType?.value === 'Door') {
+    if (numQty(v) >= 24) {
       setWarningType({
         value: v,
         index: index,
@@ -349,7 +350,7 @@ const DoorTable = ({
       newHeight = [...newHeight, v];
     }
 
-    if (numQty(v) >= 48 && part?.orderType?.value === 'Door') {
+    if (numQty(v) >= 48) {
       setWarningType({
         value: v,
         index: index,
@@ -366,10 +367,15 @@ const DoorTable = ({
       toggle();
     }
 
-    if (part?.orderType?.value === 'DF') {
+    if (
+      part?.orderType?.value === 'DF' ||
+      part?.orderType?.value === 'One_Piece_DF' ||
+      part?.orderType?.value === 'Two_Piece_DF'
+    ) {
       const limit = 7;
       const heightLimit = numQty(v);
       if (heightLimit >= limit) {
+        setFullFrameIndex(index);
         toggleFullFrameNote();
       }
     }
@@ -569,7 +575,7 @@ const DoorTable = ({
         //   );
         // }
 
-        if (part.panel?.NAME === 'Glass') {
+        if (part.panel?.glass) {
           for (let j = 0; j < value; j++) {
             dispatch(
               change(
@@ -651,7 +657,7 @@ const DoorTable = ({
           );
         }
 
-        if (part.panel?.NAME === 'Glass') {
+        if (part.panel?.glass) {
           for (let j = 0; j < value; j++) {
             dispatch(
               change(
@@ -1072,8 +1078,7 @@ const DoorTable = ({
       unevenCheck: false,
       unevenSplit: false,
       notes: '',
-      glass_check_0:
-        formState.part_list[i]?.panel?.NAME === 'Glass' ? true : false,
+      glass_check_0: formState.part_list[i]?.panel?.glass ? true : false,
     });
   };
 

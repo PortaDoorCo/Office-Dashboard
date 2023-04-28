@@ -244,21 +244,34 @@ const pricing = (parts, pricer, itemPrice, order) => {
       }
 
       if (
-        part.orderType.value === 'Door' &&
-        part.construction.value === 'Slab'
+        part?.orderType?.value === 'Door' &&
+        (part?.construction?.value === 'Slab' ||
+          part?.construction?.value === 'Wrapped')
       ) {
+        let d = 6.5;
+
+        if (part?.construction?.value === 'Wrapped') {
+          d = 18.25;
+        }
         price =
           (width * height) / 144 > 2
-            ? ((width * height) / 144) * wood + (6.5 + edge) + extraCost
-            : 2 * wood + (6.5 + edge) + extraCost;
+            ? ((width * height) / 144) * wood + (d + edge) + extraCost
+            : 2 * wood + (d + edge) + extraCost;
       } else if (
-        part.orderType.value === 'DF' &&
-        part.construction.value === 'Slab'
+        part?.orderType?.value === 'DF' &&
+        (part?.construction?.value === 'Slab' ||
+          part?.construction?.value === 'Wrapped')
       ) {
+        let d = 6.5;
+
+        if (part?.construction?.value === 'Wrapped') {
+          d = 18.25;
+        }
+
         price =
           (width * height) / 144 > 1
-            ? ((width * height) / 144) * wood + (6.5 + edge) + extraCost
-            : 1 * wood + (6.5 + edge) + extraCost;
+            ? ((width * height) / 144) * wood + (d + edge) + extraCost
+            : 1 * wood + (d + edge) + extraCost;
       } else if (part.orderType.value === 'DF') {
         price =
           eval(pricer.df_pricing) +
@@ -304,23 +317,36 @@ const pricing = (parts, pricer, itemPrice, order) => {
         ((parseInt(i.panelsH) === 1 && numQty(i.height) >= 48) ||
           (parseInt(i.panelsW) === 1 && numQty(i.width) >= 24))
       ) {
-        if (
-          !order?.oldPricing &&
-          moment(order?.created_at) > moment('11-08-2022')
-        ) {
-          const k = currency(item[index][p]).multiply(1.2).value;
-          const base = currency(k)
-            .multiply(parseInt(i.qty))
-            .add(i.price_adjustment ? currency(i.price_adjustment) : 0).value;
-          return currency(base).value;
+        if (part?.construction?.value === 'Wrapped') {
+          if (moment(order?.created_at) > moment('04-10-2023')) {
+            const k = currency(item[index][p]).value;
+            const base = currency(k).multiply(parseInt(i.qty)).value;
+            const price = base;
+            return currency(price).value;
+          } else {
+            const k = currency(item[index][p]).multiply(1.2).value;
+            const base = currency(k).multiply(parseInt(i.qty)).value;
+            const price = base;
+            return currency(price).value;
+          }
         } else {
-          const base =
-            Math.round(item[index][p] * parseInt(i.qty) * 100) / 100 +
-            (i.price_adjustment
-              ? Math.floor(i.price_adjustment * 100) / 100
-              : 0);
-          const add = base * 0.2;
-          return base + add;
+          if (
+            !order?.oldPricing &&
+            moment(order?.created_at) > moment('11-08-2022')
+          ) {
+            // console.log('less');
+            const k = currency(item[index][p]).multiply(1.2).value;
+            const base = currency(k).multiply(parseInt(i.qty)).value;
+            const price = base;
+            return currency(price).value;
+          } else {
+            // console.log('more');
+            const base =
+              Math.round(item[index][p] * parseInt(i.qty) * 100) / 100;
+            const add = base * 0.2;
+            const price = base + add;
+            return Math.round(price * 100) / 100;
+          }
         }
 
         // return base + add;
