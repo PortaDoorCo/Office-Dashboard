@@ -127,7 +127,11 @@ export default (info, part, breakdowns) => {
     numQty(info[`unevenSplitInput${i}`]) - topRail + inset + edge_factor;
 
   const unEven = [
-    ...Array.from(Array(panelsH).keys())
+    ...Array.from(
+      Array(
+        panelsH > panelsW ? panelsH : panelsW > panelsH ? panelsW : panelsH
+      ).keys()
+    )
       .slice(1)
       .map((i, v) => {
         if (v === 0) {
@@ -182,7 +186,7 @@ export default (info, part, breakdowns) => {
 
   if (eval(breakdowns.leftStile_width) === eval(breakdowns.rightStile_width)) {
     if ((panelsW > 1 && panelsH > 1) || (panelsW > 1 && panelsH === 1)) {
-      if (info.unevenCheck) {
+      if (info.unevenChecked) {
         if (info.fullMidStile) {
           return [
             {
