@@ -81,10 +81,10 @@ const changeProfile = (p, ind, props, change) => {
       );
     }
   } else {
-    const topRail = part.profile.PROFILE_WIDTH + part.design?.TOP_RAIL_ADD;
-    const bottomRail = part.profile.PROFILE_WIDTH + part.design?.BTM_RAIL_ADD;
-    const leftStile = part.profile.PROFILE_WIDTH;
-    const rightStile = part.profile.PROFILE_WIDTH;
+    const topRail = part.profile?.PROFILE_WIDTH + part.design?.TOP_RAIL_ADD;
+    const bottomRail = part.profile?.PROFILE_WIDTH + part.design?.BTM_RAIL_ADD;
+    const leftStile = part.profile?.PROFILE_WIDTH;
+    const rightStile = part.profile?.PROFILE_WIDTH;
     if (part.profile?.PROFILE_WIDTH > 0) {
       props.dispatch(
         change(

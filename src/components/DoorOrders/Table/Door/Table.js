@@ -49,6 +49,21 @@ const fraction = (num) => {
   return fraction.toLocaleString();
 };
 
+const fractionToDecimal = (fraction) => {
+  if (!fraction.includes('/')) {
+    return parseFloat(fraction);
+  }
+
+  const [whole, frac] = fraction.split(' ');
+  const [numerator, denominator] = frac.split('/').map(Number);
+
+  const decimal = numerator / denominator;
+  const wholeNumber = whole ? parseInt(whole, 10) : 0;
+  const result = wholeNumber + decimal;
+
+  return parseFloat(result.toFixed(4));
+};
+
 const DoorTable = ({
   props,
   fields,
@@ -388,513 +403,240 @@ const DoorTable = ({
   };
 
   const twoHigh = (index, e, v) => {
-    let value;
     const part = formState.part_list[i];
+    const dimensions = part?.dimensions[index];
+    const { leftStile, rightStile, topRail, bottomRail, panelsH, panelsW } =
+      dimensions || {};
 
-    const leftStile =
-      index >= 0 ? formState?.part_list[i]?.dimensions[index]?.leftStile : null;
-    const rightStile =
-      index >= 0
-        ? formState?.part_list[i]?.dimensions[index]?.rightStile
-        : null;
-    const topRail =
-      index >= 0 ? formState?.part_list[i]?.dimensions[index]?.topRail : null;
-    const bottomRail =
-      index >= 0
-        ? formState?.part_list[i]?.dimensions[index]?.bottomRail
-        : null;
+    const value = e ? e.target.value : v;
+    const isSingleNoGuarantee =
+      (height >= 48 && value < 2) || (width >= 24 && panelsW < 2);
 
-    const panelsH = formState?.part_list[i]?.dimensions[index]?.panelsH;
-    const panelsW = formState?.part_list[i]?.dimensions[index]?.panelsW;
+    const changeNotes = (notes) => {
+      dispatch(
+        change('Order', `part_list[${i}].dimensions[${index}].notes`, notes)
+      );
+    };
+
+    const changePanelsH = (panelsHValue) => {
+      dispatch(
+        change(
+          'Order',
+          `part_list[${i}].dimensions[${index}].panelsH`,
+          panelsHValue
+        )
+      );
+    };
+
+    const updateNotes = () => {
+      if (part.dimensions[index].notes !== '' && parseInt(value) > 1) {
+        const notes = isSingleNoGuarantee
+          ? `${value}H ${panelsW}W \nSINGLE - NO GUARANTEE`
+          : `${value}H ${panelsW}W`;
+        changeNotes(notes);
+      } else {
+        const notes = isSingleNoGuarantee
+          ? 'SINGLE - NO GUARANTEE'
+          : panelsW > 1
+          ? `${value}H ${panelsW}W`
+          : '';
+        changeNotes(notes);
+      }
+    };
+
+    const updatePanelsHAndNotes = () => {
+      changePanelsH(value);
+
+      if (parseInt(panelsW) > 1 && parseInt(value) > 1) {
+        changeNotes(`${value}H ${panelsW}W`);
+      } else {
+        changeNotes(`${value}H`);
+      }
+    };
 
     if (e) {
-      value = e.target.value;
-      if (part.dimensions[index].notes !== '' && parseInt(e.target.value) > 1) {
-        if (
-          leftStile === defaultLeftStile ||
-          rightStile === defaultRightStile ||
-          topRail === defaultTopRail ||
-          bottomRail === defaultBottomRail
-        ) {
-          if ((height >= 48 && value < 2) || (width >= 24 && panelsW < 2)) {
-            dispatch(
-              change(
-                'Order',
-                `part_list[${i}].dimensions[${index}].notes`,
-                `${value}H ${panelsW}W \nSINGLE - NO GUARANTEE`
-              )
-            );
-          } else {
-            dispatch(
-              change(
-                'Order',
-                `part_list[${i}].dimensions[${index}].notes`,
-                `${value}H ${panelsW}W`
-              )
-            );
-          }
-        } else {
-          // dispatch(
-          //   change(
-          //     'Order',
-          //     `part_list[${i}].dimensions[${index}].notes`,
-          //     `${value}H ${panelsW}W \nLeft Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
-          //   )
-          // );
-        }
-      } else {
-        if (
-          leftStile === defaultLeftStile ||
-          rightStile === defaultRightStile ||
-          topRail === defaultTopRail ||
-          bottomRail === defaultBottomRail
-        ) {
-          if ((height >= 48 && value < 2) || (width >= 24 && panelsW < 2)) {
-            dispatch(
-              change(
-                'Order',
-                `part_list[${i}].dimensions[${index}].notes`,
-                'SINGLE - NO GUARANTEE'
-              )
-            );
-          } else {
-            if (panelsW > 1) {
-              dispatch(
-                change(
-                  'Order',
-                  `part_list[${i}].dimensions[${index}].notes`,
-                  `${value}H ${panelsW}W`
-                )
-              );
-            } else {
-              dispatch(
-                change(
-                  'Order',
-                  `part_list[${i}].dimensions[${index}].notes`,
-                  ''
-                )
-              );
-            }
-          }
-        } else {
-          // if ((height >= 48 && value < 2) || (width >= 24 && panelsW < 2)) {
-          //   dispatch(
-          //     change(
-          //       'Order',
-          //       `part_list[${i}].dimensions[${index}].notes`,
-          //       `${value}H ${panelsW}W \nLeft Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
-          //     )
-          //   );
-          // } else {
-          //   dispatch(
-          //     change(
-          //       'Order',
-          //       `part_list[${i}].dimensions[${index}].notes`,
-          //       `${value}H ${panelsW}W \nLeft Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}" \nSINGLE - NO GUARANTEE`
-          //     )
-          //   );
-          // }
-        }
-      }
+      updateNotes();
     } else {
-      value = v;
-      if (parseInt(panelsW) > 1 && parseInt(v) > 1) {
-        dispatch(
-          change(
-            'Order',
-            `part_list[${i}].dimensions[${index}].notes`,
-            `${v}H ${panelsW}W`
-          )
-        );
-        dispatch(
-          change('Order', `part_list[${i}].dimensions[${index}].panelsH`, v)
-        );
-      } else {
-        dispatch(
-          change('Order', `part_list[${i}].dimensions[${index}].panelsH`, v)
-        );
-        dispatch(
-          change('Order', `part_list[${i}].dimensions[${index}].notes`, `${v}H`)
-        );
-      }
+      updatePanelsHAndNotes();
     }
 
-    if (part.construction?.value === 'Cope') {
-      if (value > 1) {
-        if (
-          part.dimensions[index].horizontalMidRailSize !==
-          fraction(
-            part.profile
-              ? part.profile?.Mid_Rail_Width
-                ? part.profile?.Mid_Rail_Width
-                : part.profile?.PROFILE_WIDTH +
-                  (part.edge ? part.edge?.LIP_FACTOR / 2 : 0)
-              : 0
-          )
-        ) {
-          if (parseFloat(part.dimensions[index]?.horizontalMidRailSize) < 1) {
-            dispatch(
-              change(
-                'Order',
-                `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
-                fraction(
-                  part.profile
-                    ? part.profile?.Mid_Rail_Width
-                      ? part.profile?.Mid_Rail_Width
-                      : part.profile?.PROFILE_WIDTH +
-                        (part.edge ? part.edge?.LIP_FACTOR / 2 : 0)
-                    : 0
-                )
-              )
-            );
-          }
-        } else {
-          dispatch(
-            change(
-              'Order',
-              `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
-              fraction(
-                part.profile
-                  ? part.profile?.Mid_Rail_Width
-                    ? part.profile?.Mid_Rail_Width
-                    : part.profile?.PROFILE_WIDTH +
-                      (part.edge ? part.edge?.LIP_FACTOR / 2 : 0)
-                  : 0
-              )
-            )
-          );
-        }
+    // Function for updating the horizontalMidRailSize
+    const updateHorizontalMidRailSize = () => {
+      let railWidth =
+        part.construction?.value === 'Cope'
+          ? part.profile?.Mid_Rail_Width || part.profile?.PROFILE_WIDTH
+          : part.design?.Mid_Rail_Width || part.design?.PROFILE_WIDTH;
 
-        // if (value > 2) {
-        //   dispatch(
-        //     change(
-        //       'Order',
-        //       `part_list[${i}].dimensions[${index}].unevenCheck`,
-        //       false
-        //     )
-        //   );
-        // }
+      let lipFactor = part.edge ? part.edge?.LIP_FACTOR / 2 : 0;
 
-        if (part.panel?.glass) {
-          for (let j = 0; j < value; j++) {
-            dispatch(
-              change(
-                'Order',
-                `part_list[${i}].dimensions[${index}].glass_check_${j}`,
-                true
-              )
-            );
-          }
-        }
-      } else {
+      console.log({ default: numQty(defaultTopRail), railWidth: railWidth });
+
+      if (
+        fractionToDecimal(defaultTopRail) !== railWidth ||
+        fractionToDecimal(defaultBottomRail) !== railWidth ||
+        fractionToDecimal(defaultLeftStile) !== railWidth ||
+        fractionToDecimal(defaultRightStile) !== railWidth
+      ) {
+        console.log('Here');
+        railWidth = numQty(defaultTopRail);
+        lipFactor = 0;
+      }
+
+      const horizontalMidRailSize = railWidth ? railWidth + lipFactor : 0;
+
+      if (parseFloat(dimensions?.horizontalMidRailSize) < 1) {
         dispatch(
           change(
             'Order',
             `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
-            0
-          )
-        );
-
-        dispatch(
-          change(
-            'Order',
-            `part_list[${i}].dimensions[${index}].unevenCheck`,
-            false
-          )
-        );
-
-        dispatch(
-          change(
-            'Order',
-            `part_list[${i}].dimensions[${index}].unequalMidRails`,
-            false
+            fraction(horizontalMidRailSize)
           )
         );
       }
-    } else {
-      if (value > 1) {
-        if (
-          part.dimensions[index].horizontalMidRailSize !==
-          fraction(
-            part.design
-              ? part.design?.Mid_Rail_Width
-                ? part.design?.Mid_Rail_Width
-                : part.design?.PROFILE_WIDTH +
-                  (part.edge ? part.edge?.LIP_FACTOR / 2 : 0)
-              : 0
-          )
-        ) {
-          if (parseFloat(part.dimensions[index]?.horizontalMidRailSize) < 1) {
-            dispatch(
-              change(
-                'Order',
-                `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
-                fraction(
-                  part.design
-                    ? part.design?.Mid_Rail_Width
-                      ? part.design?.Mid_Rail_Width
-                      : part.design?.PROFILE_WIDTH +
-                        (part.edge ? part.edge?.LIP_FACTOR / 2 : 0)
-                    : 0
-                )
-              )
-            );
-          }
-        } else {
+    };
+
+    // Function for updating the glass checks
+    const updateGlassChecks = () => {
+      if (part.panel?.glass) {
+        for (let j = 0; j < value; j++) {
           dispatch(
             change(
               'Order',
-              `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
-              fraction(
-                part.design
-                  ? part.design?.Mid_Rail_Width
-                    ? part.design?.Mid_Rail_Width
-                    : part.design?.PROFILE_WIDTH +
-                      (part.edge ? part.edge?.LIP_FACTOR / 2 : 0)
-                  : 0
-              )
+              `part_list[${i}].dimensions[${index}].glass_check_${j}`,
+              true
             )
           );
         }
-
-        if (part.panel?.glass) {
-          for (let j = 0; j < value; j++) {
-            dispatch(
-              change(
-                'Order',
-                `part_list[${i}].dimensions[${index}].glass_check_${j}`,
-                true
-              )
-            );
-          }
-        }
-      } else {
-        dispatch(
-          change(
-            'Order',
-            `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
-            0
-          )
-        );
-
-        dispatch(
-          change(
-            'Order',
-            `part_list[${i}].dimensions[${index}].unevenCheck`,
-            false
-          )
-        );
-
-        dispatch(
-          change(
-            'Order',
-            `part_list[${i}].dimensions[${index}].unequalMidRails`,
-            false
-          )
-        );
       }
+    };
+
+    if (value > 1) {
+      updateHorizontalMidRailSize();
+      updateGlassChecks();
+    } else {
+      dispatch(
+        change(
+          'Order',
+          `part_list[${i}].dimensions[${index}].horizontalMidRailSize`,
+          0
+        )
+      );
+
+      dispatch(
+        change(
+          'Order',
+          `part_list[${i}].dimensions[${index}].unevenCheck`,
+          false
+        )
+      );
+
+      dispatch(
+        change(
+          'Order',
+          `part_list[${i}].dimensions[${index}].unequalMidRails`,
+          false
+        )
+      );
     }
+  };
+
+  const getPanelNotes = (
+    height,
+    width,
+    panelsH,
+    value,
+    defaultValues,
+    stilesAndRails
+  ) => {
+    if ((height >= 48 && panelsH < 2) || (width >= 24 && value < 2)) {
+      return stilesAndRails
+        ? `${panelsH}H ${value}W \nSINGLE - NO GUARANTEE`
+        : 'SINGLE - NO GUARANTEE';
+    } else {
+      return value > 1 ? `${panelsH}H ${value}W` : '';
+    }
+  };
+
+  const updatePanelNotes = (dispatch, i, index, notes) => {
+    dispatch(
+      change('Order', `part_list[${i}].dimensions[${index}].notes`, notes)
+    );
   };
 
   const twoWide = (index, e, v) => {
     const part = formState.part_list[i];
+    const dimensions = part?.dimensions[index];
 
-    const leftStile =
-      index >= 0 ? formState?.part_list[i]?.dimensions[index]?.leftStile : null;
-    const rightStile =
-      index >= 0
-        ? formState?.part_list[i]?.dimensions[index]?.rightStile
-        : null;
-    const topRail =
-      index >= 0 ? formState?.part_list[i]?.dimensions[index]?.topRail : null;
-    const bottomRail =
-      index >= 0
-        ? formState?.part_list[i]?.dimensions[index]?.bottomRail
-        : null;
+    const defaultValues = {
+      leftStile: defaultLeftStile,
+      rightStile: defaultRightStile,
+      topRail: defaultTopRail,
+      bottomRail: defaultBottomRail,
+    };
 
-    const panelsH = formState?.part_list[i]?.dimensions[index]?.panelsH;
-    const panelsW = formState?.part_list[i]?.dimensions[index]?.panelsW;
+    const {
+      leftStile = null,
+      rightStile = null,
+      topRail = null,
+      bottomRail = null,
+      panelsH,
+      panelsW,
+    } = dimensions || {};
 
-    let value;
+    const stilesAndRails =
+      leftStile !== defaultValues.leftStile ||
+      rightStile !== defaultValues.rightStile ||
+      topRail !== defaultValues.topRail ||
+      bottomRail !== defaultValues.bottomRail;
+
+    let value = e ? e.target.value : v;
+    const notes = getPanelNotes(
+      part.height,
+      part.width,
+      panelsH,
+      value,
+      defaultValues,
+      stilesAndRails
+    );
+
+    updatePanelNotes(dispatch, i, index, notes);
+
     if (e) {
-      value = e.target.value;
-      if (
-        parseInt(part.dimensions[index].panelsH) > 1 &&
-        parseInt(e.target.value) > 1
-      ) {
-        if (
-          leftStile === defaultLeftStile ||
-          rightStile === defaultRightStile ||
-          topRail === defaultTopRail ||
-          bottomRail === defaultBottomRail
-        ) {
-          if ((height >= 48 && panelsH < 2) || (width >= 24 && value < 2)) {
-            dispatch(
-              change(
-                'Order',
-                `part_list[${i}].dimensions[${index}].notes`,
-                `${panelsH}H ${value}W \nSINGLE - NO GUARANTEE`
-              )
-            );
-          } else {
-            dispatch(
-              change(
-                'Order',
-                `part_list[${i}].dimensions[${index}].notes`,
-                `${panelsH}H ${value}W`
-              )
-            );
-          }
-        } else {
-          // dispatch(
-          //   change(
-          //     'Order',
-          //     `part_list[${i}].dimensions[${index}].notes`,
-          //     `${panelsH}H ${value}W \nLeft Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
-          //   )
-          // );
-        }
-      } else {
-        if (
-          leftStile === defaultLeftStile ||
-          rightStile === defaultRightStile ||
-          topRail === defaultTopRail ||
-          bottomRail === defaultBottomRail
-        ) {
-          if ((height >= 48 && panelsH < 2) || (width >= 24 && value < 2)) {
-            dispatch(
-              change(
-                'Order',
-                `part_list[${i}].dimensions[${index}].notes`,
-                'SINGLE - NO GUARANTEE'
-              )
-            );
-          } else {
-            if (value > 1) {
-              dispatch(
-                change(
-                  'Order',
-                  `part_list[${i}].dimensions[${index}].notes`,
-                  `${panelsH}H ${value}W`
-                )
-              );
-            } else {
-              dispatch(
-                change(
-                  'Order',
-                  `part_list[${i}].dimensions[${index}].notes`,
-                  ''
-                )
-              );
-            }
-          }
-        } else {
-          // if ((height >= 48 && panelsH < 2) || (width >= 24 && value < 2)) {
-          //   dispatch(
-          //     change(
-          //       'Order',
-          //       `part_list[${i}].dimensions[${index}].notes`,
-          //       `${panelsH}H ${value}W \nLeft Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}"`
-          //     )
-          //   );
-          // } else {
-          //   dispatch(
-          //     change(
-          //       'Order',
-          //       `part_list[${i}].dimensions[${index}].notes`,
-          //       `${panelsH}H ${value}W \nLeft Stile: ${leftStile}" Right Stile: ${rightStile}" \nTop Rail: ${topRail}" Bottom Rail: ${bottomRail}" \nSINGLE - NO GUARANTEE`
-          //     )
-          //   );
-          // }
-        }
-      }
-    } else {
-      value = v;
-      if (
-        part.dimensions[index].notes !== '' &&
-        parseInt(part.dimensions[index].panelsH) > 1 &&
-        parseInt(v) > 1
-      ) {
-        dispatch(
-          change(
-            'Order',
-            `part_list[${i}].dimensions[${index}].notes`,
-            `${panelsH}H ${v}W`
-          )
-        );
-        dispatch(
-          change('Order', `part_list[${i}].dimensions[${index}].panelsW`, v)
-        );
-      } else {
-        dispatch(
-          change('Order', `part_list[${i}].dimensions[${index}].panelsW`, v)
-        );
-        dispatch(
-          change('Order', `part_list[${i}].dimensions[${index}].notes`, `${v}W`)
-        );
-      }
+      dispatch(
+        change('Order', `part_list[${i}].dimensions[${index}].panelsW`, value)
+      );
     }
 
-    //look here
-
     if (value > 1) {
-      if (part.construction?.value === 'Cope') {
-        if (
-          part.dimensions[index].verticalMidRailSize !==
-          fraction(
-            part.profile
-              ? part.profile?.Mid_Rail_Width
-                ? part.profile?.Mid_Rail_Width
-                : part.profile?.PROFILE_WIDTH +
-                  (part.edge ? part.edge?.LIP_FACTOR / 2 : 0)
-              : 0
-          )
-        ) {
-          if (parseFloat(part.dimensions[index]?.verticalMidRailSize) < 1) {
-            dispatch(
-              change(
-                'Order',
-                `part_list[${i}].dimensions[${index}].verticalMidRailSize`,
-                fraction(
-                  part.profile
-                    ? part.profile?.Mid_Rail_Width
-                      ? part.profile?.Mid_Rail_Width
-                      : part.profile?.PROFILE_WIDTH +
-                        (part.edge ? part.edge?.LIP_FACTOR / 2 : 0)
-                    : 0
-                )
-              )
-            );
-          }
-        } else {
-          dispatch(
-            change(
-              'Order',
-              `part_list[${i}].dimensions[${index}].verticalMidRailSize`,
-              fraction(
-                part.profile
-                  ? part.profile?.Mid_Rail_Width
-                    ? part.profile?.Mid_Rail_Width
-                    : part.profile?.PROFILE_WIDTH +
-                      (part.edge ? part.edge?.LIP_FACTOR / 2 : 0)
-                  : 0
-              )
-            )
-          );
-        }
-      } else {
-        dispatch(
-          change(
-            'Order',
-            `part_list[${i}].dimensions[${index}].verticalMidRailSize`,
-            fraction(
-              part.design
-                ? part.design?.PROFILE_WIDTH + part.edge?.LIP_FACTOR / 2
-                : 0
-            )
-          )
-        );
+      let railWidth =
+        part.construction?.value === 'Cope'
+          ? part.profile?.Mid_Rail_Width || part.profile?.PROFILE_WIDTH
+          : part.design?.Mid_Rail_Width || part.design?.PROFILE_WIDTH;
+
+      let lipFactor = part.edge ? part.edge?.LIP_FACTOR / 2 : 0;
+
+      console.log({ defaultBottomRail, railWidth });
+
+      if (
+        fractionToDecimal(defaultTopRail) !== railWidth ||
+        fractionToDecimal(defaultBottomRail) !== railWidth ||
+        fractionToDecimal(defaultLeftStile) !== railWidth ||
+        fractionToDecimal(defaultRightStile) !== railWidth
+      ) {
+        console.log('Here');
+        railWidth = numQty(defaultLeftStile);
+        lipFactor = 0;
       }
+
+      const midRailSize = railWidth ? railWidth + lipFactor : 0;
+
+      dispatch(
+        change(
+          'Order',
+          `part_list[${i}].dimensions[${index}].verticalMidRailSize`,
+          fraction(midRailSize || 0)
+        )
+      );
     } else {
       dispatch(
         change(
@@ -1682,10 +1424,10 @@ const DoorTable = ({
           <div>
             <Row>
               {Array.from(
-                formState.part_list[i]?.dimensions[index]?.panelsH
+                formState.part_list[i]?.dimensions[index]?.panelsH || 0
                   ? Array(
                       parseInt(
-                        formState.part_list[i]?.dimensions[index]?.panelsH
+                        formState.part_list[i]?.dimensions[index]?.panelsH || 0
                       )
                     ).keys()
                   : 0
