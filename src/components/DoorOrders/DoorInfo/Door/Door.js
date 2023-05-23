@@ -139,9 +139,7 @@ class Door extends Component {
     }
   };
 
-  changePanel = (part, index, formState, change) => {
-    console.log({ part, index, formState, change });
-
+  changePanel = (index, formState) => {
     if (
       (formState.part_list[index]?.thickness?.value === 1 ||
         formState.part_list[index]?.thickness?.value === 2) &&
@@ -305,9 +303,7 @@ class Door extends Component {
                 dataKey="value"
                 textField="NAME"
                 validate={required}
-                onBlur={() =>
-                  this.changePanel(part, index, this.props.formState, change)
-                }
+                onBlur={() => this.changePanel(index, this.props.formState)}
                 edit={edit}
               />
             </FormGroup>
