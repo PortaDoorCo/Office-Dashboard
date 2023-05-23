@@ -119,18 +119,8 @@ const StatusTable = (props) => {
     {
       name: 'Date Ordered',
       cell: (row) => {
-        const dateOrdered = row?.tracking?.filter((x) => {
-          return x.status === 'Ordered';
-        });
-
-        if (row.DateOrdered || dateOrdered.length > 0) {
-          return (
-            <div>
-              {moment(row.DateOrdered || dateOrdered[0]?.date).format(
-                'MMM Do YYYY'
-              )}
-            </div>
-          );
+        if (row.DateOrdered) {
+          return <div>{moment(row.DateOrdered).format('MMM Do YYYY')}</div>;
         } else {
           return <div>TBD</div>;
         }
@@ -265,18 +255,8 @@ const StatusTable = (props) => {
       {
         name: 'Date Ordered',
         cell: (row) => {
-          const dateOrdered = row?.tracking?.filter((x) => {
-            return x.status === 'Ordered';
-          });
-
-          if (row.DateOrdered || dateOrdered.length > 0) {
-            return (
-              <div>
-                {moment(row.DateOrdered || dateOrdered[0]?.date).format(
-                  'MMM Do YYYY'
-                )}
-              </div>
-            );
+          if (row.DateOrdered) {
+            return <div>{moment(row.DateOrdered).format('MMM Do YYYY')}</div>;
           } else {
             return <div>TBD</div>;
           }
@@ -424,15 +404,9 @@ const StatusTable = (props) => {
 
     if (props.filterStatus === 'Ordered') {
       const newData = newOrder.map((i) => {
-        const dateOrdered = i?.tracking?.filter((x) => {
-          return x.status === 'Ordered';
-        });
-
         return {
           ...i,
-          dateOrdered: i.DateOrdered
-            ? new Date(i.DateOrdered)
-            : new Date(dateOrdered[0]?.date),
+          dateOrdered: new Date(i.DateOrdered),
         };
       });
 

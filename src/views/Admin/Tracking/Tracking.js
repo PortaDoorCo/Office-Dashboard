@@ -271,10 +271,6 @@ const OrderTable = (props) => {
       let date = new Date(item.dueDate);
       let Date_Complete = new Date(item.DateCompleted);
 
-      const dateOrdered = item?.tracking?.filter((x) => {
-        return x.status === 'Ordered';
-      });
-
       if (customer.Company === 'All') {
         if (orderType === 'All') {
           if (filterStatus === 'In Production') {
