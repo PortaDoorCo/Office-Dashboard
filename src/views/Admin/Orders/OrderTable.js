@@ -200,21 +200,6 @@ const OrderTable = (props) => {
     const filteredOrders = orders?.filter((item) => {
       let date = new Date(item.created_at);
 
-      // const dateOrdered = item?.tracking?.filter((x) => {
-      //   return x.status === 'Ordered';
-      // });
-      // const dateInvoiced = item?.tracking?.filter((x) => {
-      //   return x.status === 'Invoiced';
-      // });
-
-      // const dateCompleted = item?.tracking?.filter((x) => {
-      //   return x.status === 'Complete';
-      // });
-
-      // const dateShipped = item?.tracking?.filter((x) => {
-      //   return x.status === 'Shipped';
-      // });
-
       if (filterStatus === 'Ordered') {
         if (filterText?.length > 0) {
           return (
@@ -407,18 +392,8 @@ const OrderTable = (props) => {
     {
       name: 'Date Ordered',
       cell: (row) => {
-        const dateOrdered = row?.tracking?.filter((x) => {
-          return x.status === 'Ordered';
-        });
-
-        if (row.DateOrdered || dateOrdered.length > 0) {
-          return (
-            <div>
-              {moment(row.DateOrdered || dateOrdered[0]?.date).format(
-                'MMM Do YYYY'
-              )}
-            </div>
-          );
+        if (row.DateOrdered) {
+          return <div>{moment(row.DateOrdered).format('MMM Do YYYY')}</div>;
         } else {
           return <div>TBD</div>;
         }
@@ -635,16 +610,10 @@ const OrderTable = (props) => {
 
     if (filterStatus !== 'Quote') {
       const newData = newOrder.map((i) => {
-        const dateOrdered = i?.tracking?.filter((x) => {
-          return x.status === 'Ordered';
-        });
-
         return {
           ...i,
           dateOrdered: i.DateOrdered
             ? new Date(i.DateOrdered)
-            : dateOrdered.length
-            ? new Date(dateOrdered[0]?.date)
             : new Date(i.created_at),
         };
       });

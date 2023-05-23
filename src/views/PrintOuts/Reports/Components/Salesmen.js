@@ -26,14 +26,8 @@ export default (data, startDate, endDate, account, role, status) => {
     ).value;
     let name = i.job_info?.poNum ? i.job_info?.poNum : 'None';
 
-    const dateOrdered = i?.tracking?.filter((x) => {
-      return x.status === 'Ordered';
-    });
-
     return tableBody.push([
-      i.DateOrdered || dateOrdered.length > 0
-        ? moment(i.DateOrdered || dateOrdered[0].date).format('MM/DD/YYYY')
-        : 'TBD',
+      i.DateOrdered ? moment(i.DateOrdered).format('MM/DD/YYYY') : 'TBD',
       i.job_info?.customer?.Company,
       i.id + 100,
       i.status,

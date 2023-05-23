@@ -128,18 +128,6 @@ export default (data, startDate, endDate, status) => {
       });
     }
 
-    const dateOrdered = i?.tracking?.filter((x) => {
-      return x.status === 'Ordered';
-    });
-
-    const dateInvoiced = i?.tracking?.filter((x) => {
-      return x.status === 'Invoiced';
-    });
-
-    const dateShipped = i?.tracking?.filter((x) => {
-      return x.status === 'Shipped';
-    });
-
     if (status === 'Quote') {
       return tableBody.push([
         moment(i.created_at).format('MM/DD/YYYY'),
@@ -162,9 +150,7 @@ export default (data, startDate, endDate, status) => {
       ]);
     } else {
       return tableBody.push([
-        i.DateOrdered || dateOrdered.length > 0
-          ? moment(i.DateOrdered || dateOrdered[0].date).format('MM/DD/YYYY')
-          : 'TBD',
+        i.DateOrdered ? moment(i.DateOrdered).format('MM/DD/YYYY') : 'TBD',
         i.job_info?.customer?.Company,
         i.id + 100,
 
@@ -179,12 +165,8 @@ export default (data, startDate, endDate, status) => {
         i.sale?.fullName,
         i.status,
         i.Shipping_Scheduled ? moment(i.dueDate).format('MM/DD/YYYY') : 'TBD',
-        i.DateInvoiced || dateInvoiced.length > 0
-          ? moment(i.DateInvoiced || dateInvoiced[0].date).format('MM/DD/YYYY')
-          : 'TBD',
-        i.DateShipped || dateShipped.length > 0
-          ? moment(i.DateShipped || dateShipped[0].date).format('MM/DD/YYYY')
-          : 'TBD',
+        i.DateInvoiced ? moment(i.DateInvoiced).format('MM/DD/YYYY') : 'TBD',
+        i.DateShipped ? moment(i.DateShipped).format('MM/DD/YYYY') : 'TBD',
       ]);
     }
   });

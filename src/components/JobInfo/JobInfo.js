@@ -72,20 +72,14 @@ class JobInfo extends Component {
   componentDidMount() {
     const { isEdit, formState } = this.props;
 
-    const dateOrdered = formState?.tracking?.filter((x) => {
-      return x.status === 'Ordered';
-    });
-
     if (isEdit) {
       if (formState?.job_info?.Shipping_Scheduled) {
         return;
       } else {
         let dueDate = moment(new Date()).businessAdd(21)._d;
 
-        if (formState?.DateOrdered || dateOrdered.length > 0) {
-          dueDate = moment(
-            new Date(formState?.DateOrdered || dateOrdered[0]?.date)
-          ).businessAdd(21)._d;
+        if (formState?.DateOrdered) {
+          dueDate = moment(new Date(formState?.DateOrdered)).businessAdd(21)._d;
         }
 
         this.props.dispatch(change('Order', 'job_info.DueDate', dueDate));

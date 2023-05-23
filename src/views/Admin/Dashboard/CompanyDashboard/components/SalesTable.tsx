@@ -203,18 +203,8 @@ const OrderTable = (props: TablePropTypes) => {
     {
       name: 'Date Ordered',
       cell: (row) => {
-        const dateOrdered = row?.tracking?.filter((x) => {
-          return x.status === 'Ordered';
-        });
-
-        if (row.DateOrdered || dateOrdered.length > 0) {
-          return (
-            <div>
-              {moment(row.DateOrdered || dateOrdered[0]?.date).format(
-                'MMM Do YYYY'
-              )}
-            </div>
-          );
+        if (row.DateOrdered) {
+          return <div>{moment(row.DateOrdered).format('MMM Do YYYY')}</div>;
         } else {
           return <div>TBD</div>;
         }
