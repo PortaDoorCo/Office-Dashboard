@@ -21,6 +21,7 @@ import fraction from '../../../../utils/fraction';
 import changeProfile from '../Functions/changeProfile';
 import changeDesign from '../Functions/changeDesign';
 import ModalUtil from '../../../../utils/Modal';
+import PanelModal from '../../../../utils/Modal';
 
 const required = (value) => (value ? undefined : 'Required');
 
@@ -29,10 +30,17 @@ class Door extends Component {
     title: 'Reminder',
     message: 'The Edge You Selected Cannot Be Drilled For Concealed Hinges',
     modal: false,
+    panelMessage: 'We suggest using a 5/16 Panel for 4/4 Doors',
+    panelModal: false,
+    panelTitle: 'Suggestion',
   };
 
   toggle = () => {
     this.setState({ modal: !this.state.modal });
+  };
+
+  togglePanelModal = () => {
+    this.setState({ panelModal: !this.state.panelModal });
   };
 
   lipWarning = () => {
@@ -131,6 +139,17 @@ class Door extends Component {
     }
   };
 
+  changePanel = (index, formState) => {
+    if (
+      (formState.part_list[index]?.thickness?.value === 1 ||
+        formState.part_list[index]?.thickness?.value === 2) &&
+      formState.part_list[index]?.panel?.NAME.includes('3/8') &&
+      formState.part_list[index]?.panel?.Flat
+    ) {
+      this.setState({ panelModal: true });
+    }
+  };
+
   render() {
     const {
       part,
@@ -190,6 +209,12 @@ class Door extends Component {
           title={this.state.title}
           message={this.state.message}
           modal={this.state.modal}
+        />
+        <PanelModal
+          toggle={this.togglePanelModal}
+          title={this.state.panelTitle}
+          message={this.state.panelMessage}
+          modal={this.state.panelModal}
         />
         <Row>
           <Col>
@@ -278,6 +303,7 @@ class Door extends Component {
                 dataKey="value"
                 textField="NAME"
                 validate={required}
+                onBlur={() => this.changePanel(index, this.props.formState)}
                 edit={edit}
               />
             </FormGroup>
