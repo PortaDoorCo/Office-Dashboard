@@ -1257,7 +1257,7 @@ export const flatStockLinePriceSelector = createSelector(
     pricer.map((i, index) => {
       const price = i ? i : 0;
 
-      return Math.floor(price * 100) / 100;
+      return price;
     })
 );
 
