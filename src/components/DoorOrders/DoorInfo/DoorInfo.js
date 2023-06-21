@@ -33,14 +33,17 @@ class DoorInfo extends Component {
   copy = (type) => {
     const { fields, formState } = this.props;
     const lastItem = formState.part_list[formState?.part_list?.length - 1];
+
     switch (type) {
       case 'Door':
         fields.push({
           orderType:
-            lastItem.orderType.value === 'One_Piece'
-              ? orderType[3]
-              : lastItem.orderType.value === 'Two_Piece'
-              ? orderType[5]
+            lastItem.orderType.value === 'One_Piece' ||
+            lastItem.orderType.value === 'One_Piece_DF'
+              ? orderType[2]
+              : lastItem.orderType.value === 'Two_Piece' ||
+                lastItem.orderType.value === 'Two_Piece_DF'
+              ? orderType[4]
               : orderType[0],
           construction: lastItem.construction,
           thickness: lastItem.thickness,
@@ -68,9 +71,11 @@ class DoorInfo extends Component {
       case 'DF':
         fields.push({
           orderType:
-            lastItem.orderType.value === 'One_Piece'
+            lastItem.orderType.value === 'One_Piece' ||
+            lastItem.orderType.value === 'One_Piece_DF'
               ? orderType[3]
-              : lastItem.orderType.value === 'Two_Piece'
+              : lastItem.orderType.value === 'Two_Piece' ||
+                lastItem.orderType.value === 'Two_Piece_DF'
               ? orderType[5]
               : orderType[1],
           construction: lastItem.construction,
