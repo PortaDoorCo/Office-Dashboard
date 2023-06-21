@@ -337,7 +337,7 @@ class OrderEntry extends Component {
             date: new Date(),
           },
         ],
-        sale: values.job_info?.customer?.sale?.id,
+        sale: values.job_info?.salesRep?.id,
       };
     } else {
       order = {
@@ -376,7 +376,7 @@ class OrderEntry extends Component {
         status: values.job_info?.status?.value,
         dueDate: values.job_info?.DueDate,
         Shipping_Scheduled: values?.job_info?.Shipping_Scheduled,
-        sale: values.job_info?.customer?.sale?.id,
+        sale: values.job_info?.salesRep?.id,
         tracking: newStatus,
       };
     }
