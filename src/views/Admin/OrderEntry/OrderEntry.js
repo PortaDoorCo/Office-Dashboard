@@ -487,7 +487,6 @@ class OrderEntry extends Component {
       role,
       prices,
       orders,
-      values,
     } = this.props;
 
     const customer = formState?.job_info?.customer;
