@@ -469,9 +469,9 @@ const DoorTable = ({
 
       let lipFactor = part.edge ? part.edge?.LIP_FACTOR / 2 : 0;
 
-      console.log({ default: numQty(defaultTopRail), railWidth: railWidth });
-      console.log({ lipFactor });
-      console.log({ dimensions: dimensions });
+      // console.log({ default: numQty(defaultTopRail), railWidth: railWidth });
+      // console.log({ lipFactor });
+      // console.log({ dimensions: dimensions });
 
       if (
         fractionToDecimal(defaultTopRail) !== railWidth ||
@@ -486,7 +486,7 @@ const DoorTable = ({
 
       const horizontalMidRailSize = railWidth ? railWidth + lipFactor : 0;
 
-      console.log({ horizontalMidRailSize });
+      // console.log({ horizontalMidRailSize });
 
       if (parseFloat(dimensions?.horizontalMidRailSize) < 1) {
         dispatch(
@@ -629,7 +629,7 @@ const DoorTable = ({
       ) {
         console.log('Here');
         railWidth = numQty(defaultLeftStile);
-        lipFactor = 0;
+        // lipFactor = 0;
       }
 
       const midRailSize = railWidth ? railWidth + lipFactor : 0;
