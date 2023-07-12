@@ -621,6 +621,18 @@ const DoorTable = ({
 
       console.log({ defaultBottomRail, railWidth });
 
+      const changePanelsW = (panelsWValue) => {
+        dispatch(
+          change(
+            'Order',
+            `part_list[${i}].dimensions[${index}].panelsW`,
+            panelsWValue
+          )
+        );
+      };
+
+      changePanelsW(value);
+
       if (
         fractionToDecimal(defaultTopRail) !== railWidth ||
         fractionToDecimal(defaultBottomRail) !== railWidth ||
