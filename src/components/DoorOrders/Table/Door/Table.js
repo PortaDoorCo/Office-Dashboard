@@ -480,7 +480,10 @@ const DoorTable = ({
         fractionToDecimal(defaultRightStile) !== railWidth
       ) {
         console.log('Here');
-        railWidth = numQty(defaultTopRail);
+        const midRailSize = railWidth ? railWidth - lipFactor : 0;
+        railWidth = midRailSize
+          ? numQty(midRailSize)
+          : numQty(defaultLeftStile);
         // lipFactor = 0;
       }
 
@@ -640,7 +643,11 @@ const DoorTable = ({
         fractionToDecimal(defaultRightStile) !== railWidth
       ) {
         console.log('Here');
-        railWidth = numQty(defaultLeftStile);
+        const midRailSize = railWidth ? railWidth - lipFactor : 0;
+        railWidth = midRailSize
+          ? numQty(midRailSize)
+          : numQty(defaultLeftStile);
+
         // lipFactor = 0;
       }
 
