@@ -439,7 +439,7 @@ const DoorTable = ({
           ? 'SINGLE - NO GUARANTEE'
           : panelsW > 1
           ? `${value}H ${panelsW}W`
-          : '';
+          : `${value}H`;
         changeNotes(notes);
       }
     };
