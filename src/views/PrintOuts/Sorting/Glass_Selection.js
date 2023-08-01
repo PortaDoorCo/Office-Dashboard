@@ -14,16 +14,25 @@ export default (data, type) => {
       const dimensions = glass_check
         .map((g, k) => {
           if (g.glass_index === 1) {
-            glass_dimensions.push({...g});
+            glass_dimensions.push({ ...g });
             return null;
           } else {
-            return {...g};
+            return { ...g };
           }
         })
         .filter((n) => n);
 
+      console.log({ i });
+
       if (glass_dimensions.length > 0) {
         let no_panel = { ...i, panel: { NAME: 'Glass', UPCHARGE: 0 } };
+        if (i.panel.NAME === 'Louver') {
+          no_panel = {
+            ...i,
+            panel: { NAME: 'Glass', UPCHARGE: 0, louver: true },
+          };
+        }
+
         let newObj = { ...no_panel, dimensions: glass_dimensions };
         if (type !== 'Page') {
           array.push(newObj);
