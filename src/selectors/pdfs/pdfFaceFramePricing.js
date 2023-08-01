@@ -84,9 +84,9 @@ const pricing = (parts, pricer, itemPrice) => {
 
         let overcharge = 0;
 
-        if (width_input >= 48 || height >= 96) {
-          overcharge = 100;
-        }
+        // if (width_input >= 48 || height >= 96) {
+        //   overcharge = 100;
+        // }
 
         const price =
           itemPrice?.length > 0 && itemPrice[index]?.length > 0
