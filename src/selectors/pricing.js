@@ -393,9 +393,9 @@ export const itemPriceSelector = createSelector(
 
               let overcharge = 0;
 
-              if (width_input >= 48 || height >= 96) {
-                overcharge = 100;
-              }
+              // if (width_input >= 48 || height >= 96) {
+              //   overcharge = 100;
+              // }
 
               const price =
                 eval(pricer && pricer.face_frame_pricing) + extraCost;
