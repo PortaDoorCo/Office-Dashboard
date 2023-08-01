@@ -136,8 +136,6 @@ export default (data, pricing) => {
       ]);
     });
 
-    console.log({ part });
-
     return [
       {
         id: 'parts',

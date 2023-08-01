@@ -22,8 +22,6 @@ export default (data, type) => {
         })
         .filter((n) => n);
 
-      console.log({ i });
-
       if (glass_dimensions.length > 0) {
         let no_panel = { ...i, panel: { NAME: 'Glass', UPCHARGE: 0 } };
         if (i.panel.NAME === 'Louver') {
