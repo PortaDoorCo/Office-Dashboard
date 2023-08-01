@@ -176,8 +176,10 @@ export default (data, pricing) => {
                     } - ${
                       part?.construction?.value === 'Slab'
                         ? ''
-                        : part.panel
-                        ? part.panel.NAME
+                        : part?.panel?.louver
+                        ? 'Louver'
+                        : part?.panel
+                        ? part?.panel?.NAME
                         : 'Glass'
                     }`,
                     style: 'fonts',
