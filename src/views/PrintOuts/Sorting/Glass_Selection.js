@@ -27,7 +27,7 @@ export default (data, type) => {
         if (i.panel.NAME === 'Louver') {
           no_panel = {
             ...i,
-            panel: { NAME: 'Glass', UPCHARGE: 0, louver: true },
+            panel: { NAME: 'Louver', UPCHARGE: 0, louver: true },
           };
         }
 
