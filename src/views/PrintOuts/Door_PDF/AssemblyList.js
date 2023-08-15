@@ -93,8 +93,6 @@ export default (data, breakdowns) => {
       ]);
     });
 
-    console.log({ i });
-
     return [
       {
         stack: [
