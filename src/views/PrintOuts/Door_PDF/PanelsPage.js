@@ -133,6 +133,7 @@ export default (data, breakdowns, type) => {
                         }`,
                       }
                     : null,
+                  i.notes ? { text: `${i.notes.toUpperCase()}` } : null,
                   {
                     text: data.misc_items.map((i) => {
                       if (i.category === 'preselect') {
