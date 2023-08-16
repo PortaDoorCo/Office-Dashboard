@@ -4,25 +4,25 @@ import { CardSubtitle, Col, FormGroup, Label, Row } from 'reactstrap';
 import { Field, FieldArray } from 'redux-form';
 import {
   finishingSelector,
-  finishItemSelector, finishTotalSelector, itemPriceSelector, linePriceSelector, miscTotalSelector, subTotalSelector,
+  finishItemSelector,
+  finishTotalSelector,
+  itemPriceSelector,
+  linePriceSelector,
+  miscTotalSelector,
+  subTotalSelector,
   taxSelector,
-  totalSelector
+  totalSelector,
 } from '../../../../selectors/pricing';
 import {
   renderDropdownList,
   renderDropdownListFilter,
-  renderTextField
+  renderTextField,
 } from '../../../RenderInputs/renderInputs';
 import Frame_Only_Table from '../../Table/Face_Frame/Face_Frame_Table';
 
-
 const required = (value) => (value ? undefined : 'Required');
 
-
-
 class FaceFrame extends Component {
-
-
   render() {
     const {
       part,
@@ -38,14 +38,14 @@ class FaceFrame extends Component {
       edit,
       updateSubmit,
       finish,
-      finishSubtotal
+      finishSubtotal,
     } = this.props;
-
 
     let thickness = formState?.part_list[index]?.thickness?.db_name;
 
-    const ff_woodtypes = woodtypes.filter(wood => wood.face_frame !== false && wood[thickness]);
-
+    const ff_woodtypes = woodtypes.filter(
+      (wood) => wood.face_frame !== false && wood[thickness]
+    );
 
     return (
       <div>
@@ -98,12 +98,11 @@ class FaceFrame extends Component {
 
         <Row className="mt-2">
           <Col xs="4">
-      
             <FormGroup>
               <strong>
                 <Label for="jobNotes">Job Notes</Label>
                 <Field
-                  name={`${part}.notes`}
+                  name={`${part}.job_notes`}
                   type="textarea"
                   component={renderTextField}
                   edit={edit}
