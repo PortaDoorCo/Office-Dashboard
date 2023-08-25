@@ -889,6 +889,64 @@ const DoorTable = ({
 
     dispatch(startAsyncValidation('Order'));
 
+    // const notes = [];
+
+    // if (
+    //   construction === 'Cope' ||
+    //   (construction === 'MT' && part.design?.NAME?.includes('PRP 15')) ||
+    //   part.design?.NAME?.includes('PRP15')
+    // ) {
+    //   if (
+    //     defaultLeftStile !== formState?.part_list[i]?.profile?.PROFILE_WIDTH
+    //   ) {
+    //     console.log('here');
+    //     notes.push(`LS: ${fraction(defaultLeftStile)}"`);
+    //   }
+
+    //   if (
+    //     defaultRightStile !== formState?.part_list[i]?.profile?.PROFILE_WIDTH
+    //   ) {
+    //     console.log('here');
+    //     notes.push(`RS: ${fraction(defaultRightStile)}"`);
+    //   }
+
+    //   if (defaultTopRail !== formState?.part_list[i]?.profile?.PROFILE_WIDTH) {
+    //     console.log('here');
+    //     notes.push(`TR: ${fraction(defaultTopRail)}"`);
+    //   }
+
+    //   if (
+    //     defaultBottomRail !== formState?.part_list[i]?.profile?.PROFILE_WIDTH
+    //   ) {
+    //     console.log('here');
+    //     notes.push(`BR: ${fraction(defaultBottomRail)}"`);
+    //   }
+    // } else {
+    //   if (defaultLeftStile !== formState?.part_list[i]?.design?.PROFILE_WIDTH) {
+    //     console.log('here');
+    //     notes.push(`LS: ${fraction(defaultLeftStile)}"`);
+    //   }
+
+    //   if (
+    //     defaultRightStile !== formState?.part_list[i]?.design?.PROFILE_WIDTH
+    //   ) {
+    //     console.log('here');
+    //     notes.push(`RS: ${fraction(defaultRightStile)}"`);
+    //   }
+
+    //   if (defaultTopRail !== formState?.part_list[i]?.design?.PROFILE_WIDTH) {
+    //     console.log('here');
+    //     notes.push(`TR: ${fraction(defaultTopRail)}"`);
+    //   }
+
+    //   if (
+    //     defaultBottomRail !== formState?.part_list[i]?.design?.PROFILE_WIDTH
+    //   ) {
+    //     console.log('here');
+    //     notes.push(`BR: ${fraction(defaultBottomRail)}"`);
+    //   }
+    // }
+
     fields.push({
       qty: 1,
       panelsH: 1,

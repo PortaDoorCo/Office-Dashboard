@@ -3,6 +3,7 @@ import Size from '../Breakdowns/Doors/Size';
 import Glass_Selection from '../Sorting/Glass_Selection';
 import _ from 'lodash';
 import currency from 'currency.js';
+import fraction from '../../../utils/fraction';
 
 export default (data, pricing) => {
   const prices = pdfDoorPricing(
@@ -109,7 +110,7 @@ export default (data, pricing) => {
         { text: `${Size(item)}`, style: 'fonts' },
         { text: `${item.qty}`, style: 'fonts', alignment: 'center' },
         {
-          text: `${item.notes ? item.notes.toUpperCase() : ''} ${
+          text: `${item.notes ? item.notes?.toUpperCase() : ''} ${
             item.lite ? item.lite.NAME : ''
           }`,
           style: 'fontsBold',
@@ -135,6 +136,8 @@ export default (data, pricing) => {
         },
       ]);
     });
+
+    console.log({ part });
 
     return [
       {
@@ -232,13 +235,68 @@ export default (data, pricing) => {
                             part.design?.NAME?.includes('PRP 15') ||
                             part.design?.NAME?.includes('PRP15')) &&
                           part.profile
-                        ? part.profile.NAME
+                        ? `${part.profile.NAME}`
                         : part.design
-                        ? part.design.NAME
+                        ? `${part.design.NAME}`
                         : 'None'
                     }   Edge:  ${part.edge ? part.edge.NAME : 'None'}`,
                     style: 'fonts',
                   },
+                  // {
+                  //   stack: [
+                  //     part?.orderType?.value?.toLowerCase()?.includes('df')
+                  //       ? {
+                  //           text:
+                  //             (part.construction?.value === 'Cope' ||
+                  //               part.design?.NAME?.includes('PRP 15') ||
+                  //               part.design?.NAME?.includes('PRP15')) &&
+                  //             part.profile
+                  //               ? `${fraction(
+                  //                   part.profile.PROFILE_WIDTH
+                  //                 )}" Standard Stiles`
+                  //               : part.design
+                  //               ? `${fraction(
+                  //                   part.design.PROFILE_WIDTH
+                  //                 )}" Standard Stiles`
+                  //               : '',
+                  //           style: 'fonts',
+                  //         }
+                  //       : {
+                  //           text:
+                  //             (part.construction?.value === 'Cope' ||
+                  //               part.design?.NAME?.includes('PRP 15') ||
+                  //               part.design?.NAME?.includes('PRP15')) &&
+                  //             part.profile
+                  //               ? `${fraction(
+                  //                   part.profile.PROFILE_WIDTH
+                  //                 )}" Standard Framing`
+                  //               : part.design
+                  //               ? `${fraction(
+                  //                   part.design.PROFILE_WIDTH
+                  //                 )}" Standard Framing`
+                  //               : '',
+                  //           style: 'fonts',
+                  //         },
+                  //     part?.orderType?.value?.toLowerCase()?.includes('df')
+                  //       ? {
+                  //           text:
+                  //             (part.construction?.value === 'Cope' ||
+                  //               part.design?.NAME?.includes('PRP 15') ||
+                  //               part.design?.NAME?.includes('PRP15')) &&
+                  //             part.profile
+                  //               ? `${fraction(
+                  //                   part?.profile?.DF_Reduction
+                  //                 )}" Standard Rails`
+                  //               : part.design
+                  //               ? `${fraction(
+                  //                   part?.design?.DF_Reduction
+                  //                 )}" Standard Rails`
+                  //               : '',
+                  //           style: 'fonts',
+                  //         }
+                  //       : null,
+                  //   ],
+                  // },
                 ],
                 alignment: 'right',
               },
