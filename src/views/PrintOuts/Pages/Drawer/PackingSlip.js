@@ -95,7 +95,7 @@ const DrawerPDF = async (data, breakdowns, p, pricing) => {
                         style: 'fonts',
                       },
                       {
-                        text: `${data.companyprofile.City}, ${data.job_info.State} ${data.job_info.Zip}`,
+                        text: `${data.companyprofile.City}, ${data.companyprofile.State} ${data.companyprofile.Zip}`,
                         style: 'fonts',
                       },
                       {
