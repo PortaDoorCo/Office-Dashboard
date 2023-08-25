@@ -190,11 +190,11 @@ export default (data, pricing) => {
               {
                 width: 200,
                 stack: [
-                  {
-                    text: `${part.notes ? part.notes.toUpperCase() : ''}`,
-                    style: 'headerFont',
-                    alignment: 'center',
-                  },
+                  // {
+                  //   text: `${part.notes ? part.notes.toUpperCase() : ''}`,
+                  //   style: 'headerFont',
+                  //   alignment: 'center',
+                  // },
                   part.applied_profile?.NAME !== 'None'
                     ? {
                         text: `${

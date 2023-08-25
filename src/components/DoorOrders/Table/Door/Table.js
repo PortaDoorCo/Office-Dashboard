@@ -409,49 +409,52 @@ const DoorTable = ({
       dimensions || {};
 
     const value = e ? e.target.value : v;
-    const isSingleNoGuarantee =
-      (height >= 48 && value < 2) || (width >= 24 && panelsW < 2);
 
-    const changeNotes = (notes) => {
-      dispatch(
-        change('Order', `part_list[${i}].dimensions[${index}].notes`, notes)
+    const currentNotes = part.dimensions[index]?.notes || '';
+
+    const appendNotes = (newNote) => {
+      // Split the currentNotes string into an array based on ' | '
+      const notesArray = currentNotes.split(' | ').filter(Boolean); // The filter(Boolean) removes empty strings.
+
+      // Find the index of an existing height note, if any.
+      const existingNoteIndex = notesArray.findIndex((note) =>
+        /\d+H/.test(note)
       );
-    };
 
-    const changePanelsH = (panelsHValue) => {
+      // If the newNote is just 'H' (i.e., the input was cleared), we'll simply remove it.
+      if (newNote === 'H' && existingNoteIndex !== -1) {
+        notesArray.splice(existingNoteIndex, 1);
+      } else if (existingNoteIndex !== -1) {
+        // If the note exists, replace it with the new value.
+        notesArray[existingNoteIndex] = newNote;
+      } else if (newNote !== 'H') {
+        // If the note doesn't exist and it's not just 'H', append the new value.
+        notesArray.push(newNote);
+      }
+
+      // Join the array back into a string using ' | '
+      const updatedNotes = notesArray.join(' | ');
+
       dispatch(
         change(
           'Order',
-          `part_list[${i}].dimensions[${index}].panelsH`,
-          panelsHValue
+          `part_list[${i}].dimensions[${index}].notes`,
+          updatedNotes
         )
       );
     };
 
     const updateNotes = () => {
-      if (part.dimensions[index].notes !== '' && parseInt(value) > 1) {
-        const notes = isSingleNoGuarantee
-          ? `${value}H ${panelsW}W \nSINGLE - NO GUARANTEE`
-          : `${value}H ${panelsW}W`;
-        changeNotes(notes);
-      } else {
-        const notes = isSingleNoGuarantee
-          ? 'SINGLE - NO GUARANTEE'
-          : panelsW > 1
-          ? `${value}H ${panelsW}W`
-          : `${value}H`;
-        changeNotes(notes);
-      }
+      const notes = `${value}H`;
+      appendNotes(notes);
     };
 
     const updatePanelsHAndNotes = () => {
-      changePanelsH(value);
+      dispatch(
+        change('Order', `part_list[${i}].dimensions[${index}].panelsH`, value)
+      );
 
-      if (parseInt(panelsW) > 1 && parseInt(value) > 1) {
-        changeNotes(`${value}H ${panelsW}W`);
-      } else {
-        changeNotes(`${value}H`);
-      }
+      appendNotes(`${value}H`);
     };
 
     if (e) {
@@ -555,13 +558,7 @@ const DoorTable = ({
     defaultValues,
     stilesAndRails
   ) => {
-    if ((height >= 48 && panelsH < 2) || (width >= 24 && value < 2)) {
-      return stilesAndRails
-        ? `${panelsH}H ${value}W \nSINGLE - NO GUARANTEE`
-        : 'SINGLE - NO GUARANTEE';
-    } else {
-      return value > 1 ? `${panelsH}H ${value}W` : '';
-    }
+    return `${value}W`;
   };
 
   const updatePanelNotes = (dispatch, i, index, notes) => {
@@ -573,6 +570,7 @@ const DoorTable = ({
   const twoWide = (index, e, v) => {
     const part = formState.part_list[i];
     const dimensions = part?.dimensions[index];
+    const currentNotes = dimensions?.notes || '';
 
     const defaultValues = {
       leftStile: defaultLeftStile,
@@ -597,6 +595,33 @@ const DoorTable = ({
       bottomRail !== defaultValues.bottomRail;
 
     let value = e ? e.target.value : v;
+
+    const appendNotes = (newNote) => {
+      // Split the currentNotes string into an array based on ' | '
+      const notesArray = currentNotes.split(' | ').filter(Boolean); // This filters out any empty strings.
+
+      // Find the index of an existing width note, if any.
+      const existingNoteIndex = notesArray.findIndex((note) =>
+        /\d+W/.test(note)
+      );
+
+      // If the newNote is just 'W' (i.e., the input was cleared), we'll simply remove it.
+      if (newNote === 'W' && existingNoteIndex !== -1) {
+        notesArray.splice(existingNoteIndex, 1);
+      } else if (existingNoteIndex !== -1) {
+        // If the note exists, replace it with the new value.
+        notesArray[existingNoteIndex] = newNote;
+      } else if (newNote !== 'W') {
+        // If the note doesn't exist and it's not just 'W', append the new value.
+        notesArray.push(newNote);
+      }
+
+      // Join the array back into a string using ' | '
+      const updatedNotes = notesArray.join(' | ');
+
+      updatePanelNotes(dispatch, i, index, updatedNotes);
+    };
+
     const notes = getPanelNotes(
       part.height,
       part.width,
@@ -606,7 +631,7 @@ const DoorTable = ({
       stilesAndRails
     );
 
-    updatePanelNotes(dispatch, i, index, notes);
+    appendNotes(notes);
 
     if (e) {
       dispatch(
@@ -671,9 +696,45 @@ const DoorTable = ({
     }
   };
 
-  const registerChange = (index, e) => {
-    const value = e.target.value;
+  const registerChange = (index, e, label) => {
+    const value = e.target.value.trim(); // Trim spaces from the start and end.
+
+    // Get the current notes value.
+    const currentNotes =
+      formState?.part_list[i]?.dimensions[index]?.notes || '';
+
+    // Format the new value to be appended.
+    const formattedValue = value ? `${label}: ${value}"` : '';
+
+    // This regex will match digit sequences, potential spaces, potential fractions, and potential quotes.
+    const existingNoteRegex = new RegExp(`${label}: [\\d\\s\\/]+"`);
+    let updatedNotes;
+
+    if (existingNoteRegex.test(currentNotes)) {
+      // If the note exists and the new value is not empty, replace it.
+      // Otherwise, remove the note.
+      updatedNotes = value
+        ? currentNotes.replace(existingNoteRegex, formattedValue)
+        : currentNotes.replace(existingNoteRegex, '').replace(/ \|\s*$/, ''); // This regex removes trailing " |" if exists.
+    } else if (currentNotes && value) {
+      // If the note doesn't exist, and there are other notes, append the new value.
+      updatedNotes = `${currentNotes} | ${formattedValue}`;
+    } else {
+      // If there are no other notes or the input value is empty, just set the new value.
+      updatedNotes = formattedValue;
+    }
+
+    // Update the state for the changeValue.
     setChangeValue(value);
+
+    // Dispatch the change to update the notes field with the concatenated value.
+    dispatch(
+      change(
+        'Order',
+        `part_list[${i}].dimensions[${index}].notes`,
+        updatedNotes.trim() // This ensures no leading or trailing spaces.
+      )
+    );
   };
 
   const changeFraming = (e, index) => {
@@ -900,6 +961,7 @@ const DoorTable = ({
     <div>
       {modal ? (
         <WarningModal
+          formState={formState}
           toggle={toggle}
           modal={modal}
           warningType={warningType}
@@ -1070,7 +1132,7 @@ const DoorTable = ({
                       construction === 'Miter' && !design?.square ? false : edit
                     }
                     validate={required}
-                    onChange={(e) => registerChange(index, e)}
+                    onChange={(e) => registerChange(index, e, 'TR')}
                   />
                 </td>
                 <td>
@@ -1086,7 +1148,7 @@ const DoorTable = ({
                       construction === 'Miter' && !design?.square ? false : edit
                     }
                     validate={required}
-                    onChange={(e) => registerChange(index, e)}
+                    onChange={(e) => registerChange(index, e, 'BR')}
                   />
                 </td>
 
@@ -1103,7 +1165,7 @@ const DoorTable = ({
                       construction === 'Miter' && !design?.square ? false : edit
                     }
                     validate={required}
-                    onChange={(e) => registerChange(index, e)}
+                    onChange={(e) => registerChange(index, e, 'LS')}
                   />
                 </td>
                 <td>
@@ -1119,7 +1181,7 @@ const DoorTable = ({
                       construction === 'Miter' && !design?.square ? false : edit
                     }
                     validate={required}
-                    onChange={(e) => registerChange(index, e)}
+                    onChange={(e) => registerChange(index, e, 'RS')}
                   />
                 </td>
 

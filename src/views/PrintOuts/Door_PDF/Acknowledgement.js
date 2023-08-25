@@ -204,6 +204,13 @@ export default (data, pricing) => {
                     style: 'headerFont',
                     alignment: 'center',
                   },
+                  {
+                    text: `${
+                      part.job_notes ? part.job_notes.toUpperCase() : ''
+                    }`,
+                    style: 'fontsBold',
+                    alignment: 'center',
+                  },
                   part.applied_profile?.NAME !== 'None'
                     ? {
                         text: `${

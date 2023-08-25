@@ -428,7 +428,7 @@ class Door extends Component {
               <strong>
                 <Label for="jobNotes">Job Notes</Label>
                 <Field
-                  name={`${part}.notes`}
+                  name={`${part}.job_notes`}
                   type="textarea"
                   component={renderTextField}
                   edit={edit}

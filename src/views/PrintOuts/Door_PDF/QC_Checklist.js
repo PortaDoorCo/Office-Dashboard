@@ -68,7 +68,9 @@ export default (data, breakdowns) => {
                               }`,
                             }
                           : null,
-                        // i.notes ? { text: `${i.notes.toUpperCase()}` } : null,
+                        i.job_notes
+                          ? { text: `${i.job_notes.toUpperCase()}` }
+                          : null,
                         {
                           text: data.misc_items.map((i) => {
                             if (i.category === 'preselect') {

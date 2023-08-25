@@ -13,7 +13,28 @@ const WarningModal = (props) => {
     dispatch,
     change,
     prices,
+    formState, // Assume you pass formState as a prop
   } = props;
+
+  const appendNotes = (i, index, newNote) => {
+    const currentNotes =
+      formState?.part_list[i]?.dimensions[index]?.notes || '';
+
+    // Check if the note is already in the current notes
+    if (!currentNotes.includes(newNote)) {
+      const updatedNotes = currentNotes
+        ? `${currentNotes} | ${newNote}`
+        : newNote;
+
+      dispatch(
+        change(
+          'Order',
+          `part_list[${i}].dimensions[${index}].notes`,
+          updatedNotes
+        )
+      );
+    }
+  };
 
   const toggleAction = () => {
     const { value, tag, index } = warningType;
@@ -40,27 +61,20 @@ const WarningModal = (props) => {
     const { value, tag, i, index, part } = warningType;
     switch (tag) {
       case 'height':
-        // code block
-        if (numQty(value) >= 48) {
-          dispatch(
-            change(
-              'Order',
-              `part_list[${i}].dimensions[${index}].notes`,
-              'SINGLE - NO GUARANTEE'
-            )
-          );
+        if (
+          numQty(value) >= 48 &&
+          numQty(formState?.part_list[i]?.dimensions[index]?.panelsH) < 2
+        ) {
+          appendNotes(i, index, 'SINGLE - NO GUARANTEE');
         }
         toggle();
         break;
       case 'width':
-        if (numQty(value) >= 24) {
-          dispatch(
-            change(
-              'Order',
-              `part_list[${i}].dimensions[${index}].notes`,
-              'SINGLE - NO GUARANTEE'
-            )
-          );
+        if (
+          numQty(value) >= 24 &&
+          numQty(formState?.part_list[i]?.dimensions[index]?.panelsW) < 2
+        ) {
+          appendNotes(i, index, 'SINGLE - NO GUARANTEE');
         }
         toggle();
         break;
