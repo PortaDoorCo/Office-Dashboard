@@ -46,6 +46,46 @@ export default (data, breakdowns) => {
         }
       : null,
     {
+      columns: [
+        { text: '' },
+        {
+          stack: [
+            {
+              alignment: 'center',
+              text: data?.misc_items?.map((i) => {
+                if (i.category === 'preselect') {
+                  if (
+                    i?.item?.NAME?.toLowerCase()?.includes('delivery') ||
+                    i?.item?.NAME?.toLowerCase()?.includes('price') ||
+                    i?.item?.NAME?.toLowerCase()?.includes('discount') ||
+                    i?.item?.NAME?.toLowerCase()?.includes('rush') ||
+                    i?.item?.NAME?.toLowerCase()?.includes('credit')
+                  ) {
+                    return null;
+                  } else {
+                    return `${i.item?.NAME} \n`;
+                  }
+                } else {
+                  if (
+                    i?.item2?.toLowerCase()?.includes('delivery') ||
+                    i?.item2?.toLowerCase()?.includes('price') ||
+                    i?.item2?.toLowerCase()?.includes('discount') ||
+                    i?.item2?.toLowerCase()?.includes('rush') ||
+                    i?.item2?.toLowerCase()?.includes('credit')
+                  ) {
+                  } else {
+                    return `${i.item2} \n`;
+                  }
+                }
+              }),
+            },
+          ],
+        },
+        { text: '' },
+      ],
+      margin: [0, -26, 0, 10],
+    },
+    {
       text: 'Flat Stock',
       style: 'headerFont',
     },
