@@ -50,7 +50,9 @@ export default (data, pricing) => {
 
   const discountSubTotal = currency(subTotal).subtract(discountTotal).value;
 
-  const order_sub_total = currency(misc_total).add(discountSubTotal).value;
+  const order_sub_total = currency(misc_total)
+    .add(discountSubTotal)
+    .add(finishingTotal).value;
 
   const tax = data.Taxable
     ? currency(order_sub_total).multiply(data.companyprofile.TaxRate / 100)
