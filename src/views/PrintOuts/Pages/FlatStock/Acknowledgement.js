@@ -9,7 +9,7 @@ const MouldingPDF = (data, breakdowns, p, pricing) => {
     pdfMake.vfs = vfs;
 
     const totalUnits = data.flat_stock
-      .map((i) => {
+      ?.map((i) => {
         return parseInt(i.qty);
       })
       .reduce((a, b) => a + b, 0);
