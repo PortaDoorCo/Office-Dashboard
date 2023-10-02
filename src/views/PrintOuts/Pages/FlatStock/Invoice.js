@@ -8,7 +8,11 @@ const MouldingPDF = (data, breakdowns, p, pricing) => {
     const { vfs } = vfsFonts.pdfMake;
     pdfMake.vfs = vfs;
 
-    const totalUnits = data.mouldings.length;
+    const totalUnits = data.flat_stock
+      .map((i) => {
+        return parseInt(i.qty);
+      })
+      .reduce((a, b) => a + b, 0);
 
     const headerInfo = [
       {
