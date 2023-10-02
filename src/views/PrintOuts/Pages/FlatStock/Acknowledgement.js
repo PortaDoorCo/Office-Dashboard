@@ -8,15 +8,11 @@ const MouldingPDF = (data, breakdowns, p, pricing) => {
     const { vfs } = vfsFonts.pdfMake;
     pdfMake.vfs = vfs;
 
-    console.log({ data });
-
     const totalUnits = data.flat_stock
       .map((i) => {
         return parseInt(i.qty);
       })
       .reduce((a, b) => a + b, 0);
-
-    console.log({ totalUnits });
 
     const tracking = data.tracking.filter(
       (x) => x.status === 'Quote' || x.status === 'Order Edited'
