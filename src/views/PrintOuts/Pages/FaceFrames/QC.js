@@ -46,7 +46,7 @@ const FaceFramePDF = (data, breakdowns, p, pricing) => {
               },
               { text: `Order #: ${data.id + 100}`, alignment: 'right' },
               {
-                text: `Due Date: ${
+                text: `Est. Completion: ${
                   data.Shipping_Scheduled
                     ? `${moment(data.job_info.DueDate).format('MM/DD/YYYY')}`
                     : 'TBD'

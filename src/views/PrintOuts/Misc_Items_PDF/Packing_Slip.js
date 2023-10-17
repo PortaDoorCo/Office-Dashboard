@@ -46,21 +46,21 @@ export default (data, breakdowns) => {
   return [
     data.job_info?.Shop_Notes
       ? {
-        columns: [
-          { text: '' },
-          {
-            text: `${
+          columns: [
+            { text: '' },
+            {
+              text: `${
                 data.job_info?.Shop_Notes
                   ? data.job_info?.Shop_Notes?.toUpperCase()
                   : ''
-            }`,
-            alignment: 'center',
-            style: 'fontsBold',
-          },
-          { text: '' },
-        ],
-        margin: [0, -26, 0, 10],
-      }
+              }`,
+              alignment: 'center',
+              style: 'fontsBold',
+            },
+            { text: '' },
+          ],
+          margin: [0, -26, 0, 10],
+        }
       : null,
     {
       table: {
@@ -135,8 +135,8 @@ export default (data, breakdowns) => {
             production_date.length < 1
               ? ''
               : `Production Date: ${moment(production_date[0]?.date).format(
-                'MM/DD/YYYY'
-              )}`
+                  'MM/DD/YYYY'
+                )}`
           }`,
           style: 'totals',
           width: 200,
@@ -158,11 +158,9 @@ export default (data, breakdowns) => {
           width: 160,
         },
         {
-          text: `Due Date: ${
+          text: `Est. Completion: ${
             data.Shipping_Scheduled
-              ? `${moment(data.job_info.DueDate).format(
-                'MM/DD/YYYY'
-              )}`
+              ? `${moment(data.job_info.DueDate).format('MM/DD/YYYY')}`
               : 'TBD'
           }`,
           style: 'totals',
@@ -179,7 +177,7 @@ export default (data, breakdowns) => {
           width: 200,
         },
         {
-          text: 'Total # Inv\'s: ______________',
+          text: "Total # Inv's: ______________",
           style: 'totals',
           width: 347,
         },
