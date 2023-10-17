@@ -18,7 +18,7 @@ const MouldingPDF = (data, breakdowns, p, pricing) => {
             stack: [
               { text: 'QC Check Off Sheet', bold: true },
               {
-                text: `Due Date: ${
+                text: `Est. Completion: ${
                   data.Shipping_Scheduled
                     ? `${moment(data.job_info.DueDate).format('MM/DD/YYYY')}`
                     : 'TBD'
