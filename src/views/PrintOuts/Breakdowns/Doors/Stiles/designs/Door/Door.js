@@ -57,7 +57,7 @@ export default (info, part, breakdowns) => {
   const item = parseInt(info.item);
 
   let inset = 0;
-  if (info.profile) {
+  if (info?.profile && !info.profile?.id === 85) {
     inset = info.profile?.INSET;
   } else {
     inset = info.design?.INSET;
