@@ -57,13 +57,13 @@ export default (info, part, breakdowns) => {
   const item = parseInt(info.item);
 
   let inset = 0;
-  if (info?.profile && !info.profile?.id === 85) {
+  if (info?.profile && info.profile?.id !== 85) {
     inset = info.profile?.INSET;
   } else {
     inset = info.design?.INSET;
   }
 
-  console.log({ inset });
+  console.log({ inset, profile: info?.profile?.id });
 
   const midStileHeight =
     (height -
