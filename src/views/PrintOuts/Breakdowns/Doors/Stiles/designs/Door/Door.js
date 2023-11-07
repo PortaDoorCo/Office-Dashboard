@@ -63,6 +63,8 @@ export default (info, part, breakdowns) => {
     inset = info.design?.INSET;
   }
 
+  console.log({ inset });
+
   const midStileHeight =
     (height -
       topRail -
