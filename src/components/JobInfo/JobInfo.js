@@ -223,7 +223,11 @@ class JobInfo extends Component {
 
         this.props.dispatch(change('Order', 'Taxable', customer.Taxable));
 
-        if (orderType === 'Misc Items' || orderType === 'Mouldings') {
+        if (
+          orderType === 'Misc Items' ||
+          orderType === 'Mouldings' ||
+          orderType === 'Flat Stock'
+        ) {
           this.props.dispatch(change('Order', 'discount', 0));
         } else {
           this.props.dispatch(change('Order', 'discount', customer.Discount));
