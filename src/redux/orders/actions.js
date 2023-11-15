@@ -277,7 +277,7 @@ export function loadAllOrders(cookie, user) {
   }
 }
 
-export function searchOrders(cookie, user, search) {
+export function searchOrders(cookie, user, search, type) {
   if (user?.role?.type === 'customer') {
     return async function (dispatch) {
       await dispatch({
@@ -356,11 +356,24 @@ export function searchOrders(cookie, user, search) {
         search: true,
       });
 
-      const res = await fetch(`${db_url}/orders${search}`, {
-        headers: {
-          Authorization: `Bearer ${cookie}`,
-        },
-      });
+      let res;
+
+      console.log({ type });
+
+      if (type === 'item') {
+        res = await fetch(`${db_url}/searchItems${search}`, {
+          headers: {
+            Authorization: `Bearer ${cookie}`,
+          },
+        });
+      } else {
+        res = await fetch(`${db_url}/orders${search}`, {
+          headers: {
+            Authorization: `Bearer ${cookie}`,
+          },
+        });
+      }
+
       const data = await res.json();
       return await dispatch({
         type: LOAD_ORDERS,
