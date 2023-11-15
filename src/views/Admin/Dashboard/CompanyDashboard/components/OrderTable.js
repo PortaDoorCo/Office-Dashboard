@@ -129,19 +129,27 @@ const OrderTable = (props) => {
   const [printModal, setPrintModal] = useState(false);
   const [loadingModal, setLoadingModal] = useState(false);
 
+  console.log({ orders });
+
   useEffect(() => {
     if (debounceValue) {
       let search = `?id=${parseInt(debounceValue) - 100}`;
+      let type = null;
 
       if (selectedSearch === 'PO') {
         search = `?poNum_contains=${debounceValue}&_sort=id:DESC`;
       } else if (selectedSearch === 'Customer') {
         search = `?companyprofile.Company_contains=${debounceValue}&_sort=id:DESC&_limit=500`;
+      } else if (selectedSearch === 'Item') {
+        // Construct a search query for items in part_list
+        // This might be a single query string or multiple parameters
+        type = 'item';
+        search = `?searchTerm=${debounceValue}`;
       } else {
         search = `?id=${parseInt(debounceValue) - 100}`;
       }
 
-      props.searchOrders(cookie, user, search);
+      props.searchOrders(cookie, user, search, type);
     } else {
       if (debounceValue === '') {
         props.loadOrders(cookie, user);
@@ -488,6 +496,7 @@ const OrderTable = (props) => {
                   <option value={'ID'}>Search ID</option>
                   <option value={'PO'}>Search PO Num</option>
                   <option value={'Customer'}>Search Customer</option>
+                  <option value={'Item'}>Search Item</option>
                 </Input>
                 <Input
                   style={{ width: '300px' }}
