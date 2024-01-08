@@ -399,7 +399,7 @@ const StatusTable = (props) => {
     setEdit(!edit);
   };
 
-  const exportReports = () => {
+  const exportReports = (role) => {
     let newOrder = [...data];
 
     if (props.filterStatus === 'Ordered') {
@@ -420,14 +420,36 @@ const StatusTable = (props) => {
       newOrder = newData;
     }
 
-    SalesmenReport(
-      newOrder,
-      props.startDate,
-      props.endDate,
-      props.accountName,
-      props.role,
-      props.filterStatus
-    );
+    console.log({ props: props.role, role });
+
+    if (role === 'owner') {
+      SalesmenReport(
+        newOrder,
+        props.startDate,
+        props.endDate,
+        props.accountName,
+        props.role,
+        props.filterStatus
+      );
+    } else {
+      SalesmenReport(
+        newOrder,
+        props.startDate,
+        props.endDate,
+        props.accountName,
+        { type: 'authenticated' },
+        props.filterStatus
+      );
+    }
+
+    // SalesmenReport(
+    //   newOrder,
+    //   props.startDate,
+    //   props.endDate,
+    //   props.accountName,
+    //   props.role,
+    //   props.filterStatus
+    // );
     setToggleCleared(!toggleCleared);
   };
 
@@ -512,10 +534,23 @@ const StatusTable = (props) => {
         </Row>
         <Row>
           {/* <Col lg='11' /> */}
+
           <Col>
+            {props.role?.type === 'owner' && (
+              <Tooltip
+                title="Owner Reports"
+                onClick={() => exportReports('owner')}
+                placement="top"
+                className="mb-3 mt-3"
+              >
+                <IconButton>
+                  <Receipt style={{ width: '40', height: '40' }} />
+                </IconButton>
+              </Tooltip>
+            )}
             <Tooltip
               title="View Reports"
-              onClick={exportReports}
+              onClick={() => exportReports()}
               placement="top"
               className="mb-3 mt-3"
             >
