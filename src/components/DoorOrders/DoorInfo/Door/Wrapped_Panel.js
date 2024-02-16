@@ -127,7 +127,7 @@ class Door extends Component {
     let thickness_val =
       formState?.part_list[index]?.thickness?.thickness_values;
     const flat_panels = panels?.filter(
-      (panel) => panel.panel_wrap && panel.Thickness < thickness_val
+      (panel) => panel.panel_wrap && panel.Thickness <= thickness_val
     );
 
     return (
