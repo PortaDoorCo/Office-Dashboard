@@ -252,11 +252,16 @@ const pricing = (parts, pricer, itemPrice, order) => {
 
         if (part?.construction?.value === 'Wrapped') {
           d = 18.25;
+          price =
+            (width * height) / 144 > 2
+              ? ((width * height) / 144) * wood + (d + edge + panel) + extraCost
+              : 2 * wood + (d + edge + panel) + extraCost;
+        } else {
+          price =
+            (width * height) / 144 > 2
+              ? ((width * height) / 144) * wood + (d + edge) + extraCost
+              : 2 * wood + (d + edge) + extraCost;
         }
-        price =
-          (width * height) / 144 > 2
-            ? ((width * height) / 144) * wood + (d + edge) + extraCost
-            : 2 * wood + (d + edge) + extraCost;
       } else if (
         part?.orderType?.value === 'DF' &&
         (part?.construction?.value === 'Slab' ||
@@ -266,12 +271,16 @@ const pricing = (parts, pricer, itemPrice, order) => {
 
         if (part?.construction?.value === 'Wrapped') {
           d = 18.25;
+          price =
+            (width * height) / 144 > 1
+              ? ((width * height) / 144) * wood + (d + edge + panel) + extraCost
+              : 1 * wood + (d + edge + panel) + extraCost;
+        } else {
+          price =
+            (width * height) / 144 > 1
+              ? ((width * height) / 144) * wood + (d + edge) + extraCost
+              : 1 * wood + (d + edge) + extraCost;
         }
-
-        price =
-          (width * height) / 144 > 1
-            ? ((width * height) / 144) * wood + (d + edge) + extraCost
-            : 1 * wood + (d + edge) + extraCost;
       } else if (part.orderType.value === 'DF') {
         price =
           eval(pricer.df_pricing) +
