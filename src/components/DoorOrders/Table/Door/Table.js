@@ -335,7 +335,12 @@ const DoorTable = ({
       newWidth = [...newWidth, v];
     }
 
-    if (numQty(v) >= 24) {
+    if (
+      numQty(v) >= 24 &&
+      part?.orderType?.value !== 'DF' &&
+      part?.orderType?.value !== 'One_Piece_DF' &&
+      part?.orderType?.value !== 'Two_Piece_DF'
+    ) {
       setWarningType({
         value: v,
         index: index,
@@ -365,7 +370,19 @@ const DoorTable = ({
       newHeight = [...newHeight, v];
     }
 
-    if (numQty(v) >= 48) {
+    console.log({
+      orderType:
+        part?.orderType?.value !== 'DF' &&
+        part?.orderType?.value !== 'One_Piece_DF' &&
+        part?.orderType?.value !== 'Two_Piece_DF',
+    });
+
+    if (
+      numQty(v) >= 48 &&
+      part?.orderType?.value !== 'DF' &&
+      part?.orderType?.value !== 'One_Piece_DF' &&
+      part?.orderType?.value !== 'Two_Piece_DF'
+    ) {
       setWarningType({
         value: v,
         index: index,
