@@ -101,13 +101,9 @@ class DoorInfo extends Component {
           )}" Right Stile: ${fraction(
             lastItem.profile.PROFILE_WIDTH
           )}" \nTop Rail: ${fraction(
-            lastItem.profile.DF_Reduction
-              ? lastItem.profile.DF_Reduction
-              : '1 7/16'
+            lastItem.profile ? lastItem.profile.DF_Reduction : '1 7/16'
           )}" Bottom Rail: ${fraction(
-            lastItem.profile.DF_Reduction
-              ? lastItem.profile.DF_Reduction
-              : '1 7/16'
+            lastItem.profile ? lastItem.profile.DF_Reduction : '1 7/16'
           )}"`,
           applied_profile: lastItem.applied_profile,
           dimensions: [],
