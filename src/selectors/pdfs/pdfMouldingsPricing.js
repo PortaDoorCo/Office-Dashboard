@@ -87,7 +87,9 @@ const pricing = (parts, pricer) => {
         } else {
           premium = 1 + 1;
         }
-        price = a * newWood * parseFloat(linearFT) * premium;
+
+        const adjust_price = extraCost ? Math.round(extraCost * 100) / 100 : 0;
+        price = a * newWood * parseFloat(linearFT) * premium + adjust_price;
       }
     }
 
