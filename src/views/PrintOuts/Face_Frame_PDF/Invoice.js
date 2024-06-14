@@ -46,7 +46,9 @@ export default (data, pricing) => {
 
   const misc_total = misc_prices.reduce((acc, item) => acc + item, 0);
 
-  const discountTotal = currency(subTotal).multiply(data.discount / 100).value;
+  const discountTotal = currency(subTotal_Total).multiply(
+    data.discount / 100
+  ).value;
 
   const discountSubTotal = currency(subTotal).subtract(discountTotal).value;
 
