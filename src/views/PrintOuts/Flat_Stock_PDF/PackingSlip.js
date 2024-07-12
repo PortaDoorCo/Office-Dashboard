@@ -4,7 +4,7 @@ export default (data, breakdowns) => {
   let qty = 0;
 
   const count = data.flat_stock.map((part, i) => {
-    qty += i + 1;
+    qty += parseInt(part.qty);
   });
 
   const production_date = data.tracking.filter((x) =>
