@@ -70,9 +70,7 @@ export default (data, pricing) => {
         { text: i.qty, style: 'fonts' },
         { text: i.item2, style: 'fonts' },
         {
-          text: i.pricePer
-            ? `$${i.pricePer?.toFixed(2)}`
-            : `$${i.price?.toFixed(2)}`,
+          text: i.pricePer ? `$${i.pricePer}` : `$${i.price?.toFixed(2)}`,
           style: 'fonts',
         },
         {
