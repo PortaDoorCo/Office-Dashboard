@@ -89,66 +89,28 @@ export default (data, breakdowns) => {
       margin: [-21, -7, -5, 8],
       table: {
         alignment: 'center',
-        widths: [175, 182, 180],
-        heights: newChunk.map((i, index) => {
-          if (index === 10) {
-            return 10;
-          } else {
-            if (index < 5) {
-              return 67 - index;
-            }
-            if (index === 4) {
-              return 70;
-            }
-            if (index === 5) {
-              return 69;
-            }
-            if (index === 9) {
-              return 76;
-            }
-
-            if (index === 10) {
-              return 70;
-            }
-
-            if (index === 8) {
-              return 65;
-            }
-
-            if (index > 10) {
-              return 67 - (index - 10);
-            }
-            return 75;
-          }
-        }),
+        widths: [182, 182, 182], // Adjust to fit the width of each label
+        heights: Array(newChunk.length).fill(72), // Fixed height for Avery 5160 labels
         body: newChunk,
       },
       layout: {
         hLineWidth: function (i, node) {
-          return i === 1 ? 0 : 0;
+          return 0;
         },
         vLineWidth: function (i, node) {
           return 0;
         },
-        hLineStyle: function (i, node) {
-          if (i === 0 || i === node.table.body.length) {
-            return null;
-          }
-          return { dash: { length: 1, space: 1 } };
-        },
         paddingLeft: function (i) {
-          return i === 0 ? 0 : 8;
+          return 10; // Adjust padding as needed
         },
-        paddingRight: function (i, node) {
-          return i === node.table.widths.length - 1 ? 0 : 8;
+        paddingRight: function (i) {
+          return 10; // Adjust padding as needed
         },
-        // paddingLeft: function(i, node) { return 10; },
-        // paddingRight: function(i, node) { return 5; },
-        paddingTop: function (i, node) {
-          return 7;
+        paddingTop: function () {
+          return 20; // Adjust to center vertically
         },
-        paddingBottom: function (i, node) {
-          return -0.5;
+        paddingBottom: function () {
+          return 20; // Adjust to center vertically
         },
       },
     },

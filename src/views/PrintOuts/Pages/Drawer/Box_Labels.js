@@ -30,7 +30,7 @@ const DrawerPDF = async (data, breakdowns, p, pricing) => {
       pageSize: 'LETTER',
       pageOrientation: 'portrait',
       content: ContentSorted,
-      pageMargins: [40, 40, 40, 60],
+      pageMargins: [20, 40, 20, 60], // Set margins to match Avery 5160 labels
       footer: function (currentPage, pageCount) {
         return {
           columns: [
