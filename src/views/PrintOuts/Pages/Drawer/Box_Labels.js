@@ -27,7 +27,7 @@ const DrawerPDF = async (data, breakdowns, p, pricing) => {
     const fileName = `Order #${data.id + 100}`;
 
     const documentDefinition = {
-      pageSize: 'A4',
+      pageSize: 'LETTER',
       pageOrientation: 'portrait',
       content: ContentSorted,
       pageMargins: [40, 40, 40, 60],
