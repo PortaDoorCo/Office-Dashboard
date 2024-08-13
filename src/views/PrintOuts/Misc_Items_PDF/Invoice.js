@@ -70,12 +70,14 @@ export default (data, pricing) => {
         { text: i.qty, style: 'fonts' },
         { text: i.item2, style: 'fonts' },
         {
-          text: i.pricePer ? `$${i.pricePer}` : `$${i.price?.toFixed(2)}`,
+          text: i.pricePer
+            ? `$${parseFloat(i.pricePer).toFixed(2)}`
+            : `$${i.price?.toFixed(2)}`,
           style: 'fonts',
         },
         {
           text: `$${(
-            parseFloat(i.pricePer ? i.pricePer : i.price) * parseFloat(i.qty)
+            (parseFloat(i.pricePer) || parseFloat(i.price)) * parseFloat(i.qty)
           ).toFixed(2)}`,
           style: 'fonts',
         },
