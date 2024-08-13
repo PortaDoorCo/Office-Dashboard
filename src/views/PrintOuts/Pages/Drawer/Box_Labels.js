@@ -30,40 +30,8 @@ const DrawerPDF = async (data, breakdowns, p, pricing) => {
       pageSize: 'LETTER',
       pageOrientation: 'portrait',
       content: ContentSorted,
-      pageMargins: [20, 40, 20, 60], // Set margins to match Avery 5160 labels
-      footer: function (currentPage, pageCount) {
-        return {
-          columns: [
-            {
-              stack: [
-                {
-                  text: moment().format('MM-D-YYYY'),
-                  style: 'warrantyFont',
-                },
-                {
-                  text: currentPage.toString() + ' of ' + pageCount,
-                  style: 'warrantyFont',
-                },
-              ],
-              width: 250,
-            },
-            {
-              stack: [
-                {
-                  text: ' ',
-                  style: 'warrantyFont',
-                },
-                {
-                  text: `UNITS: ${totalUnits}    ${fileName}`,
-                  style: 'warrantyFont',
-                  alignment: 'right',
-                },
-              ],
-            },
-          ],
-          margin: [40, 10, 40, 0],
-        };
-      },
+      pageMargins: [20, 42, 20, 40], // Slightly smaller margins
+
       pageBreakBefore: function (
         currentNode,
         followingNodesOnPage,
@@ -84,10 +52,10 @@ const DrawerPDF = async (data, breakdowns, p, pricing) => {
           bold: true,
         },
         fonts: {
-          fontSize: 9,
+          fontSize: 10,
         },
         fontsBold: {
-          fontSize: 8,
+          fontSize: 10,
           bold: true,
         },
         headerFont: {

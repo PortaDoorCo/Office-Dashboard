@@ -86,10 +86,10 @@ export default (data, breakdowns) => {
 
   return [
     {
-      margin: [-21, -7, -5, 8],
+      margin: [0, 0, 0, 0],
       table: {
         alignment: 'center',
-        widths: [182, 182, 182], // Adjust to fit the width of each label
+        widths: [170, 170, 170], // Adjust to fit the width of each label
         heights: Array(newChunk.length).fill(72), // Fixed height for Avery 5160 labels
         body: newChunk,
       },
@@ -107,10 +107,10 @@ export default (data, breakdowns) => {
           return 10; // Adjust padding as needed
         },
         paddingTop: function () {
-          return 20; // Adjust to center vertically
+          return 0; // Adjusted to move content up
         },
         paddingBottom: function () {
-          return 20; // Adjust to center vertically
+          return 0; // Adjust to center vertically
         },
       },
     },
