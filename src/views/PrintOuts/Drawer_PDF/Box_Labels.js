@@ -101,16 +101,16 @@ export default (data, breakdowns) => {
           return 0;
         },
         paddingLeft: function (i) {
-          return 10; // Adjust padding as needed
+          return 12; // Adjust padding as needed
         },
         paddingRight: function (i) {
-          return 10; // Adjust padding as needed
+          return 12; // Adjust padding as needed
         },
         paddingTop: function () {
-          return 0; // Adjusted to move content up
+          return 1; // Adjusted to move content up
         },
         paddingBottom: function () {
-          return 0; // Adjust to center vertically
+          return 1; // Adjust to center vertically
         },
       },
     },

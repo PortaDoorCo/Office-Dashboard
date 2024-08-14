@@ -30,7 +30,7 @@ const DrawerPDF = async (data, breakdowns, p, pricing) => {
       pageSize: 'LETTER',
       pageOrientation: 'portrait',
       content: ContentSorted,
-      pageMargins: [20, 42, 20, 40], // Slightly smaller margins
+      pageMargins: [20, 47, 20, 40], // Slightly smaller margins
 
       pageBreakBefore: function (
         currentNode,
