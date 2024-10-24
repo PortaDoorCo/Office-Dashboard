@@ -27,10 +27,10 @@ const DrawerPDF = async (data, breakdowns, p, pricing) => {
     const fileName = `Order #${data.id + 100}`;
 
     const documentDefinition = {
-      pageSize: 'LETTER',
+      pageSize: 'A4',
       pageOrientation: 'portrait',
       content: ContentSorted,
-      pageMargins: [20, 47, 20, 10], // Slightly smaller margins
+      pageMargins: [20, 47, -5, 10], // Slightly smaller margins
 
       pageBreakBefore: function (
         currentNode,
@@ -38,9 +38,17 @@ const DrawerPDF = async (data, breakdowns, p, pricing) => {
         nodesOnNextPage,
         previousNodesOnPage
       ) {
-        return (
-          currentNode.headlineLevel === 1 && followingNodesOnPage.length === 0
-        );
+        // If the current node is a table row with an ID
+        if (currentNode.id && currentNode.id.startsWith('row-')) {
+          // Prevent page break if it's not the first row on the page
+          if (previousNodesOnPage.some((node) => node.id === currentNode.id)) {
+            return false;
+          }
+          // Allow page break if it's the first row on the page
+          return true;
+        }
+        // Default behavior
+        return false;
       },
       styles: {
         woodtype: {

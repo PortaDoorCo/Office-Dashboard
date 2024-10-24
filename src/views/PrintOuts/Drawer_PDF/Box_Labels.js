@@ -45,7 +45,7 @@ export default (data, breakdowns) => {
                   style: 'fonts',
                 },
                 {
-                  text: `Cab#: ${i.cab_number ? i.cab_number : ''}`,
+                  text: `Cab#: ${i.cab_number ? i.cab_number : ' '}`,
                   alignment: 'center',
                   style: 'fonts',
                 },
@@ -61,11 +61,12 @@ export default (data, breakdowns) => {
   );
 
   function splitArrayIntoChunksOfLen(arr, len) {
-    var chunks = [],
-      i = 0,
-      n = arr.length;
+    const chunks = [];
+    let i = 0;
+    const n = arr.length;
     while (i < n) {
-      chunks.push(arr.slice(i, (i += len)));
+      chunks.push(arr.slice(i, i + len));
+      i += len;
     }
     return chunks;
   }
@@ -77,12 +78,23 @@ export default (data, breakdowns) => {
   if (lastArr !== 3) {
     for (let i = 0; i < 3 - lastArr; i++) {
       newChunk[newChunk.length - 1].push({
-        text: '',
+        text: ' ',
         alignment: 'center',
         margin: [0, 0, 0, 0],
       });
     }
   }
+
+  // Assign IDs to each row in newChunk
+  let newNewChunk = newChunk.map((row, rowIndex) => {
+    return row.map((cell) => {
+      // Assign a unique ID to each cell
+      if (cell.stack) {
+        cell.id = `row-${rowIndex}`;
+      }
+      return cell;
+    });
+  });
 
   return [
     {
@@ -90,8 +102,11 @@ export default (data, breakdowns) => {
       table: {
         alignment: 'center',
         widths: [170, 170, 170], // Adjust to fit the width of each label
-        heights: Array(newChunk.length).fill(72), // Fixed height for Avery 5160 labels
-        body: newChunk,
+        heights: function (rowIndex) {
+          return 72; // Adjusted height for each label row
+        },
+        body: newNewChunk,
+        dontBreakRows: true,
       },
       layout: {
         hLineWidth: function (i, node) {
