@@ -413,7 +413,10 @@ export const itemPriceSelector = createSelector(
                       formState?.initial.part_list[index]?.face_frame_design ||
                     formState?.values?.part_list[index]
                       ?.face_frame_finishing !==
-                      formState?.initial.part_list[index]?.face_frame_finishing
+                      formState?.initial.part_list[index]
+                        ?.face_frame_finishing ||
+                    formState?.values?.part_list[index]?.thickness !== // Add thickness check
+                      formState?.initial.part_list[index]?.thickness
                   ) {
                     return Math.floor(price * 100) / 100;
                   } else {
@@ -532,15 +535,19 @@ export const itemPriceSelector = createSelector(
                 switch (part) {
                   case 'leftStile':
                     leftStileCalc(design, price);
+                    console.log({ leftStileAdd });
                     break;
                   case 'rightStile':
                     rightStileCalc(design, price);
+                    console.log({ rightStileAdd });
                     break;
                   case 'topRail':
                     topRailCalc(design, price);
+                    console.log({ topRailAdd });
                     break;
                   case 'bottomRail':
                     bottomRailCalc(design, price);
+                    console.log({ bottomRailAdd });
                     break;
                   default:
                     return 0;
@@ -1213,7 +1220,9 @@ export const mouldingPriceSelector = createSelector(
             premium = 1 + 1;
           }
 
-          const adjust_price = extraCost ? Math.round(extraCost * 100) / 100 : 0;
+          const adjust_price = extraCost
+            ? Math.round(extraCost * 100) / 100
+            : 0;
 
           price = a * newWood * parseFloat(linearFT) * premium + adjust_price;
         }
