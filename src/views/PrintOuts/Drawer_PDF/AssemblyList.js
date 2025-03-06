@@ -185,6 +185,9 @@ export default (data, breakdowns) => {
                                   ) ||
                                   i?.item?.NAME?.toLowerCase()?.includes(
                                     'credit'
+                                  ) ||
+                                  i?.item?.NAME?.toLowerCase()?.includes(
+                                    'service charge'
                                   )
                                 ) {
                                   return null;
@@ -201,7 +204,10 @@ export default (data, breakdowns) => {
                                     ?.toLowerCase()
                                     ?.includes('discount') ||
                                   i?.item2?.toLowerCase()?.includes('rush') ||
-                                  i?.item2?.toLowerCase()?.includes('credit')
+                                  i?.item2?.toLowerCase()?.includes('credit') ||
+                                  i?.item2
+                                    ?.toLowerCase()
+                                    ?.includes('service charge')
                                 ) {
                                 } else {
                                   return `${i.item2} \n`;
