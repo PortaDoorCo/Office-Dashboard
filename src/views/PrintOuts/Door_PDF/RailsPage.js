@@ -176,7 +176,12 @@ export default (data, breakdowns) => {
                                 'discount'
                               ) ||
                               i?.item?.NAME?.toLowerCase()?.includes('rush') ||
-                              i?.item?.NAME?.toLowerCase()?.includes('credit')
+                              i?.item?.NAME?.toLowerCase()?.includes(
+                                'credit'
+                              ) ||
+                              i?.item?.NAME?.toLowerCase()?.includes(
+                                'service charge'
+                              )
                             ) {
                               return null;
                             } else {
@@ -188,7 +193,10 @@ export default (data, breakdowns) => {
                               i?.item2?.toLowerCase()?.includes('price') ||
                               i?.item2?.toLowerCase()?.includes('discount') ||
                               i?.item2?.toLowerCase()?.includes('rush') ||
-                              i?.item2?.toLowerCase()?.includes('credit')
+                              i?.item2?.toLowerCase()?.includes('credit') ||
+                              i?.item2
+                                ?.toLowerCase()
+                                ?.includes('service charge')
                             ) {
                             } else {
                               return `${i.item2} \n`;
