@@ -3,14 +3,14 @@ import vfsFonts from 'pdfmake-lite/build/vfs_fonts';
 import LateList from './Components/Tracking';
 import OpenOrders from './Components/OpenOrders';
 
-export default (data, startDate, endDate, status) => {
+export default (data, startDate, endDate, status, showPrice = false) => {
   const { vfs } = vfsFonts.pdfMake;
   pdfMake.vfs = vfs;
 
   const documentDefinition = {
     pageSize: 'LETTER',
     pageOrientation: 'landscape',
-    content: [OpenOrders(data, startDate, endDate, status)],
+    content: [OpenOrders(data, startDate, endDate, status, showPrice)],
     styles: {
       woodtype: {
         fontSize: 18,

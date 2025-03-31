@@ -1054,14 +1054,15 @@ const OrderTable = (props) => {
       (a, b) => new Date(a.dueDate) - new Date(b.dueDate)
     );
 
+    // Only show price for admin/owner roles and when showPrice is true
+    const shouldShowPrice =
+      role &&
+      (role.type === 'owner' || role.type === 'administrator') &&
+      showPrice;
+
     if (filterStatus === 'Open Orders') {
-      OpenOrders(sortedData, startDate, endDate, filterStatus);
+      OpenOrders(sortedData, startDate, endDate, filterStatus, shouldShowPrice);
     } else {
-      // Only show price for admin/owner roles and when showPrice is true
-      const shouldShowPrice =
-        role &&
-        (role.type === 'owner' || role.type === 'administrator') &&
-        showPrice;
       Tracking(sortedData, startDate, endDate, filterStatus, shouldShowPrice);
     }
 
