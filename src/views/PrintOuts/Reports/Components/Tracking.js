@@ -1,21 +1,28 @@
 import moment from 'moment';
 
-export default (data, startDate, endDate, status) => {
-  const tableBody = [
-    [
-      { text: 'Due Date' },
-      { text: 'Customer' },
-      { text: 'Job ID' },
-      { text: 'Status' },
-      { text: 'Description' },
-      { text: 'Doors' },
-      { text: 'DFs' },
-      { text: 'Boxes' },
-      { text: 'Face Frames' },
-      { text: 'Total' },
-      { text: 'Notes' },
-    ],
+export default (data, startDate, endDate, status, showPrice = false) => {
+  // Ensure showPrice is a boolean
+  const shouldShowPrice = Boolean(showPrice);
+
+  const baseColumns = [
+    { text: 'Due Date' },
+    { text: 'Customer' },
+    { text: 'Job ID' },
+    { text: 'Status' },
+    { text: 'Description' },
+    { text: 'Doors' },
+    { text: 'DFs' },
+    { text: 'Boxes' },
+    { text: 'Face Frames' },
   ];
+
+  if (shouldShowPrice) {
+    baseColumns.push({ text: 'Total' });
+  }
+
+  baseColumns.push({ text: 'Notes' });
+
+  const tableBody = [baseColumns];
   let total = 0;
   let doorTotal = 0;
   let dfTotal = 0;
@@ -69,7 +76,7 @@ export default (data, startDate, endDate, status) => {
       });
     }
 
-    return tableBody.push([
+    const rowData = [
       moment(i.dueDate).format('MM/DD/YYYY'),
       i.job_info.customer.Company,
       i.id + 100,
@@ -79,23 +86,36 @@ export default (data, startDate, endDate, status) => {
       dfs,
       boxes,
       face_frames,
-      `$${i.total.toFixed(2)}`,
-      '',
-    ]);
+    ];
+
+    if (shouldShowPrice) {
+      rowData.push(`$${i.total.toFixed(2)}`);
+    }
+
+    rowData.push('');
+
+    return tableBody.push(rowData);
   });
 
-  let totalBody = [
-    ['', 'Doors', 'DFs', 'Boxes', 'Face Frames', 'Total', ''],
-    [
-      '',
-      doorTotal,
-      dfTotal,
-      boxTotal,
-      faceFrameTotal,
-      `$${total.toFixed(2)}`,
-      '',
-    ],
-  ];
+  const totalColumns = ['', 'Doors', 'DFs', 'Boxes', 'Face Frames'];
+  if (shouldShowPrice) {
+    totalColumns.push('Total');
+  }
+  totalColumns.push('');
+
+  const totalValues = ['', doorTotal, dfTotal, boxTotal, faceFrameTotal];
+  if (shouldShowPrice) {
+    totalValues.push(`$${total.toFixed(2)}`);
+  }
+  totalValues.push('');
+
+  let totalBody = [totalColumns, totalValues];
+
+  const columnWidths = [55, '*', 40, '*', '*', 30, 30, 30, 35];
+  if (shouldShowPrice) {
+    columnWidths.push(60);
+  }
+  columnWidths.push('*');
 
   return [
     {
@@ -120,7 +140,7 @@ export default (data, startDate, endDate, status) => {
       table: {
         headerRows: 1,
         body: tableBody,
-        widths: [55, '*', 40, '*', '*', 30, 30, 30, 35, 60, '*'],
+        widths: columnWidths,
       },
       layout: 'lightHorizontalLines',
     },
@@ -129,7 +149,9 @@ export default (data, startDate, endDate, status) => {
       table: {
         headerRows: 1,
         body: totalBody,
-        widths: [383, 30, 30, 30, 36, '*', '*'],
+        widths: shouldShowPrice
+          ? [383, 30, 30, 30, 36, '*', '*']
+          : [323, 30, 30, 30, 36, '*'],
       },
       layout: 'headerLineOnly',
     },

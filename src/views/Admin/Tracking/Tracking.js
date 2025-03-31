@@ -126,6 +126,9 @@ const OrderTable = (props) => {
   const [customer, setCustomer] = useState({ Company: 'All' });
   const [filterText, setFilterText] = useState('');
   const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
+  const [showPrice, setShowPrice] = useState(
+    role && (role.type === 'owner' || role.type === 'administrator')
+  );
   const [customerDebounce] = useDebounce(customer, 500);
   const [statusDebounce] = useDebounce(filterStatus, 500);
   const [orderTypeDebounce] = useDebounce(orderType, 500);
@@ -1054,7 +1057,12 @@ const OrderTable = (props) => {
     if (filterStatus === 'Open Orders') {
       OpenOrders(sortedData, startDate, endDate, filterStatus);
     } else {
-      Tracking(sortedData, startDate, endDate, filterStatus);
+      // Only show price for admin/owner roles and when showPrice is true
+      const shouldShowPrice =
+        role &&
+        (role.type === 'owner' || role.type === 'administrator') &&
+        showPrice;
+      Tracking(sortedData, startDate, endDate, filterStatus, shouldShowPrice);
     }
 
     setToggleCleared(!toggleCleared);
@@ -1205,7 +1213,6 @@ const OrderTable = (props) => {
       </Row>
 
       <Row>
-        {/* <Col lg='11' /> */}
         <Col>
           <Tooltip
             title="View Reports"
@@ -1217,6 +1224,21 @@ const OrderTable = (props) => {
               <Receipt style={{ width: '40', height: '40' }} />
             </IconButton>
           </Tooltip>
+          {role && (role.type === 'owner' || role.type === 'administrator') && (
+            <Tooltip
+              title={showPrice ? 'Hide Price Column' : 'Show Price Column'}
+              placement="top"
+              className="ml-2"
+            >
+              <Button
+                color={showPrice ? 'primary' : 'secondary'}
+                onClick={() => setShowPrice(!showPrice)}
+                style={{ marginLeft: '10px' }}
+              >
+                {showPrice ? 'Hide Prices' : 'Show Prices'}
+              </Button>
+            </Tooltip>
+          )}
         </Col>
       </Row>
 
