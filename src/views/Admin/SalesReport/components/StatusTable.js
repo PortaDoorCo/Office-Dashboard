@@ -344,21 +344,21 @@ const StatusTable = (props) => {
         sortable: true,
         cell: (row) => <div>${row.total?.toFixed(2)}</div>,
       },
-      {
-        name: 'Commission (%)',
-        cell: (row) => <div>{row.companyprofile?.SC * 100}%</div>,
-      },
-      {
-        name: 'Commission ($)',
-        cell: (row) => (
-          <div>
-            $
-            {currency(
-              (row.total - row.tax) * row.companyprofile?.SC
-            ).value.toFixed(2)}
-          </div>
-        ),
-      },
+      // {
+      //   name: 'Commission (%)',
+      //   cell: (row) => <div>{row.companyprofile?.SC * 100}%</div>,
+      // },
+      // {
+      //   name: 'Commission ($)',
+      //   cell: (row) => (
+      //     <div>
+      //       $
+      //       {currency(
+      //         (row.total - row.tax) * row.companyprofile?.SC
+      //       ).value.toFixed(2)}
+      //     </div>
+      //   ),
+      // },
       {
         name: ' ',
         button: true,
@@ -483,7 +483,7 @@ const StatusTable = (props) => {
                   </h3>
                 ) : null}
 
-                {role && role.type === 'owner' ? (
+                {/* {role && role.type === 'owner' ? (
                   <h3>
                     Commission: $
                     {data
@@ -500,7 +500,7 @@ const StatusTable = (props) => {
                       )
                       .toFixed(2)}
                   </h3>
-                ) : null}
+                ) : null} */}
               </Col>
             </Row>
             <Row className="mt-3">

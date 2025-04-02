@@ -10,8 +10,8 @@ export default (data, startDate, endDate, account, role, status) => {
       { text: 'Status' },
       { text: 'Description' },
       { text: 'Total' },
-      role?.type === 'owner' ? { text: 'Commission (%)' } : null,
-      role?.type === 'owner' ? { text: 'Commission ($)' } : null,
+      // role?.type === 'owner' ? { text: 'Commission (%)' } : null,
+      // role?.type === 'owner' ? { text: 'Commission ($)' } : null,
       { text: 'Due On' },
     ],
   ];
@@ -33,12 +33,12 @@ export default (data, startDate, endDate, account, role, status) => {
       i.status,
       name,
       i.total?.toFixed(2),
-      role?.type === 'owner' ? `${i.companyprofile?.SC * 100}%` : null,
-      role?.type === 'owner'
-        ? `$${currency((i.total - i.tax) * i.companyprofile?.SC).value.toFixed(
-            2
-          )}`
-        : null,
+      // role?.type === 'owner' ? `${i.companyprofile?.SC * 100}%` : null,
+      // role?.type === 'owner'
+      //   ? `$${currency((i.total - i.tax) * i.companyprofile?.SC).value.toFixed(
+      //       2
+      //     )}`
+      //   : null,
       i.Shipping_Scheduled
         ? moment(i.job_info?.DueDate).format('MM/DD/YYYY')
         : 'TBD',
@@ -51,18 +51,18 @@ export default (data, startDate, endDate, account, role, status) => {
 
   let totalWidths = [415, '*'];
 
-  if (role.type === 'owner') {
-    totalBody = [
-      ['', 'Total', 'Commission'],
-      ['', `$${total.toFixed(2)}`, `$${commission.toFixed(2)}`],
-    ];
+  // if (role.type === 'owner') {
+  //   totalBody = [
+  //     ['', 'Total', 'Commission'],
+  //     ['', `$${total.toFixed(2)}`, `$${commission.toFixed(2)}`],
+  //   ];
 
-    if (status === 'Quote') {
-      totalWidths = [310, '*', '*'];
-    } else {
-      totalWidths = [300, '*', '*'];
-    }
-  }
+  //   if (status === 'Quote') {
+  //     totalWidths = [310, '*', '*'];
+  //   } else {
+  //     totalWidths = [300, '*', '*'];
+  //   }
+  // }
 
   return [
     {
