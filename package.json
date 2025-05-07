@@ -163,9 +163,10 @@
     "terser": "^5.0.0"
   },
   "scripts": {
-    "start": "react-dotenv && react-scripts --max_old_space_size=8192 start",
+    "start": "node server.js",
+    "dev": "react-dotenv && react-scripts --max_old_space_size=8192 start",
     "build": "react-dotenv && CI=false react-scripts --max_old_space_size=8192 build",
-    "build2": "react-dotenv && react-scripts --max_old_space_size=8192 build",
+    "heroku-postbuild": "npm run build",
     "test": "react-scripts test --silent",
     "test-react": "react-scripts test",
     "test:cov": "npm test -- --coverage --watchAll=false",
