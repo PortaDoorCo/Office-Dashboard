@@ -445,7 +445,7 @@ export default (data, pricing) => {
           : null,
         new Date(data.created_at) >= new Date('2025-03-03')
           ? {
-              text: 'Our listed prices incorporate a 4% discount for cash payments. If an alternative payment method is used, an additional 4% fee will be applied to the final amount.',
+              text: 'Our listed prices incorporate a 4% discount for cash payments. If an alternative payment method is used, an additional 4% will be applied to the final amount.',
               style: 'fonts',
               alignment: 'left',
               margin: [0, 5, 0, 5],
