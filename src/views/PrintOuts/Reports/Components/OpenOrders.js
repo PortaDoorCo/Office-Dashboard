@@ -111,7 +111,7 @@ export default (data, startDate, endDate, status, showPrice = false) => {
 
   let totalBody = [totalColumns, totalValues];
 
-  const columnWidths = [55, '*', 40, '*', '*', 30, 30, 30, 35];
+  const columnWidths = [55, 70, 40, 70, 100, 30, 30, 30, 35];
   if (shouldShowPrice) {
     columnWidths.push(60);
   }
