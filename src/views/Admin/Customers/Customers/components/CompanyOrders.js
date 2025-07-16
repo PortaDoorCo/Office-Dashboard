@@ -720,6 +720,26 @@ const OrderTable = (props) => {
           <Row className="mt-3">
             <Col>
               <h3># Of Orders: {data.length}</h3>
+              {filterStatus === 'Pending Shipment' && (
+                <h3>
+                  Total Balance Due: $
+                  {data
+                    .reduce((acc, row) => {
+                      let updated_total = row.total;
+
+                      // Apply the same balance calculation logic used in the table
+                      row.balance_history.forEach((i) => {
+                        updated_total =
+                          updated_total -
+                          parseFloat(i.balance_paid || 0) -
+                          parseFloat(i.deposit_paid || 0);
+                      });
+
+                      return acc + updated_total;
+                    }, 0)
+                    .toFixed(2)}
+                </h3>
+              )}
             </Col>
           </Row>
         </Col>

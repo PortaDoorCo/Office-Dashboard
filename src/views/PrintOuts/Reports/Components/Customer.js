@@ -45,6 +45,28 @@ export default (data, startDate, endDate, status, company) => {
         { text: 'Date Shipped' },
       ],
     ];
+  } else if (status === 'Pending Shipment') {
+    tableBody = [
+      [
+        // { text: 'Date Created' },
+        { text: 'Date Ordered' },
+
+        { text: 'Job ID' },
+
+        { text: 'Description' },
+        { text: 'Doors' },
+        { text: 'DFs' },
+        { text: 'Boxes' },
+        { text: 'Face Frames' },
+        { text: 'Total' },
+        { text: 'Net Total' },
+        { text: 'Tax' },
+        { text: 'Balance Due' },
+        { text: 'Status' },
+        { text: 'Due Date' },
+        { text: 'Date Invoiced' },
+      ],
+    ];
   } else {
     tableBody = [
       [
@@ -76,6 +98,7 @@ export default (data, startDate, endDate, status, company) => {
   let dfTotal = 0;
   let boxTotal = 0;
   let faceFrameTotal = 0;
+  let balanceDueTotal = 0;
 
   data.forEach((i, index) => {
     total = Math.round(100 * (total += i.total)) / 100;
@@ -85,6 +108,16 @@ export default (data, startDate, endDate, status, company) => {
     let dfs = 0;
     let boxes = 0;
     let face_frames = 0;
+
+    // Calculate balance due for this order
+    let balanceDue = i.total;
+    if (i.balance_history && i.balance_history.length > 0) {
+      i.balance_history.forEach((balance) => {
+        balanceDue -= parseFloat(balance.balance_paid || 0);
+        balanceDue -= parseFloat(balance.deposit_paid || 0);
+      });
+    }
+    balanceDueTotal += balanceDue;
 
     let name = i.job_info?.poNum?.length > 0 ? i.job_info?.poNum : 'None';
     if (i.orderType === 'Door Order') {
@@ -144,6 +177,25 @@ export default (data, startDate, endDate, status, company) => {
         i.DateInvoiced ? moment(i.DateInvoiced).format('MM/DD/YYYY') : 'TBD',
         i.DateShipped ? moment(i.DateShipped).format('MM/DD/YYYY') : 'TBD',
       ]);
+    } else if (status === 'Pending Shipment') {
+      return tableBody.push([
+        i.DateOrdered ? moment(i.DateOrdered).format('MM/DD/YYYY') : 'TBD',
+
+        i.id + 100,
+
+        name,
+        doors,
+        dfs,
+        boxes,
+        face_frames,
+        `$${i.total?.toFixed(2)}`,
+        `$${(i.total - i.tax)?.toFixed(2)}`,
+        `$${i.tax?.toFixed(2)}`,
+        `$${balanceDue?.toFixed(2)}`,
+        i.status,
+        i.Shipping_Scheduled ? moment(i.dueDate).format('MM/DD/YYYY') : 'TBD',
+        i.DateInvoiced ? moment(i.DateInvoiced).format('MM/DD/YYYY') : 'TBD',
+      ]);
     } else {
       return tableBody.push([
         i.DateOrdered ? moment(i.DateOrdered).format('MM/DD/YYYY') : 'TBD',
@@ -166,30 +218,72 @@ export default (data, startDate, endDate, status, company) => {
     }
   });
 
-  let totalBody = [
-    [
-      '',
-      'Doors',
-      'DFs',
-      'Boxes',
-      'Face Frames',
-      'Total',
-      'Net Total',
-      'Tax Total',
-      '',
-    ],
-    [
-      '',
-      doorTotal,
-      dfTotal,
-      boxTotal,
-      faceFrameTotal,
-      `$${total.toFixed(2)}`,
-      `$${netTotal.toFixed(2)}`,
-      `$${taxTotal.toFixed(2)}`,
-      '',
-    ],
-  ];
+  let totalBody;
+
+  if (status === 'Pending Shipment') {
+    totalBody = [
+      [
+        '',
+        'Doors',
+        'DFs',
+        'Boxes',
+        'Face Frames',
+        'Total',
+        'Net Total',
+        'Tax Total',
+        'Balance Due Total',
+        '',
+      ],
+      [
+        '',
+        doorTotal,
+        dfTotal,
+        boxTotal,
+        faceFrameTotal,
+        `$${total.toFixed(2)}`,
+        `$${netTotal.toFixed(2)}`,
+        `$${taxTotal.toFixed(2)}`,
+        `$${balanceDueTotal.toFixed(2)}`,
+        '',
+      ],
+    ];
+  } else {
+    totalBody = [
+      [
+        '',
+        'Doors',
+        'DFs',
+        'Boxes',
+        'Face Frames',
+        'Total',
+        'Net Total',
+        'Tax Total',
+        '',
+      ],
+      [
+        '',
+        doorTotal,
+        dfTotal,
+        boxTotal,
+        faceFrameTotal,
+        `$${total.toFixed(2)}`,
+        `$${netTotal.toFixed(2)}`,
+        `$${taxTotal.toFixed(2)}`,
+        '',
+      ],
+    ];
+  }
+
+  // Adjust column widths based on status
+  const mainTableWidths =
+    status === 'Pending Shipment'
+      ? [45, 30, 90, 23, 18, 23, 27, 40, 40, 35, 40, 50, 50, 50]
+      : [45, 30, 90, 23, 18, 23, 27, 40, 40, 35, 50, 45, 45, 45];
+
+  const totalTableWidths =
+    status === 'Pending Shipment'
+      ? [195, 23, 18, 23, 27, 45, 45, 35, 45, 185]
+      : [195, 23, 18, 23, 27, 45, 45, 35, 230];
 
   return [
     {
@@ -214,7 +308,7 @@ export default (data, startDate, endDate, status, company) => {
       table: {
         headerRows: 1,
         body: tableBody,
-        widths: [45, 30, 90, 23, 18, 23, 27, 40, 40, 35, 50, 45, 45, 45],
+        widths: mainTableWidths,
       },
       layout: 'lightHorizontalLines',
     },
@@ -223,7 +317,7 @@ export default (data, startDate, endDate, status, company) => {
       table: {
         headerRows: 1,
         body: totalBody,
-        widths: [195, 23, 18, 23, 27, 45, 45, 35, 230],
+        widths: totalTableWidths,
       },
       layout: 'headerLineOnly',
     },
