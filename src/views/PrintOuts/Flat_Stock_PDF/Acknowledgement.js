@@ -42,12 +42,18 @@ export default (data, pricing) => {
 
   const order_sub_total = currency(misc_total).add(discountSubTotal).value;
 
-  const tax = data.Taxable
-    ? currency(order_sub_total).multiply(data.companyprofile.TaxRate / 100)
-        .value
+  // Calculate 4% credit card fee if NonCashPayment is true
+  const creditCardFee = data.NonCashPayment
+    ? currency(order_sub_total).multiply(0.04).value
     : 0;
 
-  const total = currency(order_sub_total).add(tax).value;
+  const taxableBase = currency(order_sub_total).add(creditCardFee).value;
+
+  const tax = data.Taxable
+    ? currency(taxableBase).multiply(data.companyprofile.TaxRate / 100).value
+    : 0;
+
+  const total = currency(order_sub_total).add(creditCardFee).add(tax).value;
 
   const balanceDue = currency(total)
     .subtract(depositPaid)
@@ -292,6 +298,33 @@ export default (data, pricing) => {
     //   margin: [0, 0, 0, 0],
     //   alignment: 'right',
     // },
+    data.NonCashPayment
+      ? {
+          columns: [
+            { text: '', style: 'totals', width: 317 },
+            {
+              text: `Non Cash Price: $${creditCardFee.toFixed(2)}`,
+              style: 'totals',
+              margin: [0, 0, 0, 0],
+              width: 120,
+              alignment: 'right',
+            },
+            {
+              text: `$${taxableBase.toFixed(2)}`,
+              style: 'fonts',
+              alignment: 'right',
+            },
+          ],
+          margin: [0, 0, 0, 0],
+        }
+      : null,
+    data.NonCashPayment
+      ? {
+          text: '------------',
+          margin: [0, 0, 0, 0],
+          alignment: 'right',
+        }
+      : null,
     data.Taxable
       ? {
           columns: [
@@ -299,7 +332,7 @@ export default (data, pricing) => {
             {
               text: data.Taxable
                 ? '$' +
-                  order_sub_total.toFixed(2) +
+                  taxableBase.toFixed(2) +
                   ' x ' +
                   data.companyprofile.TaxRate +
                   '%' +

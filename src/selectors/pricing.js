@@ -29,6 +29,20 @@ const discountSelector = (state) => {
   }
 };
 
+const nonCashPaymentSelector = (state) => {
+  const orders = state.form.Order;
+
+  if (orders) {
+    if (state.form.Order.values && state.form.Order.values.NonCashPayment) {
+      return Boolean(state.form.Order.values.NonCashPayment);
+    } else {
+      return false;
+    }
+  } else {
+    return false;
+  }
+};
+
 const stateSelector = (state) => {
   const orders = state.form.Order;
 
@@ -1366,6 +1380,31 @@ export const totalDiscountSelector = createSelector(
   }
 );
 
+export const creditCardFeeSelector = createSelector(
+  [
+    subTotalSelector,
+    miscTotalSelector,
+    totalDiscountSelector,
+    nonCashPaymentSelector,
+    orderTypeSelector,
+  ],
+  (subTotal, misc, discount, nonCashPayment, orderType) => {
+    if (!nonCashPayment) {
+      return 0;
+    }
+
+    if (orderType === 'Misc Items') {
+      const sub = subTotal.reduce((acc, item) => acc + item, 0);
+      const taxableBase = sub - discount;
+      return currency(taxableBase).multiply(0.04).value;
+    } else {
+      const sub = subTotal.reduce((acc, item) => acc + item, 0);
+      const taxableBase = currency(sub).subtract(discount).add(misc).value;
+      return currency(taxableBase).multiply(0.04).value;
+    }
+  }
+);
+
 export const taxSelector = createSelector(
   [
     subTotalSelector,
@@ -1376,11 +1415,22 @@ export const taxSelector = createSelector(
     stateSelector,
     nonDiscountedItems,
     orderTypeSelector,
+    creditCardFeeSelector,
   ],
-  (subTotal, tax, discount, dis, misc, state, nonDiscounted, orderType) => {
+  (
+    subTotal,
+    tax,
+    discount,
+    dis,
+    misc,
+    state,
+    nonDiscounted,
+    orderType,
+    creditCardFee
+  ) => {
     if (orderType === 'Misc Items') {
       const sub = subTotal.reduce((acc, item) => acc + item, 0);
-      const price = (sub - discount + nonDiscounted) * tax;
+      const price = (sub - discount + nonDiscounted + creditCardFee) * tax;
 
       // console.log({ sub, price });
 
@@ -1397,7 +1447,8 @@ export const taxSelector = createSelector(
       const sub2 = currency(sub)
         .subtract(discount)
         .add(misc)
-        .add(nonDiscounted).value;
+        .add(nonDiscounted)
+        .add(creditCardFee).value;
       const price = currency(sub2).multiply(tax).value;
 
       // console.log({ sub, sub2, price });
@@ -1424,18 +1475,19 @@ export const totalSelector = createSelector(
     totalDiscountSelector,
     nonDiscountedItems,
     orderTypeSelector,
+    creditCardFeeSelector,
   ],
-  (subTotal, tax, misc, discount, nonDiscounted, orderType) => {
+  (subTotal, tax, misc, discount, nonDiscounted, orderType, creditCardFee) => {
     if (orderType === 'Misc Items') {
       const preSub = subTotal.reduce((acc, item) => acc + item, 0);
       const sub = currency(preSub).value;
-      const final = sub + tax + nonDiscounted - discount;
+      const final = sub + tax + nonDiscounted + creditCardFee - discount;
       return currency(final).value;
     } else {
       const preSub = subTotal.reduce((acc, item) => acc + item, 0);
       const sub = currency(preSub).value;
 
-      const final = sub + tax + misc + nonDiscounted - discount;
+      const final = sub + tax + misc + nonDiscounted + creditCardFee - discount;
 
       return currency(final).value;
     }
@@ -1450,17 +1502,18 @@ export const rushTotal = createSelector(
     totalDiscountSelector,
     nonDiscountedItems,
     orderTypeSelector,
+    creditCardFeeSelector,
   ],
-  (subTotal, tax, misc, discount, nonDiscounted, orderType) => {
+  (subTotal, tax, misc, discount, nonDiscounted, orderType, creditCardFee) => {
     if (orderType === 'Misc Items') {
       const preSub = subTotal.reduce((acc, item) => acc + item, 0);
       const sub = currency(preSub).value;
-      const final = sub + tax + nonDiscounted;
+      const final = sub + tax + nonDiscounted + creditCardFee;
       return currency(final).value;
     } else {
       const preSub = subTotal.reduce((acc, item) => acc + item, 0);
       const sub = currency(preSub).value;
-      const final = sub + tax + misc + nonDiscounted;
+      const final = sub + tax + misc + nonDiscounted + creditCardFee;
       return currency(final).value;
     }
   }
