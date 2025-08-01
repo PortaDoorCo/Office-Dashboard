@@ -81,6 +81,30 @@ const CheckoutBox = (props) => {
                     </Col>
                   </Row>
 
+                  <Row className="mb-0">
+                    <Col xs="9" />
+                    <Col>
+                      <FormGroup>
+                        <Label htmlFor="nonCashPayment">
+                          Non Cash Payment?
+                        </Label>
+                        <Field
+                          name={'NonCashPayment'}
+                          component={renderCheckboxToggle}
+                          edit={
+                            role?.type === 'authenticated' ||
+                            role?.type === 'owner' ||
+                            role?.type === 'administrator' ||
+                            role?.type === 'management' ||
+                            role?.type === 'office'
+                              ? true
+                              : false
+                          }
+                        />
+                      </FormGroup>
+                    </Col>
+                  </Row>
+
                   <strong>Discount: </strong>
                   <InputGroup>
                     <InputGroupAddon addonType="prepend">
