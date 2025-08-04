@@ -24,6 +24,7 @@ import RenderPriceHolder from '../../../RenderInputs/RenderPriceHolder';
 import RenderRails from './Components/Rails';
 import RenderStiles from './Components/Stiles';
 import RenderPanels from './Components/Panels';
+import CSVDimensionUploader from '../../../CSVDimensionUploader/CSVDimensionUploader';
 
 const required = (value) => (value ? undefined : 'Required');
 const trim_val = (value) => (value.trim('') ? undefined : 'Required');
@@ -135,6 +136,13 @@ const DoorTable = ({
 
   return (
     <div>
+      <CSVDimensionUploader
+        fields={fields}
+        edit={edit}
+        partIndex={i}
+        partName="Door (Custom)"
+      />
+
       {fields.map((table, index) => (
         <Fragment key={index}>
           <hr />

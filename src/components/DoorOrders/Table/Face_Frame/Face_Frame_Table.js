@@ -21,6 +21,7 @@ import {
   renderTextField,
 } from '../../../RenderInputs/renderInputs';
 import RenderPriceHolder from '../../../RenderInputs/RenderPriceHolder';
+import CSVDimensionUploader from '../../../CSVDimensionUploader/CSVDimensionUploader';
 
 const required = (value) => (value ? undefined : 'Required');
 
@@ -158,6 +159,13 @@ const Frame_Only_Table = ({
 
   return formState ? (
     <div>
+      <CSVDimensionUploader
+        fields={fields}
+        edit={edit}
+        partIndex={i}
+        partName="Face Frame"
+      />
+
       <Fragment>
         {fields.map((table, index) => (
           <Fragment key={index}>

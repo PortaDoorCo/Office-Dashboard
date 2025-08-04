@@ -21,6 +21,7 @@ import {
 } from '../../../RenderInputs/renderInputs';
 import RenderPriceHolder from '../../../RenderInputs/RenderPriceHolder';
 import Maker from '../../MakerJS/Maker';
+import CSVDimensionUploader from '../../../CSVDimensionUploader/CSVDimensionUploader';
 
 const required = (value) => (value ? undefined : 'Required');
 
@@ -95,6 +96,13 @@ const Slab_Door_Table = ({
 
   return formState ? (
     <div>
+      <CSVDimensionUploader
+        fields={fields}
+        edit={edit}
+        partIndex={i}
+        partName="Slab Door"
+      />
+
       <Fragment>
         {fields.map((table, index) => (
           <Fragment key={index}>

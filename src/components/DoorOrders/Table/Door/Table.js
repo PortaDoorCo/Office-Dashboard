@@ -36,6 +36,7 @@ import WarningModal from '../Warnings/Modal';
 import currencyMask from '../../../../utils/currencyMask';
 import ordinal from 'ordinal';
 import FullFrameModal from '../../../../utils/Modal';
+import CSVDimensionUploader from '../../../CSVDimensionUploader/CSVDimensionUploader';
 
 const required = (value) => (value ? undefined : 'Required');
 const panelsCount = (value) => {
@@ -1059,6 +1060,14 @@ const DoorTable = ({
           addFullFrameNote(e);
         }}
       />
+
+      <CSVDimensionUploader
+        fields={fields}
+        edit={edit}
+        partIndex={i}
+        partName="Door"
+      />
+
       {fields.map((table, index) => (
         <Fragment key={index}>
           <hr />

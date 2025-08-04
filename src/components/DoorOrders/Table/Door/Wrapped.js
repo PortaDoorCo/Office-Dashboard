@@ -30,6 +30,7 @@ import {
 } from '../../../RenderInputs/renderInputs';
 import RenderPriceHolder from '../../../RenderInputs/RenderPriceHolder';
 import { connect } from 'react-redux';
+import CSVDimensionUploader from '../../../CSVDimensionUploader/CSVDimensionUploader';
 import numQty from 'numeric-quantity';
 import currencyMask from '../../../../utils/currencyMask';
 
@@ -283,6 +284,13 @@ const Cope_Table = ({
 
   return formState ? (
     <div>
+      <CSVDimensionUploader
+        fields={fields}
+        edit={edit}
+        partIndex={i}
+        partName="Wrapped Door"
+      />
+
       <Fragment>
         {fields.map((table, index) => (
           <Fragment key={index}>

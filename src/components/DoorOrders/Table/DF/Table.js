@@ -568,6 +568,14 @@ const Cope_Table = ({
           addFullFrameNote(e);
         }}
       />
+
+      <CSVDimensionUploader
+        fields={fields}
+        edit={edit}
+        partIndex={i}
+        partName="Drawer Front"
+      />
+
       <Fragment>
         {fields.map((table, index) => (
           <Fragment key={index}>
