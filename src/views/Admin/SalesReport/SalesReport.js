@@ -21,7 +21,7 @@ import {
 } from 'reactstrap';
 import { bindActionCreators } from 'redux';
 import { loadOrders, searchOrders } from '../../../redux/orders/actions';
-import status from '../../../utils/report_status';
+import status, { getStatusByRole } from '../../../utils/report_status';
 import Charts from './components/Chart';
 import Chart1 from './components/SalesCharts/Chart1';
 import Cookies from 'js-cookie';
@@ -264,7 +264,8 @@ const SalesReport = (props) => {
       : new Date();
 
   return (role && role?.type === 'owner') ||
-    (role && role.type === 'administrator') ? (
+    (role && role.type === 'administrator') ||
+    (role && role.type === 'office') ? (
     <div>
       <Row className="mb-3">
         <Col lg="10" />
@@ -307,7 +308,7 @@ const SalesReport = (props) => {
                 defaultValue="Quote"
                 onChange={(e) => setFilterStatus(e.target.value)}
               >
-                {status.map((i, index) => (
+                {getStatusByRole(role).map((i, index) => (
                   <option key={index} value={i.value}>
                     {i.value}
                   </option>
@@ -473,7 +474,7 @@ const SalesReport = (props) => {
                 defaultValue="Quote"
                 onChange={(e) => setFilterStatus(e.target.value)}
               >
-                {status.map((i, index) => (
+                {getStatusByRole(role).map((i, index) => (
                   <option key={index} value={i.value}>
                     {i.value}
                   </option>
@@ -491,7 +492,7 @@ const SalesReport = (props) => {
         status={user?.sale?.fullName}
       />
 
-      {/* <Maps 
+      {/* <Maps
             orders={orders}
             startDate={startDate}
             endDate={endDate}

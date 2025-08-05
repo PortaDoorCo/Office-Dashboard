@@ -20,7 +20,7 @@ import 'react-dates/initialize';
 import 'react-dates/lib/css/_datepicker.css';
 import Receipt from '@material-ui/icons/Receipt';
 import SalesmenReport from '../../../PrintOuts/Reports/SalesmenReport';
-import status from '../../../../utils/status';
+import status, { getStatusByRole } from '../../../../utils/report_status';
 import currency from 'currency.js';
 
 // momentLocaliser(moment);
@@ -192,7 +192,7 @@ const StatusTable = (props) => {
                 background: 'none',
               }}
             >
-              {status.map((i, index) => (
+              {getStatusByRole(role).map((i, index) => (
                 <option key={index} value={i.value}>
                   {i.value}
                 </option>
