@@ -24,7 +24,7 @@ const DrawerPDF = async (data, breakdowns, p, pricing) => {
             stack: [
               { text: 'Porta Door Co. Inc.', alignment: 'center' },
               { text: '65 Cogwheel Lane', alignment: 'center' },
-              { text: 'Seymour, CT', alignment: 'center' },
+              { text: 'Seymour, CT 06483', alignment: 'center' },
               {
                 text: '203-888-6191',
                 alignment: 'center',
