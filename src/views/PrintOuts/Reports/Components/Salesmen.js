@@ -7,12 +7,9 @@ export default (data, startDate, endDate, account, role, status) => {
       { text: 'Date Ordered' },
       { text: 'Customer' },
       { text: 'Job ID' },
-      { text: 'Status' },
-      { text: 'Description' },
+      { text: 'Order Type' },
       { text: 'Total' },
-      // role?.type === 'owner' ? { text: 'Commission (%)' } : null,
-      // role?.type === 'owner' ? { text: 'Commission ($)' } : null,
-      { text: 'Due On' },
+      { text: 'Discount (%)' },
     ],
   ];
   let total = 0;
@@ -24,24 +21,17 @@ export default (data, startDate, endDate, account, role, status) => {
       (commission +=
         (i.total - i.tax) * (i.companyprofile.SC ? i.companyprofile.SC : 0))
     ).value;
-    let name = i.job_info?.poNum ? i.job_info?.poNum : 'None';
+
+    // Use 20% if no discount is specified
+    const discountPercent = i.discount || 20;
 
     return tableBody.push([
       i.DateOrdered ? moment(i.DateOrdered).format('MM/DD/YYYY') : 'TBD',
       i.job_info?.customer?.Company,
       i.id + 100,
-      i.status,
-      name,
-      i.total?.toFixed(2),
-      // role?.type === 'owner' ? `${i.companyprofile?.SC * 100}%` : null,
-      // role?.type === 'owner'
-      //   ? `$${currency((i.total - i.tax) * i.companyprofile?.SC).value.toFixed(
-      //       2
-      //     )}`
-      //   : null,
-      i.Shipping_Scheduled
-        ? moment(i.job_info?.DueDate).format('MM/DD/YYYY')
-        : 'TBD',
+      i.orderType || 'Standard',
+      `$${i.total?.toFixed(2)}`,
+      `${discountPercent}%`,
     ]);
   });
   let totalBody = [
@@ -49,7 +39,7 @@ export default (data, startDate, endDate, account, role, status) => {
     ['', `$${total.toFixed(2)}`],
   ];
 
-  let totalWidths = [415, '*'];
+  let totalWidths = [330, '*']; // Adjusted to align with the Total column
 
   // if (role.type === 'owner') {
   //   totalBody = [
@@ -90,6 +80,7 @@ export default (data, startDate, endDate, account, role, status) => {
       table: {
         headerRows: 1,
         body: tableBody,
+        widths: [65, '*', 50, 80, 70, 65], // Date, Customer, JobID, OrderType, Total, Discount
       },
       layout: 'headerLineOnly',
     },
