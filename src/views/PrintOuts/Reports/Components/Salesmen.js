@@ -23,7 +23,7 @@ export default (data, startDate, endDate, account, role, status) => {
     ).value;
 
     // Use 20% if no discount is specified
-    const discountPercent = i.discount || 20;
+    const discountPercent = i.discount || 0;
 
     return tableBody.push([
       i.DateOrdered ? moment(i.DateOrdered).format('MM/DD/YYYY') : 'TBD',
