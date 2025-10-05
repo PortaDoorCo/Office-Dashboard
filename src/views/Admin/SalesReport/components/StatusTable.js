@@ -525,16 +525,21 @@ const StatusTable = (props) => {
                 <Receipt style={{ width: '40', height: '40' }} />
               </IconButton>
             </Tooltip>
-            <Tooltip
-              title="Export CSV Report"
-              onClick={() => exportReports('csv')}
-              placement="top"
-              className="mb-3 mt-3 ml-2"
-            >
-              <IconButton>
-                <GetApp style={{ width: '40', height: '40' }} />
-              </IconButton>
-            </Tooltip>
+            {role &&
+            (role?.type === 'administrator' ||
+              role?.type === 'management' ||
+              role?.type === 'owner') ? (
+              <Tooltip
+                title="Export CSV Report"
+                onClick={() => exportReports('csv')}
+                placement="top"
+                className="mb-3 mt-3 ml-2"
+              >
+                <IconButton>
+                  <GetApp style={{ width: '40', height: '40' }} />
+                </IconButton>
+              </Tooltip>
+            ) : null}
           </Col>
         </Row>
       </div>
