@@ -19,6 +19,7 @@ import Cookies from 'js-cookie';
 import 'react-dates/initialize';
 import 'react-dates/lib/css/_datepicker.css';
 import Receipt from '@material-ui/icons/Receipt';
+import GetApp from '@material-ui/icons/GetApp';
 import SalesmenReport from '../../../PrintOuts/Reports/SalesmenReport';
 import status, { getStatusByRole } from '../../../../utils/report_status';
 import currency from 'currency.js';
@@ -399,7 +400,7 @@ const StatusTable = (props) => {
     setEdit(!edit);
   };
 
-  const exportReports = () => {
+  const exportReports = (format = 'pdf') => {
     let newOrder = [...data];
 
     if (props.filterStatus === 'Ordered') {
@@ -426,7 +427,8 @@ const StatusTable = (props) => {
       props.endDate,
       props.accountName,
       props.role,
-      props.filterStatus
+      props.filterStatus,
+      format
     );
     setToggleCleared(!toggleCleared);
   };
@@ -514,13 +516,23 @@ const StatusTable = (props) => {
           {/* <Col lg='11' /> */}
           <Col>
             <Tooltip
-              title="View Reports"
-              onClick={exportReports}
+              title="Export PDF Report"
+              onClick={() => exportReports('pdf')}
               placement="top"
               className="mb-3 mt-3"
             >
               <IconButton>
                 <Receipt style={{ width: '40', height: '40' }} />
+              </IconButton>
+            </Tooltip>
+            <Tooltip
+              title="Export CSV Report"
+              onClick={() => exportReports('csv')}
+              placement="top"
+              className="mb-3 mt-3 ml-2"
+            >
+              <IconButton>
+                <GetApp style={{ width: '40', height: '40' }} />
               </IconButton>
             </Tooltip>
           </Col>

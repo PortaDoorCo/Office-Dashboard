@@ -1,8 +1,23 @@
 import pdfMake from 'pdfmake-lite/build/pdfmake';
 import vfsFonts from 'pdfmake-lite/build/vfs_fonts';
 import Salesmen from './Components/Salesmen';
+import SalesmenReportCSV from './SalesmenReportCSV';
 
-export default (data, startDate, endDate, account, role, status) => {
+export default (
+  data,
+  startDate,
+  endDate,
+  account,
+  role,
+  status,
+  format = 'pdf'
+) => {
+  // If format is CSV, use the CSV export function
+  if (format === 'csv') {
+    return SalesmenReportCSV(data, startDate, endDate, account, role, status);
+  }
+
+  // Otherwise, generate PDF as before
   const { vfs } = vfsFonts.pdfMake;
   pdfMake.vfs = vfs;
 
