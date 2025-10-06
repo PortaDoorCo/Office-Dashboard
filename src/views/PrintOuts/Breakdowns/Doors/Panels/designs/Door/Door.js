@@ -118,17 +118,48 @@ export default (info, part, breakdowns) => {
       (width - leftStile - rightStile - vertMull * (panelsW - 1)) / panelsW;
 
     const panelHeight = (v) => {
-      console.log({ v });
+      // For DF with panels wide, this calculates panel widths for horizontal splits
+      // v represents the panel index
+      // For 2 panels wide: panel 0 (left), panel 1 (right)
+      // unevenSplitInput0 is the distance from left to the vertical mullion
 
       if (v < 3) {
-        return (
-          width -
-          rightStile -
-          numQty(info[`unevenSplitInput${v}`]) -
-          vertMull +
-          panel_factor +
-          lip_factor / 2
-        );
+        // For horizontal splits (panelsW > 1):
+        // Panel 0 (left): from leftStile to unevenSplitInput0
+        // Panel 1 (right): from unevenSplitInput0 to (width - rightStile)
+        // etc.
+
+        if (v === 0) {
+          // First panel (leftmost)
+          const splitPosition = numQty(info.unevenSplitInput0);
+          const panelWidth =
+            splitPosition - leftStile + panel_factor + lip_factor / 2;
+          return panelWidth;
+        } else if (v === 1 && panelsW === 2) {
+          // Second panel for 2-panel wide configuration
+          const splitPosition = numQty(info.unevenSplitInput0);
+          const panelWidth =
+            width - splitPosition - vertMull + panel_factor + lip_factor / 2;
+          return panelWidth;
+        } else {
+          // For more than 2 panels, would need additional logic
+          const prevSplit =
+            v > 0 ? numQty(info[`unevenSplitInput${v - 1}`]) : leftStile;
+          const currSplit = info[`unevenSplitInput${v}`];
+
+          if (currSplit) {
+            return (
+              numQty(currSplit) -
+              prevSplit -
+              vertMull +
+              panel_factor +
+              lip_factor / 2
+            );
+          } else {
+            // Last panel
+            return width - prevSplit - vertMull + panel_factor + lip_factor / 2;
+          }
+        }
       } else {
         if (info[`unequalMidRails`]) {
           return (
@@ -195,26 +226,30 @@ export default (info, part, breakdowns) => {
 
     const glassCheck = (v) => info[`glass_check_${v}`];
 
-    console.log({ VERTICAL_GRAIN });
+    // For horizontal uneven splits, we need to create panels for each width section
+    // panelsW = 2 means we have 2 panels horizontally (left and right)
+    // We need to calculate width for each panel
 
+    // Create panels for all but the last one (which is handled separately as 'bottom')
     const unEven = [
-      ...Array.from(Array(panelsW).keys())
-        .slice(1)
-        .map((i, v) => {
-          if (glassCheck(v)) {
-            return glassDoor(v);
+      ...Array.from(Array(panelsW - 1).keys()) // Changed to panelsW - 1 to exclude last panel
+        .map((i) => {
+          // i is the actual index, not v
+          if (glassCheck(i)) {
+            return glassDoor(i);
           } else {
-            const panelHeight = unevenSplitInput(v);
+            const panelWidth = panelHeight(i); // This actually calculates width for horizontal splits
+
             if (VERTICAL_GRAIN || orderType === 'Door') {
               return {
                 qty: `(${qty * panelsH})`,
                 qty2: qty * panelsH,
-                measurement: `${fraction(panelHeight)} x ${fraction(
+                measurement: `${fraction(panelWidth)} x ${fraction(
                   Math.round(eval(breakdowns.panel_height) * 16) / 16
                 )}`,
                 pattern: panelFlat ? 'PF' : 'PR',
                 height: Math.round(eval(breakdowns.panel_height) * 16) / 16,
-                width: panelHeight,
+                width: panelWidth,
                 panel: panelName,
                 multiplier: panelsH,
                 count: qty * panelsH,
@@ -225,9 +260,9 @@ export default (info, part, breakdowns) => {
                 qty2: qty * panelsH,
                 measurement: `${fraction(
                   Math.round(eval(breakdowns.panel_height) * 16) / 16
-                )} x ${fraction(panelHeight)}`,
+                )} x ${fraction(panelWidth)}`,
                 pattern: panelFlat ? 'PF' : 'PR',
-                height: panelHeight,
+                height: panelWidth,
                 width: Math.round(eval(breakdowns.panel_height) * 16) / 16,
                 panel: panelName,
                 multiplier: panelsH,
@@ -238,14 +273,18 @@ export default (info, part, breakdowns) => {
         }),
     ];
 
+    // For the last panel, we need to calculate based on panelsW not panelsH
+    // since we're doing horizontal splits in DF
+    const lastPanelIndex = panelsW - 1;
+
     let bottom = {
       qty: `(${qty * panelsH})`,
       qty2: qty * panelsH,
       measurement: `${fraction(
         Math.round(eval(breakdowns.panel_height) * 16) / 16
-      )} x ${fraction(panelHeight(parseInt(panelsH)))}`,
+      )} x ${fraction(panelHeight(lastPanelIndex))}`,
       pattern: panelFlat ? 'PF' : 'PR',
-      height: panelHeight(parseInt(panelsH)),
+      height: panelHeight(lastPanelIndex),
       width: Math.round(eval(breakdowns.panel_height) * 16) / 16,
       panel: panelName,
       multiplier: qty * panelsH,
@@ -256,12 +295,12 @@ export default (info, part, breakdowns) => {
       bottom = {
         qty: `(${qty * panelsH})`,
         qty2: qty * panelsH,
-        measurement: `${fraction(panelHeight(parseInt(panelsH)))} x ${fraction(
+        measurement: `${fraction(panelHeight(lastPanelIndex))} x ${fraction(
           Math.round(eval(breakdowns.panel_height) * 16) / 16
         )}`,
         pattern: panelFlat ? 'PF' : 'PR',
         height: Math.round(eval(breakdowns.panel_height) * 16) / 16,
-        width: panelHeight(parseInt(panelsH)),
+        width: panelHeight(lastPanelIndex),
         panel: panelName,
         multiplier: qty * panelsH,
         count: qty * panelsH,
@@ -299,8 +338,6 @@ export default (info, part, breakdowns) => {
       (width - leftStile - rightStile - vertMull * (panelsW - 1)) / panelsW;
 
     const panelHeight = (v) => {
-      console.log({ v });
-
       if (v < 3) {
         return (
           height -
