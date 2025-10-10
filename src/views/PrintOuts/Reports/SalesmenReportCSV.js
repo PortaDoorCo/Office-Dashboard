@@ -82,3 +82,4 @@ export default (data, startDate, endDate, account, role, status) => {
   link.click();
   document.body.removeChild(link);
 };
+

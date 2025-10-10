@@ -139,7 +139,12 @@ export default (info, part, breakdowns) => {
           // Second panel for 2-panel wide configuration
           const splitPosition = numQty(info.unevenSplitInput0);
           const panelWidth =
-            width - splitPosition - vertMull + panel_factor + lip_factor / 2;
+            width -
+            splitPosition -
+            vertMull -
+            rightStile +
+            panel_factor +
+            lip_factor / 2;
           return panelWidth;
         } else {
           // For more than 2 panels, would need additional logic
