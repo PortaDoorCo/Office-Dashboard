@@ -45,7 +45,9 @@ export default (data, breakdowns) => {
                   style: 'fonts',
                 },
                 {
-                  text: `Cab#: ${i.cab_number ? i.cab_number : ' '}`,
+                  text: `Cab#: ${
+                    i.cab_number ? i.cab_number.replace(/\n/g, ' ') : ' '
+                  }`,
                   alignment: 'center',
                   style: 'fonts',
                 },

@@ -191,9 +191,6 @@ export default (data, breakdowns) => {
                                   ) ||
                                   i?.item?.NAME?.toLowerCase()?.includes(
                                     'deposit'
-                                  ) ||
-                                  i?.item?.NAME?.toLowerCase()?.includes(
-                                    'catalogue'
                                   )
                                 ) {
                                   return null;
@@ -214,10 +211,7 @@ export default (data, breakdowns) => {
                                   i?.item2
                                     ?.toLowerCase()
                                     ?.includes('service charge') ||
-                                  i?.item2
-                                    ?.toLowerCase()
-                                    ?.includes('deposit') ||
-                                  i?.item2?.toLowerCase()?.includes('catalogue')
+                                  i?.item2?.toLowerCase()?.includes('deposit')
                                 ) {
                                 } else {
                                   return `${i.item2} \n`;
