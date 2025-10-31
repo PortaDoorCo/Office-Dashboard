@@ -124,8 +124,9 @@ export default (data, pricing) => {
           style: 'fontsBold',
         },
         {
-          text: `${item.cab_number ? item.cab_number : ''}`,
+          text: `${item.cab_number ? item.cab_number.replace(/\n/g, ' ') : ''}`,
           style: 'tableBold',
+          fontSize: 7,
           alignment: 'center',
         },
 
